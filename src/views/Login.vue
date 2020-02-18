@@ -16,7 +16,7 @@
                 placeholder="Email input"
               />
               <span class="icon is-small is-left">
-                <i class="fas fa-envelope"></i>
+                <i class="mdi mdi-email"></i>
               </span>
             </div>
           </div>
@@ -30,7 +30,7 @@
                 placeholder="Password input"
               />
               <span class="icon is-small is-left">
-                <i class="fas fa-key"></i>
+                <i class="mdi mdi-key"></i>
               </span>
             </div>
           </div>
