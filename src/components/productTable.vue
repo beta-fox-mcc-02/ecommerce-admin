@@ -8,8 +8,8 @@
     <td><img style="width: 8rem" :src=product.imageUrl></td>
     <td>
       <ul>
-        <li style="color: green;"><i class="material-icons">edit</i></li>
-        <li style="color: red;"><i class="material-icons">delete</i></li>
+        <li style="color: green;" @click="editProduct"><i class="material-icons editButton">edit</i></li>
+        <li style="color: red;"><i class="material-icons deleteButton">delete</i></li>
       </ul>
     </td>
   </tr>
@@ -38,10 +38,32 @@ export default {
       const { price } = this.product
       return `Rp ${Number(price).toLocaleString('id-ID')}`
     }
+  },
+  methods: {
+    editProduct () {
+      this.$router.push({ path: 'editProduct', query: { id: this.product.id } })
+    }
   }
 }
 </script>
 
-<style>
-
+<style scoped>
+.editButton {
+  transition: .7s
+}
+.editButton:hover {
+  cursor: pointer;
+  color: rgb(0, 75, 0);
+  transform: rotate(360deg);
+  transition: .7s
+}
+.deleteButton {
+  transition: .7s
+}
+.deleteButton:hover {
+  cursor: pointer;
+  color: darkred;
+  transform: rotate(360deg);
+  transition: .7s
+}
 </style>

@@ -19,6 +19,11 @@ const routes = [
         path: '/user',
         name: 'Manage User',
         component: () => import('@/components/userManage')
+      },
+      {
+        path: '/editProduct',
+        name: 'Edit Product',
+        component: () => import('@/components/editProduct')
       }
     ]
   },

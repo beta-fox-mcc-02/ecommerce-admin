@@ -6,6 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     products: [{
+      id: 1,
       name: 'Smartphone 1',
       description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda itaque sequi magnam atque. Iste odio repellendus autem? Et, aut itaque.',
       category: 'Smartphone',
@@ -13,6 +14,7 @@ export default new Vuex.Store({
       stock: 10,
       imageUrl: 'https://radscanmedical.com/wp-content/uploads/2018/11/coming-soon.png'
     }, {
+      id: 2,
       name: 'Komputer 1',
       description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda itaque sequi magnam atque. Iste odio repellendus autem? Et, aut itaque.',
       category: 'Computer',
@@ -20,6 +22,7 @@ export default new Vuex.Store({
       stock: 10,
       imageUrl: 'https://radscanmedical.com/wp-content/uploads/2018/11/coming-soon.png'
     }, {
+      id: 3,
       name: 'Komputer 2',
       description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda itaque sequi magnam atque. Iste odio repellendus autem? Et, aut itaque.',
       category: 'Computer',
