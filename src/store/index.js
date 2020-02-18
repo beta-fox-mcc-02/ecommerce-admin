@@ -7,9 +7,11 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     token: localStorage.getItem('token') || '',
-    user: {}
+    user: {},
+    products: []
   },
   mutations: {
+    // AUTH
     auth(state, data) {
       state.token = data.token
       state.user = data.user
@@ -21,9 +23,20 @@ export default new Vuex.Store({
       localStorage.clear('token')
       state.user = {}
       localStorage.clear('user')
+    },
+
+    // END OF AUTH
+
+    // PRODUCTS
+
+    setProducts(state, products) {
+      state.products = products
     }
+
+    // END OF PRODUCTS
   },
   actions: {
+    // AUTH
     async register({ commit }, data) {
       return new Promise((resolve, reject) => {
         client
@@ -59,7 +72,26 @@ export default new Vuex.Store({
         commit('logout')
         resolve()
       })
+    },
+
+    // END OF AUTH
+
+    // PRODUCTS
+
+    getProducts({ commit }) {
+      return new Promise((resolve, reject) => {
+        client
+          .get(`/products`)
+          .then(({ data }) => {
+            commit('setProducts', data.products)
+            resolve(data.products)
+          })
+          .catch(e => {
+            reject(e)
+          })
+      })
     }
-  },
-  modules: {}
+
+    // END OF PRODUCTS
+  }
 })

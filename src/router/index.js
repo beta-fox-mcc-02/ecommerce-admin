@@ -5,6 +5,9 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login'
 import Dashboard from '../views/Dashboard'
 import Register from '../views/Register'
+import Products from '../components/Products'
+import AddProduct from '../components/AddProduct'
+import UpdateProduct from '../components/UpdateProduct'
 
 Vue.use(VueRouter)
 
@@ -26,8 +29,12 @@ const routes = [
   },
   {
     path: '/dashboard',
-    name: 'Dashboard',
-    component: Dashboard
+    component: Dashboard,
+    children: [
+      { path: '', component: Products },
+      { path: 'add', component: AddProduct },
+      { path: 'update/:id', component: UpdateProduct }
+    ]
     // beforeEnter: isAuthenticated
   },
   {

@@ -4,13 +4,7 @@
       <SideMenu />
     </div>
     <div class="container column is-9">
-      <div class="card">
-        <div class="card-header">
-          <p class="card-header-title">Header</p>
-        </div>
-        <div class="card-content"><div class="content">Content</div></div>
-      </div>
-      <br />
+      <router-view/>
     </div>
   </div>
 </template>
