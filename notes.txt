@@ -1,0 +1,5 @@
+1. adding buefy
+2. adding vuex
+3. adding router
+4. adding axios & interceptors
+5. adding auth guard 
