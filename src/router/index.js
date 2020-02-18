@@ -1,21 +1,21 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import store from '../store'
+// import store from '../store'
 import Login from '../views/Login'
 import Dashboard from '../views/Dashboard'
 
 Vue.use(VueRouter)
 
-function isAuthenticated(to, from, next) {
-  if (store.getters.isAuthenticated) {
-    next()
-  } else {
-    next({
-      path: '/login'
-    })
-  }
-}
+// function isAuthenticated(to, from, next) {
+//   if (store.getters.isAuthenticated) {
+//     next()
+//   } else {
+//     next({
+//       path: '/login'
+//     })
+//   }
+// }
 
 const routes = [
   {
@@ -26,8 +26,8 @@ const routes = [
   {
     path: '/dashboard',
     name: 'Dashboard',
-    component: Dashboard,
-    beforeEnter: isAuthenticated
+    component: Dashboard
+    // beforeEnter: isAuthenticated
   },
   {
     path: '/login',
