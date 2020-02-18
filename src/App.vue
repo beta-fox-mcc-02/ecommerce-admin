@@ -46,13 +46,17 @@
     <section class="section">
       <router-view />
     </section>
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div> -->
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  methods: {
+    logout: function() {
+      this.$store.dispatch('logout').then(() => {
+        this.$router.push('/login')
+      })
+    }
+  }
+}
 </script>

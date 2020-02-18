@@ -3,20 +3,34 @@
     <h1 class="title has-text-centered">
       Create new account
     </h1>
-    <div class="columns is-mobile is-centered">
-      <div class="column is-4">
+    <div class="columns is-centered">
+      <div class="column is-5 is-narrow">
         <form v-on:submit.prevent="submitForm">
           <div class="field">
-            <label class="label">Name</label>
+            <label class="label">First Name</label>
             <div class="control has-icons-left has-icons-right">
               <input
                 class="input"
-                v-model="name"
+                v-model="first_name"
                 type="text"
-                placeholder="Name input"
+                placeholder="First name"
               />
               <span class="icon is-small is-left">
-                <i class="fas fa-envelope"></i>
+                <i class="mdi mdi-account"></i>
+              </span>
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Last Name</label>
+            <div class="control has-icons-left has-icons-right">
+              <input
+                class="input"
+                v-model="last_name"
+                type="text"
+                placeholder="Last name"
+              />
+              <span class="icon is-small is-left">
+                <i class="mdi mdi-account"></i>
               </span>
             </div>
           </div>
@@ -30,7 +44,7 @@
                 placeholder="Email input"
               />
               <span class="icon is-small is-left">
-                <i class="fas fa-envelope"></i>
+                <i class="mdi mdi-email"></i>
               </span>
             </div>
           </div>
@@ -44,7 +58,7 @@
                 placeholder="Password input"
               />
               <span class="icon is-small is-left">
-                <i class="fas fa-key"></i>
+                <i class="mdi mdi-key"></i>
               </span>
             </div>
           </div>
@@ -72,7 +86,8 @@
 export default {
   data: () => {
     return {
-      name: null,
+      first_name: null,
+      last_name: null,
       email: null,
       password: null
     }
@@ -80,7 +95,8 @@ export default {
   methods: {
     submitForm: async function() {
       const data = {
-        name: this.name,
+        first_name: this.first_name,
+        last_name: this.last_name,
         email: this.email,
         password: this.password
       }

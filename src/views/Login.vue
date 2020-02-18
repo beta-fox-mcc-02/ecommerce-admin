@@ -87,7 +87,6 @@ export default {
       this.$store
         .dispatch('login', data)
         .then(path => {
-          console.log(this)
           this.$router.push({ path })
         })
         .catch(e => {
