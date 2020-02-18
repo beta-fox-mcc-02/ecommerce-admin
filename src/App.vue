@@ -3,7 +3,7 @@
     <div id="nav">
       <router-link to="/"><i class="fas fa-home"></i></router-link>
       or
-      <router-link to="/login" id="login">Login</router-link>
+      <a v-on:click="logout" style="cursor: pointer">logout</a>
     </div>
     <router-view/>
   </div>
@@ -11,7 +11,12 @@
 
 <script>
 export default {
-
+  methods: {
+    logout () {
+      localStorage.clear()
+      this.$router.push('/login')
+    }
+  }
 }
 </script>
 

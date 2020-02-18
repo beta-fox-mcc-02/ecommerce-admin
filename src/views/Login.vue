@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   data () {
     return {
@@ -26,7 +28,21 @@ export default {
   },
   methods: {
     login () {
-      this.$router.push('/')
+      if (this.email && this.password) {
+        axios({
+          method: 'POST',
+          url: 'http://localhost:3000/admin/login',
+          data: {
+            email: this.email,
+            password: this.password
+          }
+        })
+          .then((result) => {
+            localStorage.setItem('access_token', result.data.token)
+            this.$router.push('/')
+          })
+          .catch((err) => console.log(err))
+      }
     }
   }
 }

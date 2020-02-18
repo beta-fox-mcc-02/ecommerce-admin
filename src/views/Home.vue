@@ -1,23 +1,19 @@
 <template>
   <div class="home">
-    home
+    <Sidebar />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
+import Sidebar from '../components/sidebar.vue'
 
 export default {
   name: 'Home',
-  data () {
-    return {
-
-    }
-  },
+  components: { Sidebar },
   beforeRouteEnter (to, from, next) {
     const token = localStorage.getItem('access_token')
-    if (token) next('/')
-    else next('/login')
+    if (!token) next('/login')
+    else next()
   }
 }
 </script>
