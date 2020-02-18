@@ -5,31 +5,30 @@
         <h1
           class="text-center mt-0 pt-0 shadow"
           style="font-family: 'Playfair Display SC', serif; font-weight: normal; font-size: 90px"
-        >
-          G<span style="font-family: 'serif'; font-size: 20px">&</span>N
-        </h1>
+        >G<span style="font-family: 'serif'; font-size: 20px">&</span>N</h1>
         <nav class="navbar navbar-expand-md p-0 shadow">
           <div class="collapse navbar-collapse d-md-flex justify-content-center" id="trigger">
             <ul class="navbar-nav">
-              <li class="navbar-item mx-2 shadow">
+              <li class="navbar-item mx-1">
                 <router-link to="/" class="nav-link">Home</router-link>
               </li>
-              <li class="navbar-item mx-2">
+              <li class="navbar-item mx-1">
                 <router-link to="/" class="nav-link">Store</router-link>
               </li>
-              <li class="navbar-item mx-2">
-                <router-link to="/" class="nav-link">
-                  My Cart                  
-                </router-link>
+              <li class="navbar-item mx-1">
+                <router-link to="/" class="nav-link" v-if="!adminStatus">My Cart</router-link>
               </li>
-              <li class="navbar-item mx-2">
-                <router-link to="/" class="nav-link">About</router-link>
+              <li class="navbar-item mx-1">
+                <router-link to="/about" class="nav-link">About</router-link>
               </li>
-              <li class="navbar-item mx-2">
-                <router-link to="/login" class="nav-link" v-if="!isLogin">Login</router-link>
+              <li class="navbar-item mx-1">
+                <router-link to="/login" class="nav-link" v-if="!loginStatus">Login</router-link>
               </li>
-              <li class="navbar-item mx-2" v-if="isLogin">
-                <router-link to="/a" class="nav-link">Logout</router-link>
+              <li class="navbar-item mx-1">
+                <router-link to="/admin" class="nav-link" v-if="adminStatus">Dashboard</router-link>
+              </li>
+              <li class="navbar-item mx-1">
+                <p @click="logout" class="nav-link" v-if="loginStatus" style="cursor:pointer">Logout</p>
               </li>
             </ul>
           </div>
@@ -41,16 +40,44 @@
 
 <script>
 export default {
-   name: `Navbar`,
-   methods: {
-
-   },
-   computed: {
-      isLogin() {
-         return this.$store.state.isLogin
-      }
-   }
-}
+  name: `Navbar`,
+  data() {
+    return {
+      loginStatus: false,
+      adminStatus: false
+    };
+  },
+  methods: {
+    logout() {
+      console.log(`ke hit`);
+      localStorage.removeItem("token");
+      localStorage.removeItem("isAdmin");
+      this.loginStatus = false;
+      this.adminStatus = false;
+      Toastify({
+        text: "Logout successfully, See you!",
+        backgroundColor: "linear-gradient(to right, #DA22FF, #9733EE)",
+        className: "info"
+      }).showToast();
+    }
+  },
+  computed: {
+    isLogin() {
+      return this.$store.state.isLogin;
+    },
+    isAdmin() {
+      return this.$store.state.isAdmin;
+    }
+  },
+  created() {
+    if (localStorage.token) {
+      this.loginStatus = true;
+    }
+    if (localStorage.isAdmin) {
+      this.adminStatus = localStorage.getItem("isAdmin");
+    }
+  }
+};
 </script>
 
 <style scoped>

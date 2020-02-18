@@ -55,13 +55,15 @@
       style="cursor: pointer; max-width: 100%; position: center"
     />
 
-    <div class="container my-3 d-flex justify-content-center">
-      <div class="col align-self-center">
+    <div class="container my-4 d-flex justify-content-center">
+      <div class="row" style="display: flex; justify-content: space-around">
+      <div class="col">
         <img
           src="../assets/5.jpg"
           alt="newArrival"
-          style="cursor: pointer; max-width: 1100px; position: center"
+          style="cursor: pointer;"
         />
+      </div>
       </div>
     </div>
     <slot name="footer"></slot>
