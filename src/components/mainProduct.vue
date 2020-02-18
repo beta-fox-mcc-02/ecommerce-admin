@@ -6,7 +6,7 @@
       </div>
       <div id="form-product-container">
         <button id="add-button" v-on:click="showAddForm"><i class="fas fa-plus"></i></button>
-        <AddProductForm v-if="isShowed" v-bind:categories="categories" v-on:closeForm="closeForm" />
+        <AddProductForm v-if="isShowed" v-bind:categories="categories" v-on:closeForm="closeForm"  v-on:addProduct="addProduct"/>
       </div>
     </div>
     <div id="table-product-container">
@@ -17,22 +17,22 @@
         <table>
           <thead>
             <tr id="rowhead">
-              <th>ID</th>
+              <th class="id-cols">ID</th>
               <th>Name</th>
               <th>Price</th>
               <th>Stock</th>
               <th>Purchase Total</th>
-              <th>Action</th>
+              <th class="action-cols">Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>id</td>
-              <td>Name</td>
-              <td>Price</td>
-              <td>Stock</td>
-              <td>Purchase Total</td>
-              <td>Action</td>
+            <tr v-for="product in products" v-bind:key="product.id">
+              <td class="id-cols">{{ product.id }}</td>
+              <td>{{ product.name }}</td>
+              <td>{{ product.price }}</td>
+              <td>{{ product.stock }}</td>
+              <td>{{ product.total }}</td>
+              <td class="action-cols">Action</td>
             </tr>
           </tbody>
         </table>
@@ -49,7 +49,8 @@ export default {
   data () {
     return {
       categories: [],
-      isShowed: false
+      isShowed: false,
+      products: []
     }
   },
   components: { AddProductForm },
@@ -65,7 +66,33 @@ export default {
         })
         .catch((err) => console.log(err))
     },
+    fetchAll () {
+      axios({
+        method: 'GET',
+        url: 'http://localhost:3000/product/findall'
+      })
+        .then((result) => {
+          this.products = result.data.products
+          console.log(this.products)
+        })
+        .catch((err) => console.log(err))
+    },
+    addProduct (data) {
+      axios({
+        method: 'POST',
+        url: 'http://localhost:3000/product/create',
+        data
+      })
+        .then((result) => {
+          this.fetchAll()
+          this.closeForm()
+        })
+        .catch((err) => console.log(err))
+    },
     closeForm (params) { this.isShowed = params }
+  },
+  created () {
+    this.fetchAll()
   }
 }
 </script>
@@ -108,9 +135,23 @@ tr#rowhead {
     margin-bottom: 0.5rem;
 }
 
+.id-cols{
+  width: 2rem;
+}
+
+td {
+  text-align: right;
+}
+th, td {
+  width: 8rem;
+}
+
+.action-cols{
+  width: 12rem;
+}
+
 tr {
   display: flex;
-  justify-content: space-between;
   padding-bottom: 0.2rem;
 }
 
@@ -121,11 +162,15 @@ tr {
   cursor: pointer;
   background-color: #189a18;
   color: white;
-  border: 0.5rem ridge #008000;
+  border-style: none;
 }
 
 #add-button{
   margin-right: 0.5rem
+}
+
+button#add-button:hover, button#filter-button:hover {
+  background-color: #117111;
 }
 
 #filter-button{

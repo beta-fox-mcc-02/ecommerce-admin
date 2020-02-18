@@ -7,11 +7,15 @@
         <i v-if="unfilledField" class="fas fa-exclamation-circle"></i>
       </div>
       <div class="add-input">
-        <input type="number" v-model="price" placeholder="product price...">
+        <input type="number" v-model="price">
         <i v-if="unfilledField" class="fas fa-exclamation-circle"></i>
       </div>
       <div class="add-input">
-        <input type="number" v-model="stock" placeholder="product quantity...">
+        <input type="number" v-model="stock">
+        <i v-if="unfilledField" class="fas fa-exclamation-circle"></i>
+      </div>
+      <div class="add-input">
+        <input type="url" v-model="imgurl" placeholder="product url...">
         <i v-if="unfilledField" class="fas fa-exclamation-circle"></i>
       </div>
       <div class="add-input">
@@ -32,6 +36,7 @@ export default {
       name: '',
       price: 0,
       stock: 0,
+      imgurl: '',
       chosenCategory: '',
       unfilledField: false
     }
@@ -47,8 +52,10 @@ export default {
           name: this.name,
           price: this.price,
           stock: this.stock,
+          imageUrl: this.imgurl,
           category: this.chosenCategory
         })
+        this.clearInputs()
       } else {
         this.clearInputs()
         this.unfilledField = true
