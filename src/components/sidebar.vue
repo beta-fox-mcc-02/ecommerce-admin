@@ -18,6 +18,7 @@ export default {
 
 div#sidebar {
   width: 10rem;
+  position: fixed;
   display: flex;
   flex-direction: column;
   align-items: center;

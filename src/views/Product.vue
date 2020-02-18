@@ -2,21 +2,18 @@
   <div>
     <Upperbar />
     <Sidebar />
+    <MainProduct />
   </div>
 </template>
 
 <script>
 import Sidebar from '../components/sidebar.vue'
 import Upperbar from '../components/upperbar.vue'
+import MainProduct from '../components/mainProduct.vue'
 
 export default {
-  name: 'Home',
-  components: { Sidebar, Upperbar },
-  beforeRouteEnter (to, from, next) {
-    const token = localStorage.getItem('access_token')
-    if (!token) next('/login')
-    else next()
-  }
+  name: 'Product',
+  components: { Sidebar, Upperbar, MainProduct }
 }
 </script>
 

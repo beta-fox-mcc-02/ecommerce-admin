@@ -10,13 +10,8 @@ import Sidebar from '../components/sidebar.vue'
 import Upperbar from '../components/upperbar.vue'
 
 export default {
-  name: 'Home',
-  components: { Sidebar, Upperbar },
-  beforeRouteEnter (to, from, next) {
-    const token = localStorage.getItem('access_token')
-    if (!token) next('/login')
-    else next()
-  }
+  name: 'Summary',
+  components: { Sidebar, Upperbar }
 }
 </script>
 
