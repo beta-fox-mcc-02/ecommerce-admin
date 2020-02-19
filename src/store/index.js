@@ -11,6 +11,9 @@ const store = new Vuex.Store({
   mutations: {
     SUCCESS_AUTH(state) {
       state.isAuth = true;
+    },
+    LOGOUT(state) {
+      state.isAuth = false;
     }
   },
   actions: {

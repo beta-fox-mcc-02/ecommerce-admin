@@ -7,7 +7,7 @@
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav class="ml-auto">
-          <b-nav-item v-if="show">Logout</b-nav-item>
+          <b-nav-item v-if="isAuth" class="logout" @click="logout">Logout</b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -15,15 +15,31 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   name: 'Navbar',
   data() {
     return {
-      show: this.$store.state.isAuth
     };
+  },
+  methods: {
+    logout() {
+      this.$store.commit('LOGOUT');
+      localStorage.removeItem('access_token');
+      this.$router.push('/');
+    }
+  },
+  computed: {
+    ...mapState([
+      'isAuth'
+    ])
   }
 };
 </script>
 
 <style>
+.logout {
+  cursor: pointer;
+}
 </style>

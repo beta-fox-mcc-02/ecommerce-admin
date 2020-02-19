@@ -60,6 +60,7 @@ export default {
           .then(({ data }) => {
             this.$store.commit("SUCCESS_AUTH", data.access_token);
             localStorage.access_token = data.access_token;
+            this.$router.push('/home');
             console.log(data.access_token);
           })
           .catch(({ response }) => {
@@ -74,6 +75,7 @@ export default {
           .then(({ data }) => {
             this.$store.commit("SUCCESS_AUTH", data.access_token);
             localStorage.access_token = data.access_token;
+            this.$router.push('/home');
             console.log(data.access_token);
           })
           .catch(({ response }) => {
