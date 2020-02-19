@@ -8,12 +8,12 @@
 </template>
 
 <script>
-import Card from '../components/Card'
+// import Card from '../components/Card'
 
 export default {
   name: 'Dashboard',
   components: {
-    Card
+    // Card
   }
 }
 </script>
