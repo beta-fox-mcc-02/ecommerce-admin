@@ -7,15 +7,19 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     products: [],
-    token: '',
+    isAdmin: '',
     error: {}
   },
   mutations: {
     FETCH_PRODUCT (state, data) {
       state.products = data
     },
-    TOKEN (state, data) {
-      state.token = data
+    ISADMIN (state, data) {
+      if (data.role) {
+        state.isAdmin = true
+      } else {
+        state.isAdmin = false
+      }
     },
     ERROR (state, err) {
       state.error = err
@@ -35,7 +39,6 @@ export default new Vuex.Store({
         })
     },
     login (context, payload) {
-      console.log(payload, '+++++++++')
       axios({
         method: 'post',
         url: 'http://localhost:3000/login',
@@ -44,13 +47,34 @@ export default new Vuex.Store({
           password: payload.password
         }
       })
+        .then(({ data }) => {
+          localStorage.setItem('token', data.token)
+          context.commit('ISADMIN', data)
+        })
+        .catch(err => {
+          context.commit('ERROR', err)
+        })
+    },
+    addProduct (context, payload) {
+      axios({
+        method: 'post',
+        url: 'http://localhost:3000/products',
+        data: {
+          name: payload.name,
+          price: payload.price,
+          stock: payload.stock,
+          image_url: payload.image_url,
+          category: payload.category
+        },
+        headers: {
+          token: localStorage.token
+        }
+      })
         .then(data => {
           console.log(data)
-          context.commit('TOKEN', data)
         })
         .catch(err => {
           console.log(err)
-          context.commit('ERROR', err)
         })
     }
   },

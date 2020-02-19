@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="container">
-      {{ token }}
         <div id="form-login">
           <h1>LOG IN</h1>
           <form v-on:submit.prevent="login">
@@ -32,13 +31,8 @@ export default {
         email: this.email,
         password: this.password
       }
-      console.log(data, 'di login nich')
       this.$store.dispatch('login', data)
-    }
-  },
-  computed: {
-    token () {
-      return this.$store.state.token
+      this.$router.push({ path: '/' })
     }
   }
 }

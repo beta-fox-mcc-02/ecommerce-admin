@@ -11,7 +11,7 @@
             <th>Image</th>
             <th>Actions</th>
           </tr>
-          <tr v-for="product in products.products" :key="product.id">
+          <tr v-for="product in products" :key="product.id">
             <td>{{ product.name }}</td>
             <td>{{ product.price }}</td>
             <td>{{ product.stock }}</td>
@@ -51,7 +51,7 @@ export default {
   },
   computed: {
     products () {
-      return this.$store.state.products
+      return this.$store.state.products.msg
     }
   }
 }
