@@ -60,7 +60,7 @@ export default {
 
 h1 {
   color: white; 
-  text-shadow: 2px 2px #4e50b1;
+  text-shadow: 3px 2px #4e50b1;
 }
 
 h1:hover {

@@ -24,7 +24,7 @@
       <hr class="clearfix w-100 d-md-none">
 
       <!-- Grid column -->
-      <div class="col-md-2 mx-auto">
+      <div class="col-md-2 mx-auto" @click.prevent="">
 
         <!-- Links -->
         <p class="font-weight-bold text-uppercase mt-3 mb-2">Coorporate info</p>
@@ -52,7 +52,7 @@
       <hr class="clearfix w-100 d-md-none">
 
       <!-- Grid column -->
-      <div class="col-md-2 mx-auto">
+      <div class="col-md-2 mx-auto" @click.prevent="">
 
         <!-- Links -->
         <p class="font-weight-bold text-uppercase mt-3 mb-2">HELP</p>

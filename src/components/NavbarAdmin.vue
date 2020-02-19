@@ -12,7 +12,7 @@
             </router-link>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">See products</a>
+            <router-link class="nav-link" to="/admin">See products</router-link>
           </li>
           <li class="nav-item">
             <span

@@ -10,12 +10,12 @@ export default new Vuex.Store({
     detailProduct: {}
   },
   mutations: {
-    SET_ALL_PRODUCT(state, payload) {
+    SET_ALL_PRODUCT (state, payload) {
       state.allProduct = payload
     }
   },
   actions: {
-    getAllItem({ commit }) {
+    getAllItem ({ commit }) {
       axios({
         method: `GET`,
         url: `/products`,
@@ -24,8 +24,7 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          console.log(data, `iki lhooooooooooooooooooo data`);
-          commit('SET_ALL_PRODUCT', data)
+          commit('SET_ALL_PRODUCT', data.data)
         })
         .catch(err => {
           console.log(err);
