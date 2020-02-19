@@ -68,7 +68,7 @@ export default {
         email: this.loginEmail,
         password: this.loginPass
       }
-      console.log(admin)
+      // console.log(admin)
       this.$store.dispatch('loginAdmin', admin)
     }
   },
