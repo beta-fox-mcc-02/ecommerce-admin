@@ -21,9 +21,7 @@ export default {
 
 <style>
 html {
+  height: 100%;
   scroll-behavior: smooth;
-}
-body {
-  /* background-color:  */
 }
 </style>

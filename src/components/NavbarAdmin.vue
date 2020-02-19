@@ -1,6 +1,6 @@
 <template>
   <div class="Navbar">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: black">
       <a class="navbar-brand text-light">Welcome admin</a>
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -53,27 +53,31 @@
             </button>
           </div>
           <div class="modal-body">
-
-            <form @submit.prevent=''>
+            <form>
               <div class="form-group">
-                <input class="form-control" placeholder="product name" />
+                <input class="form-control" placeholder="product name" v-model="product.name" />
               </div>
               <div class="form-group">
-                <input class="form-control" placeholder="product price" />
+                <input class="form-control" placeholder="product price" v-model="product.price" />
               </div>
               <div class="form-group">
-                <input class="form-control" placeholder="product stock" />
+                <input class="form-control" placeholder="product stock" v-model="product.stock" />
               </div>
               <div class="form-group">
-                <input class="form-control" placeholder="product image url" />
+                <input class="form-control" placeholder="product image url" v-model="product.image" />
               </div>
               <div class="form-group">
-                <select class="form-control" id="exampleFormControlSelect1">
+                <select
+                  class="form-control"
+                  id="exampleFormControlSelect1"
+                  v-model="product.CategoryId"
+                >
                   <option value="1">cloth</option>
                   <option value="2">accessories</option>
                   <option value="3">pants</option>
                   <option value="4">jacket</option>
                   <option value="5">suits</option>
+                  <option value="6">dress</option>
                 </select>
                 <small class="text-muted ml-2">
                   <i>Select category for this product</i>
@@ -84,6 +88,7 @@
                 class="btn btn-info shadow"
                 style="margin-left: 165px;"
                 data-dismiss="modal"
+                @click.prevent="createProduct"
               >Launch product</button>
             </form>
           </div>
@@ -94,23 +99,51 @@
 </template>
 
 <script>
-import axios from '../api/axiosInstance'
+import axios from "../api/axiosInstance";
 export default {
-   name: 'NavbarAdmin',
-   data () {
-      return {
-         product: {
-            name: '',
-            image: '',
-            price: '',
-            stock: '',
-            CategoryId: ''
-         }
+  name: "NavbarAdmin",
+  data() {
+    return {
+      product: {
+        name: "",
+        image: "",
+        price: "",
+        stock: "",
+        CategoryId: ""
       }
-   },
-   methods: {
-      // LANJUT DISINI YAaaaaaaaaaaaaaaaaaaaaaaaaa
-   }
+    };
+  },
+  methods: {
+    createProduct() {
+      axios({
+        method: `POST`,
+        url: `/products`,
+        data: {
+          name: this.product.name,
+          image_url: this.product.image,
+          price: this.product.price,
+          stock: this.product.stock,
+          CategoryId: this.product.CategoryId
+        },
+        headers: {
+          token: localStorage.token
+        }
+      })
+        .then(({ data }) => {
+          this.product.name = ""
+          this.product.image = ""
+          this.product.price = ""
+          this.product.stock = ""
+          this.product.CategoryId = ""
+
+          console.log(data, `ini createeeeeeeeeeeeeeeeee`);
+          this.$store.dispatch("getAllItem");
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  }
 };
 </script>
 

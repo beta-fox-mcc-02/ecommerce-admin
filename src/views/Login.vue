@@ -97,18 +97,31 @@ export default {
         }
       })
         .then(({ data }) => {
-          localStorage.setItem("token", data.token);
-          localStorage.setItem("isAdmin", data.isAdmin);
+          localStorage.setItem("token", data.token)
+          localStorage.setItem("isAdmin", data.isAdmin)
 
-          Toastify({
-            text: "Login success",
-            backgroundColor: "linear-gradient(to right, #DA22FF, #9733EE)",
-            className: "info"
-          }).showToast();
-
-          setTimeout(() => {
-            this.$router.push("/");
-          }, 2000);
+          if (localStorage.isAdmin === true) {
+            Toastify({
+              text: "Login success, welcome admin",
+              backgroundColor: "linear-gradient(to right, #DA22FF, #9733EE)",
+              className: "info"
+            }).showToast()
+  
+            setTimeout(() => {
+              this.$router.push("/")
+            }, 2000)
+          }
+          else {
+            Toastify({
+              text: "Login success, welcome admin",
+              backgroundColor: "linear-gradient(to right, #DA22FF, #9733EE)",
+              className: "info"
+            }).showToast()
+  
+            setTimeout(() => {
+              this.$router.push("/")
+            }, 2000)
+          }
         })
         .catch(err => {
           this.loading = false;
@@ -116,7 +129,7 @@ export default {
             text: "Email / password wrong",
             backgroundColor: "linear-gradient(to right, #DA22FF, #9733EE)",
             className: "info"
-          }).showToast();
+          }).showToast()
         });
     }
   }

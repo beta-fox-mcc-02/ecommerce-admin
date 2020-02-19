@@ -4,9 +4,9 @@
     <div class="header-admin shadow">
       <small>.</small>
       <h1
-        style="margin-top: 80px; font-family: 'Merriweather', serif;"
+        style="margin-top: 140px; font-family: 'Merriweather', serif;"
         class="text-center shadow"
-      >Build something great together.</h1>
+      >We create something great together.</h1>
     </div>
 
     <div class="container">
@@ -28,6 +28,14 @@ export default {
 
     }
   },
+  created () {
+    this.$store.dispatch("getAllItem");
+  },
+  computed: {
+    allItem () {
+      return this.$store.state.allProduct
+    }
+  },
   beforeRouteEnter (to, from, next) {
     if (!localStorage.isAdmin) {
       next('/')
@@ -40,7 +48,7 @@ export default {
 
 <style scoped>
 .header-admin {
-  min-height: 40vh;
+  min-height: 60vh;
   /* background-image: url("https://i.gifer.com/CWyf.gif"); */
   height: 100%;
   background-position: center;
@@ -56,7 +64,7 @@ h1 {
 }
 
 h1:hover {
-  color: #ffb0b0;
+  color: #f3e961;
   cursor: pointer;
 }
 </style>

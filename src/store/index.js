@@ -18,7 +18,7 @@ export default new Vuex.Store({
     getAllItem({ commit }) {
       axios({
         method: `GET`,
-        url: `/`,
+        url: `/products`,
         headers: {
           token: localStorage.token
         }
