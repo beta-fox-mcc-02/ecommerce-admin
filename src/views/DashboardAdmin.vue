@@ -1,15 +1,61 @@
 <template>
-  <div id="dashboard-admin">
-     haloooo jancok
+  <div class="admin-dashboard">
+    <NavbarAdmin />
+    <div class="header-admin shadow">
+      <small>.</small>
+      <h1
+        style="margin-top: 80px; font-family: 'Merriweather', serif;"
+        class="text-center shadow"
+      >Build something great together.</h1>
+    </div>
+
+    <div class="container">
+      <router-view />
+    </div>
+    <slot name="footer"></slot>
   </div>
 </template>
 
 <script>
+import NavbarAdmin from "../components/NavbarAdmin";
 export default {
-
-}
+  name: `AdminDashboard`,
+  components: {
+    NavbarAdmin
+  },
+  data() {
+    return {};
+  },
+  beforeRouteEnter(to, from, next) {
+    if (!localStorage.isAdmin) {
+      next('/')
+    }
+    else {
+      next()
+    }
+  }
+};
 </script>
 
-<style>
+<style scoped>
+.header-admin {
+  min-height: 40vh;
+  /* background-image: url("https://i.gifer.com/CWyf.gif"); */
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background: linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) ), url('https://i.gifer.com/CWyf.gif');
+  background-size: cover;
+  background-position: 0px -150px;
+}
 
+h1 {
+  color: white; 
+  text-shadow: 2px 2px #4e50b1;
+}
+
+h1:hover {
+  color: #ffb0b0;
+  cursor: pointer;
+}
 </style>

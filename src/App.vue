@@ -24,6 +24,6 @@ html {
   scroll-behavior: smooth;
 }
 body {
-  background-color: rgb(252, 238, 243)
+  /* background-color:  */
 }
 </style>
