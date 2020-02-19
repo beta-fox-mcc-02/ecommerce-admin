@@ -1,6 +1,9 @@
 <template>
-  <div class="container w-75">
+  <div>
     <h1 class="text-center">Home</h1>
+    <div>
+      <b-button variant="dark">Add New Product</b-button>
+    </div>
   </div>
 </template>
 

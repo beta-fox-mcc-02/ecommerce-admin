@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="form-vue">
     <FormLandingPage :titleForm="'Register'"></FormLandingPage>
     <router-link to="/login">Login Here!</router-link>
     <router-view />

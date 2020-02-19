@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="form-vue">
     <FormLandingPage :titleForm="'Login'"></FormLandingPage>
     <router-link to="/">Register Here!</router-link>
     <router-view />
@@ -18,4 +18,8 @@ export default {
 </script>
 
 <style>
+.form-vue {
+  width: 50%;
+  margin: 0 auto;
+}
 </style>
