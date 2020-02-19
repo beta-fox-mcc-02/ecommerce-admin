@@ -2,12 +2,12 @@
     <div class="container login-container">
                 <div class="col-md login-form-1">
                     <h3>Login</h3>
-                    <form>
+                    <form @submit.prevent="login">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Your Email *" value="" />
+                            <input v-model="email" type="text" class="form-control" placeholder="Your Email" value="" />
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" placeholder="Your Password *" value="" />
+                            <input v-model="password" type="password" class="form-control" placeholder="Your Password" value="" />
                         </div>
                         <div class="form-group">
                             <input type="submit" class="btnSubmit" value="Login" />
@@ -21,8 +21,36 @@
 </template>
 
 <script>
+import axios from 'axios'
+import router from '../router'
+
 export default {
-  name: 'Login'
+  name: 'Login',
+  data () {
+    return {
+      email: '',
+      password: ''
+    }
+  },
+  methods: {
+    login () {
+      axios({
+        method: 'POST',
+        url: 'http://localhost:3000/admins/login',
+        data: {
+          email: this.email,
+          password: this.password
+        }
+      })
+        .then(response => {
+          localStorage.setItem('access_token', response.data.access_token)
+          router.push('Home')
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
+  }
 }
 </script>
 

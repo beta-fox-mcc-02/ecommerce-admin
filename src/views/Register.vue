@@ -2,15 +2,18 @@
 <div class="container login-container">
     <div class="col-sm login-form-2">
                     <h3>Register</h3>
-                    <form>
+                    <form @submit.prevent="register">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Your Email *" value="" />
+                            <input v-model="username" type="text" class="form-control" placeholder="Your Username" value="" />
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" placeholder="Your Password *" value="" />
+                            <input v-model="email" type="text" class="form-control" placeholder="Your Email" value="" />
                         </div>
                         <div class="form-group">
-                            <input type="submit" class="btnSubmit" value="Login" />
+                            <input v-model="password" type="password" class="form-control" placeholder="Your Password" value="" />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" class="btnSubmit" value="Register" />
                         </div>
                         <div class="form-group">
                             <a href="#" class="ForgetPwd" value="Login">Already have an account? Click here to sign in</a>
@@ -22,8 +25,37 @@
 
 <script>
 import axios from 'axios'
+import router from '../router'
+
 export default {
-  name: 'Register'
+  name: 'Register',
+  data () {
+    return {
+      username: '',
+      email: '',
+      password: ''
+    }
+  },
+  methods: {
+    register () {
+      axios({
+        method: 'POST',
+        url: 'http://localhost:3000/admins/register',
+        data: {
+          username: this.username,
+          email: this.email,
+          password: this.password
+        }
+      })
+        .then(response => {
+          router.push('Login')
+          console.log(response)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
+  }
 }
 </script>
 
