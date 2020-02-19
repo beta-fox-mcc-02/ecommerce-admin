@@ -5,9 +5,37 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/dashboard',
-    name: 'Dashboard',
-    component: () => import(/* webpackChunkName: "dashboard" */ '../views/Dashboard.vue')
+    path: '/',
+    component: () => import(/* webpackChunkName: "dashboard" */ '../views/Dashboard.vue'),
+    children:
+    [
+      {
+        name: 'Dashboard',
+        path: '',
+        component: () => import(/* webpackChunkName: "summary" */ '../views/Summary.vue')
+      },
+      {
+        path: 'products',
+        component: () => import(/* webpackChunkName: "products" */ '../views/Product.vue'),
+        children: [
+          {
+            name: 'Products',
+            path: '',
+            component: () => import(/* webpackChunkName: "products" */ '../components/ProductList.vue')
+          },
+          {
+            name: 'Add Product',
+            path: 'add',
+            component: () => import(/* webpackChunkName: "products" */ '../components/ProductForm.vue')
+          }
+        ]
+      },
+      {
+        name: 'Category',
+        path: 'categories',
+        component: () => import(/* webpackChunkName: "category" */ '../views/Category.vue')
+      }
+    ]
   },
   {
     path: '/about',
@@ -21,10 +49,6 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue')
-  },
-  {
-    path: '/',
-    redirect: '/dashboard'
   }
 ]
 

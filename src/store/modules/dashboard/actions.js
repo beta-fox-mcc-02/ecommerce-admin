@@ -1,9 +1,6 @@
 import resource from '../../../config/resource'
 
 const actions = {
-  toggleDrawer: ({ commit }) => {
-    commit('TOGGLE_SIDEBAR')
-  },
   getProfile: ({ commit }) => {
     resource.getAdmin()
       .then(response => {

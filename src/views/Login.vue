@@ -139,16 +139,20 @@ export default {
   },
   beforeRouteEnter (to, from, next) {
     next(vm => {
-      vm.$store.dispatch('checkAuthentication')
-        .then(response => {
-          if (response.body.id) {
-            next('/')
-          }
-        })
-        .catch((err) => {
-          console.log(err)
-          next()
-        })
+      if (localStorage.token) {
+        vm.$store.dispatch('checkAuthentication')
+          .then(response => {
+            if (response.body.id) {
+              next('/')
+            }
+          })
+          .catch((err) => {
+            console.log(err)
+            next()
+          })
+      } else {
+        next()
+      }
     })
   }
 }

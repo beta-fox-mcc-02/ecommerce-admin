@@ -21,7 +21,7 @@
       class="hidden-sm-and-down"
     />
     <v-spacer />
-    <v-subheader :inset="inset">{{ profile ? profile.username: '' }}</v-subheader>
+    <v-subheader>{{ profile ? profile.username: '' }}</v-subheader>
     <v-menu
         left
         bottom
@@ -59,11 +59,10 @@
 export default {
   name: 'Navbar',
   data: () => ({
-    inset: true
   }),
   methods: {
     toggleDrawer () {
-      this.$store.dispatch('toggleDrawer')
+      this.$emit('toggleDrawer')
     },
     logout () {
       this.$store.dispatch('logout')
