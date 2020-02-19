@@ -61,12 +61,15 @@ export default {
     }
   },
   methods: {
-    close () { this.$emit('closeForm', false) },
+    close () {
+      this.$store.commit('unsetAll')
+      this.$emit('closeForm', false)
+    },
     editProduct () {
       this.$store.dispatch('updateProductAsync')
         .then((result) => {
           if (!result) this.unfilledField = true
-          else this.close()
+          else if (result) this.close()
         })
         .catch((err) => {
           console.log(err)

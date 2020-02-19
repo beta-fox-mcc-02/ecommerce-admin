@@ -6,7 +6,7 @@
       </div>
       <div id="form-product-container">
         <button id="add-button" v-on:click="showAddForm"><i class="fas fa-plus"></i></button>
-        <AddProductForm v-if="isShowed" v-on:closeForm="closeForm"  v-on:addProduct="addProduct"/>
+        <AddProductForm v-if="isShowed" v-on:closeForm="closeForm" />
       </div>
     </div>
     <div id="table-product-container">
@@ -48,13 +48,10 @@
 <script>
 import AddProductForm from './2TierComponents/addProductForm.vue'
 import EditProductForm from './2TierComponents/editProductForm.vue'
-import axios from 'axios'
 
 export default {
   data () {
     return {
-      categories: [],
-      editProduct: '',
       isShowed: false,
       editMode: false
     }
@@ -76,18 +73,6 @@ export default {
     },
     fetchAll () {
       this.$store.dispatch('fetchProducts')
-    },
-    addProduct (data) {
-      axios({
-        method: 'POST',
-        url: 'http://localhost:3000/product',
-        data
-      })
-        .then((result) => {
-          this.fetchAll()
-          this.closeForm()
-        })
-        .catch((err) => console.log(err))
     },
     deleteEntry (id) {
       this.$store.dispatch('deleteAsync', id)

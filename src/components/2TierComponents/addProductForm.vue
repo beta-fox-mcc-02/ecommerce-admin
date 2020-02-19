@@ -7,20 +7,19 @@
         <i v-if="unfilledField" class="fas fa-exclamation-circle"></i>
       </div>
       <div class="add-input">
-        <input type="number" v-model="price">
+        <input type="number" v-model="price" placeholder="product price...">
         <i v-if="unfilledField" class="fas fa-exclamation-circle"></i>
       </div>
       <div class="add-input">
-        <input type="number" v-model="stock">
+        <input type="number" v-model="stock" placeholder="product stock...">
         <i v-if="unfilledField" class="fas fa-exclamation-circle"></i>
       </div>
       <div class="add-input">
-        <input type="url" v-model="imgurl" placeholder="product url...">
-        <i v-if="unfilledField" class="fas fa-exclamation-circle"></i>
+        <input type="url" v-model="imageUrl" placeholder="product url...">
       </div>
       <div class="add-input">
-        <select v-model="chosenCategory">
-          <option v-for="category in categories" v-bind:key="category.id" selected> {{ category.name }} </option>
+        <select v-model="category">
+          <option v-for="category in categories" v-bind:key="category.id"> {{ category.name }} </option>
         </select>
         <i v-if="unfilledField" class="fas fa-exclamation-circle"></i>
       </div>
@@ -33,38 +32,48 @@
 export default {
   data () {
     return {
-      name: '',
-      price: 0,
-      stock: 0,
-      imgurl: '',
-      chosenCategory: '',
       unfilledField: false
     }
   },
   computed: {
-    categories () { return this.$store.state.categories }
+    categories () {
+      return this.$store.state.categories
+    },
+    name: {
+      get () { return this.$store.state.name },
+      set (value) { this.$store.commit('setName', value) }
+    },
+    price: {
+      get () { return this.$store.state.price },
+      set (value) { this.$store.commit('setPrice', value) }
+    },
+    stock: {
+      get () { return this.$store.state.stock },
+      set (value) { this.$store.commit('setStock', value) }
+    },
+    imageUrl: {
+      get () { return this.$store.state.imageUrl },
+      set (value) { this.$store.commit('setImageUrl', value) }
+    },
+    category: {
+      get () { return this.$store.state.category },
+      set (value) { this.$store.commit('setCategory', value) }
+    }
   },
   methods: {
-    close () { this.$emit('closeForm', false) },
-    addProduct () {
-      if (this.name && this.price && this.stock && this.chosenCategory) {
-        this.$emit('addProduct', {
-          name: this.name,
-          price: this.price,
-          stock: this.stock,
-          imageUrl: this.imgurl,
-          category: this.chosenCategory
-        })
-        this.clearInputs()
-      } else {
-        this.clearInputs()
-        this.unfilledField = true
-      }
+    close () {
+      this.$store.commit('unsetAll')
+      this.$emit('closeForm', false)
     },
-    clearInputs () {
-      this.name = ''
-      this.price = 0
-      this.stock = 0
+    addProduct () {
+      this.$store.dispatch('createProductAsync')
+        .then((result) => {
+          if (result) this.close()
+          else if (!result) this.unfilledField = true
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     }
   }
 }

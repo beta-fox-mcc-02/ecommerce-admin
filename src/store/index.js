@@ -10,7 +10,6 @@ const store = new Vuex.Store({
     categories: [],
     email: '',
     password: '',
-    isLogin: false,
     id: '',
     name: '',
     price: '',
@@ -36,9 +35,6 @@ const store = new Vuex.Store({
       state.imageUrl = obj.product.imageUrl
       state.categories = obj.categories
     },
-    isAdmin (state, params) {
-      state.authorizedUser = params
-    },
     setName (state, params) {
       state.name = params
     },
@@ -60,6 +56,16 @@ const store = new Vuex.Store({
     unsetEmailPassword (state) {
       state.email = ''
       state.password = ''
+    },
+    unsetAll (state) {
+      state.email = ''
+      state.password = ''
+      state.id = ''
+      state.name = ''
+      state.price = ''
+      state.stock = ''
+      state.imageUrl = ''
+      state.category = ''
     }
   },
   actions: {
@@ -88,6 +94,23 @@ const store = new Vuex.Store({
           password: context.state.password
         }
       })
+    },
+    createProductAsync (context) {
+      const input = context.state
+      if (input.name && input.price && input.stock && input.category) {
+        const data = {
+          name: input.name,
+          price: input.price,
+          stock: input.stock,
+          imageUrl: input.imageUrl,
+          category: input.category
+        }
+        return axios({
+          method: 'POST',
+          url: 'http://localhost:3000/product',
+          data
+        })
+      } else return null
     },
     updateProductAsync (context) {
       const input = context.state
