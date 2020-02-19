@@ -8,7 +8,7 @@
           <label for="searchQuery">Search Product</label>
         </div>
       </form>
-      <div class="col addButton">
+      <div class="col addButton" @click.prevent="addProduct">
         <i class="material-icons">add_circle</i>
       </div>
     </div>
@@ -26,6 +26,9 @@ export default {
     searchProduct () {
       this.$emit('filterProduct', this.searchQuery)
       this.searchQuery = ''
+    },
+    addProduct () {
+      this.$store.commit('SHOW_ADD_FORM', true)
     }
   }
 }

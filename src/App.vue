@@ -4,9 +4,55 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div> -->
+    <CustomAddProdModal v-if="addProduct"/>
+    <LoginModal v-if="!isLogin"/>
     <router-view />
   </div>
 </template>
+
+<script>
+import CustomAddProdModal from '@/components/addProductModal'
+import LoginModal from '@/components/login'
+import { mapState } from 'vuex'
+
+export default {
+  components: {
+    CustomAddProdModal,
+    LoginModal
+  },
+  computed: {
+    addProduct () {
+      return this.$store.state.addProduct
+    },
+    // isLogin () {
+    //   return localStorage.access_token
+    // },
+    ...mapState([
+      'isLogin'
+    ])
+  },
+  methods: {
+    checkToken () {
+      if (localStorage.access_token) {
+        const payload = {
+          token: localStorage.access_token,
+          username: localStorage.username
+        }
+        this.$store.commit('SET_USER_CREDENTIALS', payload)
+        this.$store.commit('SET_LOGIN', true)
+      }
+    },
+    fetchProduct () {
+      this.$store.dispatch('fetchProducts')
+    }
+  },
+  created () {
+    this.checkToken()
+    this.fetchProduct()
+    // console.log(this.$store.state.products)
+  }
+}
+</script>
 
 <style>
 body {

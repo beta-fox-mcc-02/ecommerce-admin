@@ -32,7 +32,6 @@ export default {
   },
   methods: {
     filterProduct (words) {
-      // console.log('asdas', words)
       const regex = new RegExp(words, 'gi')
       const data = this.products.filter(product => product.name.match(regex))
       this.$store.commit('SET_FILTERED_PRODUCTS', data)
@@ -43,7 +42,7 @@ export default {
     ...mapGetters(['getFilteredProducts'])
   },
   created () {
-    this.filterProduct('')
+    // this.filterProduct('')
   }
 }
 </script>

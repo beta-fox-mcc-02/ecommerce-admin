@@ -2,7 +2,7 @@
   <tr>
     <td>{{product.name}}</td>
     <td>{{hundredCharString}}</td>
-    <td>{{product.category}}</td>
+    <td>{{product.Category.name}}</td>
     <td>{{getPrice}}</td>
     <td>{{product.stock}}</td>
     <td><img style="width: 8rem" :src=product.imageUrl></td>
@@ -29,10 +29,15 @@ export default {
     hundredCharString () {
       const { description } = this.product
       let str = ''
-      for (let i = 0; i < 100; i++) {
-        str += description[i]
+      if (description.length > 100) {
+        for (let i = 0; i < 100; i++) {
+          str += description[i]
+        }
+        str += '...'
+      } else {
+        str = description
       }
-      return `${str} ...`
+      return str
     },
     getPrice () {
       const { price } = this.product
