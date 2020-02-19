@@ -2,9 +2,13 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import AdminLogin from '../views/AdminLogin.vue'
+import Login from '../views/Login.vue'
+import Admin from '../views/Admin.vue'
+import store from '../store/index.js'
 
 Vue.use(VueRouter)
 
+// import './custom.scss'
 const routes = [
   {
     path: '/',
@@ -20,17 +24,25 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
   {
+    path: '/login',
+    name: 'login',
+    component: Login
+  },
+  {
     path: '/admin/login',
-    name: 'admin',
+    name: 'adminLogin',
     component: AdminLogin
-    // children: [
-    //   {
-    //     path: '/login',
-    //     name: 'admin login',
-    //     component: () => import(/* webpackChunkName: "about" */ '../views/AdminLogin.vue')
-    //     // component: () => import('../views/Admin.vue')
-    //   }
-    // ]
+  },
+  {
+    path: '/admin',
+    name: 'admin',
+    component: Admin,
+    beforeEnter: (to, from, next) => {
+      console.log(store.state.isLogin)
+      if (localStorage.token) {
+        next()
+      } else next('/login')
+    }
   }
 ]
 

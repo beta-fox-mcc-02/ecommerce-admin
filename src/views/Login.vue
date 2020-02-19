@@ -1,6 +1,7 @@
 <template>
+  <div class="home">
 <div class="container">
-    <br>
+  <br>
     <div class="row">
         <div class="col-sm"></div>
         <div class="col-sm">
@@ -10,7 +11,7 @@
                 </div>
                 <div class="card-body">
                     <label>LOGIN</label><div>
-                      <b-form @submit.prevent="loginAdmin">
+                      <b-form @submit.prevent="login">
                         <b-form-group
                           id="input-group-1"
                           label="Email address:"
@@ -33,7 +34,6 @@
                           <b-form-input
                             id="input-2"
                             v-model="loginPass"
-                            type="password"
                             required
                             placeholder="Enter Your Password"
                           ></b-form-input>
@@ -42,44 +42,33 @@
                       </b-form>
                     </div>
                     <br>
-                    <Register></Register>
+                    <RegisterCost></RegisterCost>
+                </div>
+                <div class="card-footer">
+                    <router-link to="/admin/login">are you admin</router-link>
                 </div>
             </div>
         </div>
         <div class="col-sm"></div>
     </div>
 </div>
+  </div>
 </template>
 
 <script>
-// import axios from 'axios'
-import Register from '@/components/RegisterAdmin'
+// @ is an alias to /src
+// import HelloWorld from '@/components/HelloWorld.vue'
+import RegisterCost from '@/components/Register.vue'
 export default {
-  name: 'AdminLogin',
+  name: 'Home',
   data () {
     return {
       loginEmail: '',
       loginPass: ''
     }
   },
-  methods: {
-    loginAdmin () {
-      const admin = {
-        email: this.loginEmail,
-        password: this.loginPass
-      }
-      console.log(admin)
-      this.$store.dispatch('loginAdmin', admin)
-    }
-  },
   components: {
-    Register
-  },
-  created () {
-    // this.loginAdmin()
+    RegisterCost
   }
 }
 </script>
-
-<style>
-</style>
