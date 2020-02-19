@@ -1,9 +1,5 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link>|
-      <router-link to="/login">Login</router-link>
-    </div>
     <router-view />
     <quick-menu
       v-if="isLogin"
@@ -13,11 +9,18 @@
       backgroundColor="#000000"
       :position="position"
     ></quick-menu>
+    <div v-if="isLoading" class="loading">
+      <button class="btn btn-primary" type="button" disabled>
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Loading...
+      </button>
+    </div>
   </div>
 </template>
 
 <script>
 import quickMenu from 'vue-quick-menu';
+import userAPI from './API/userAPI';
 
 export default {
   components: {
@@ -25,11 +28,30 @@ export default {
   },
   data() {
     return {
-      count: 3,
-      icons: ['fas fa-home', 'fas fa-tools', 'fas fa-sign-out-alt'],
-      list: [{ isLink: true, url: '/' }, { isLink: true, url: '/admin' }, { isLink: true, url: '/logout' }],
+      count: 2,
+      icons: ['fas fa-home', 'fas fa-tachometer-alt'],
+      list: [{ isLink: true, url: '/' }, { isLink: true, url: '/admin' }],
       position: 'top-right',
     };
+  },
+  computed: {
+    isLogin() {
+      return this.$store.state.isLogin;
+    },
+    isLoading() {
+      return this.$store.state.isLoading;
+    },
+  },
+  created() {
+    if (localStorage.token) {
+      userAPI.get(`/findUser/${localStorage.person_id}`)
+        .then((response) => {
+          this.$store.commit('setLogin', response.data);
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+    }
   },
 };
 </script>
@@ -37,6 +59,38 @@ export default {
 <style>
 @import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,700&display=swap');
 
+body {
+  background: #f6f5f7;
+}
+h1 {
+  font-weight: 700;
+  margin: 15px 0;
+}
+p {
+  font-size: 14px;
+  font-weight: 100;
+  line-height: 20px;
+  letter-spacing: 0.5px;
+  margin: 20px 0 30px;
+}
+button {
+  border-radius: 20px;
+  border: 1px solid #ff4b2b;
+  background-color: #ff4b2b;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 12px 45px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: transform 80ms ease-in;
+}
+button:active {
+  transform: scale(0.95);
+}
+button:focus {
+  outline: none;
+}
 
 #app {
   font-family: 'Montserrat', sans-serif;
@@ -57,5 +111,13 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+.loading{
+  z-index: 999;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 0);
 }
 </style>
