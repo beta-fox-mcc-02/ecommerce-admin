@@ -23,7 +23,7 @@
             >
               <td>{{ index + 1 }}</td>
               <td>{{ product.name }}</td>
-              <td><a :href="product.image_url">show</a></td>
+              <td><a @click="showImage(product.image_url)">show</a></td>
               <td>{{ product.price }}</td>
               <td>{{ product.stock }}</td>
               <td>
@@ -40,12 +40,23 @@
         </table>
       </div>
     </div>
+    <b-modal :active.sync="isImageModalActive">
+      <p class="image is-4by3">
+        <img :src="image_url" />
+      </p>
+    </b-modal>
   </div>
 </template>
 
 <script>
 export default {
   name: 'Products',
+  data: function() {
+    return {
+      isImageModalActive: false,
+      image_url: null
+    }
+  },
   created: function() {
     this.$store
       .dispatch('getProducts')
@@ -77,7 +88,13 @@ export default {
         }
       })
     },
-    updateProduct: function() {}
+    updateProduct: function(id) {
+      this.$router.push(`/dashboard/update/${id}`)
+    },
+    showImage: function(image_url) {
+      this.isImageModalActive = true
+      this.image_url = image_url
+    }
   }
 }
 </script>

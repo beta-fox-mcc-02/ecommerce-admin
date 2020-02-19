@@ -8,7 +8,8 @@ export default new Vuex.Store({
   state: {
     token: localStorage.getItem('token') || '',
     user: {},
-    products: []
+    products: [],
+    product: {}
   },
   mutations: {
     // AUTH
@@ -38,9 +39,17 @@ export default new Vuex.Store({
     },
     DELETE_PRODUCT(state, id) {
       state.products = state.products.filter(i => i.id !== id)
-    }
+    },
 
     // END OF PRODUCTS
+
+    // PRODUCT
+
+    SET_PRODUCT(state, product) {
+      state.product = product
+    }
+
+    // END OF PRODUCT
   },
   actions: {
     // AUTH
@@ -119,6 +128,20 @@ export default new Vuex.Store({
           .delete(`/products/${id}`)
           .then(() => {
             commit('DELETE_PRODUCT', id)
+            resolve()
+          })
+          .catch(e => {
+            reject(e)
+          })
+      })
+    },
+
+    getProduct({ commit }, id) {
+      return new Promise((resolve, reject) => {
+        client
+          .get(`/products/${id}`)
+          .then(product => {
+            commit('SET_PRODUCT', product)
             resolve()
           })
           .catch(e => {
