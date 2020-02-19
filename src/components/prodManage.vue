@@ -40,9 +40,6 @@ export default {
   computed: {
     ...mapState(['products', 'filteredProducts']),
     ...mapGetters(['getFilteredProducts'])
-  },
-  created () {
-    // this.filterProduct('')
   }
 }
 </script>

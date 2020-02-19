@@ -11,7 +11,7 @@ const routes = [
     component: Dashboard,
     children: [
       {
-        path: '/product',
+        path: '/',
         name: 'Manage Product',
         component: () => import('@/components/prodManage')
       },
@@ -24,6 +24,10 @@ const routes = [
         path: '/editProduct',
         name: 'Edit Product',
         component: () => import('@/components/editProduct')
+      },
+      {
+        path: '/:anything',
+        component: () => import('@/components/prodManage')
       }
     ]
   },

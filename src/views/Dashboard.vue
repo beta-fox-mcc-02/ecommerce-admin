@@ -3,7 +3,7 @@
 
   <NavBar />
 
-    <div class="row" style="width: 100%; height: 90vh; background: red; margin: 0;">
+    <div class="row" style="width: 100%; height: 90vh; margin: 0;">
       <SideBar />
       <div class="col m10" style="background: #e4e4f7; height: 100%; margin: 0; padding-right: 0">
         <router-view />

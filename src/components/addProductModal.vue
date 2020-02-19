@@ -20,7 +20,7 @@
               <div class="row">
                 <div class="input-field col s4">
                   <select class="browser-default" v-model="CategoryId">
-                    <option value="1">Computer</option>
+                    <option value="1" selected>Computer</option>
                     <option value="2">Smartphone</option>
                     <option value="3">Peripheral</option>
                     <option value="4">Accessories</option>
@@ -64,12 +64,12 @@
 export default {
   data () {
     return {
-      name: null,
-      description: null,
-      CategoryId: null,
-      price: null,
-      stock: null,
-      imageUrl: null
+      name: '',
+      description: '',
+      CategoryId: '',
+      price: '',
+      stock: '',
+      imageUrl: ''
     }
   },
   methods: {
@@ -87,10 +87,10 @@ export default {
 
       this.$store.dispatch('addProduct', formData)
         .then(({ data }) => {
-          console.log(data)
+          this.$store.commit('SET_NOTIFICATION', data.msg)
           this.$store.dispatch('fetchProducts')
         })
-        .catch(err => console.log(err))
+        .catch(err => this.$store.commit('SET_ERROR', err))
     },
     processFile (event) {
       this.imageUrl = event.target.files[0]

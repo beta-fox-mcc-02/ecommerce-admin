@@ -1,11 +1,8 @@
 <template>
   <div id="app">
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div> -->
     <CustomAddProdModal v-if="addProduct"/>
     <LoginModal v-if="!isLogin"/>
+    <Notifications />
     <router-view />
   </div>
 </template>
@@ -13,20 +10,19 @@
 <script>
 import CustomAddProdModal from '@/components/addProductModal'
 import LoginModal from '@/components/login'
+import Notifications from '@/components/notification'
 import { mapState } from 'vuex'
 
 export default {
   components: {
     CustomAddProdModal,
-    LoginModal
+    LoginModal,
+    Notifications
   },
   computed: {
     addProduct () {
       return this.$store.state.addProduct
     },
-    // isLogin () {
-    //   return localStorage.access_token
-    // },
     ...mapState([
       'isLogin'
     ])
@@ -57,10 +53,6 @@ export default {
 <style>
 body {
   background: grey;
-  /* width: 100%; */
-  /* height: 100%; */
-  /* max-height: 100vh; */
-  /* overflow: hidden; */
   margin: 0;
   padding: 0;
 }

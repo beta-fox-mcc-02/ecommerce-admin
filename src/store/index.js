@@ -6,43 +6,47 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    products: [{
-      id: 1,
-      name: 'Smartphone 1',
-      description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda itaque sequi magnam atque. Iste odio repellendus autem? Et, aut itaque.',
-      category: 'Smartphone',
-      price: '100000',
-      stock: 10,
-      imageUrl: 'https://radscanmedical.com/wp-content/uploads/2018/11/coming-soon.png'
-    }, {
-      id: 2,
-      name: 'Komputer 1',
-      description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda itaque sequi magnam atque. Iste odio repellendus autem? Et, aut itaque.',
-      category: 'Computer',
-      price: '200000',
-      stock: 10,
-      imageUrl: 'https://radscanmedical.com/wp-content/uploads/2018/11/coming-soon.png'
-    }, {
-      id: 3,
-      name: 'Komputer 2',
-      description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda itaque sequi magnam atque. Iste odio repellendus autem? Et, aut itaque.',
-      category: 'Computer',
-      price: '300000',
-      stock: 10,
-      imageUrl: 'https://radscanmedical.com/wp-content/uploads/2018/11/coming-soon.png'
-    }],
-    // products: [],
+    // products: [{
+    //   id: 1,
+    //   name: 'Smartphone 1',
+    //   description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda itaque sequi magnam atque. Iste odio repellendus autem? Et, aut itaque.',
+    //   category: 'Smartphone',
+    //   price: '100000',
+    //   stock: 10,
+    //   imageUrl: 'https://radscanmedical.com/wp-content/uploads/2018/11/coming-soon.png'
+    // }, {
+    //   id: 2,
+    //   name: 'Komputer 1',
+    //   description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda itaque sequi magnam atque. Iste odio repellendus autem? Et, aut itaque.',
+    //   category: 'Computer',
+    //   price: '200000',
+    //   stock: 10,
+    //   imageUrl: 'https://radscanmedical.com/wp-content/uploads/2018/11/coming-soon.png'
+    // }, {
+    //   id: 3,
+    //   name: 'Komputer 2',
+    //   description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda itaque sequi magnam atque. Iste odio repellendus autem? Et, aut itaque.',
+    //   category: 'Computer',
+    //   price: '300000',
+    //   stock: 10,
+    //   imageUrl: 'https://radscanmedical.com/wp-content/uploads/2018/11/coming-soon.png'
+    // }],
+    products: [],
     filteredProducts: [],
     addProduct: false,
     error: {},
     notification: '',
     access_token: '',
     isLogin: false,
-    username: ''
+    username: '',
+    oneProduct: {}
   },
   mutations: {
     FETCH_PRODUCTS (state, data) {
       state.products = data
+    },
+    FETCH_ONE_PRODUCT (state, data) {
+      state.oneProduct = data.product
     },
     SET_FILTERED_PRODUCTS (state, data) {
       state.filteredProducts = data
@@ -52,15 +56,9 @@ export default new Vuex.Store({
     },
     SET_ERROR (state, data) {
       state.error = data
-      setTimeout(() => {
-        state.error = {}
-      }, 500)
     },
     SET_NOTIFICATION (state, data) {
       state.notification = data
-      setTimeout(() => {
-        state.notification = ''
-      }, 500)
     },
     SET_USER_CREDENTIALS (state, data) {
       state.access_token = data.token
@@ -86,6 +84,13 @@ export default new Vuex.Store({
         })
     },
 
+    fetchOneProduct (context, product) {
+      return axios({
+        method: 'get',
+        url: process.env.VUE_APP_BASEURL + 'product/' + product.id
+      })
+    },
+
     addProduct (context, formData) {
       return axios
         .post(process.env.VUE_APP_BASEURL + 'product', formData, {
@@ -96,28 +101,10 @@ export default new Vuex.Store({
         })
     },
 
-    // addProductWithoutPic (context, product) {
-    //   const { name, description, CategoryId, price, stock } = product
-    //   return axios({
-    //     method: 'post',
-    //     url: process.env.VUE_APP_BASEURL + 'product/addwopic',
-    //     data: {
-    //       name,
-    //       description,
-    //       CategoryId,
-    //       price,
-    //       stock,
-    //       imageUrl: 'https://radscanmedical.com/wp-content/uploads/2018/11/coming-soon.png'
-    //     },
-    //     headers: {
-    //       access_token: this.state.access_token
-    //     }
-    //   })
-    // },
-
-    editProduct (context, formData, id) {
+    editProduct (context, data) {
+      const { formData, query } = data
       return axios
-        .patch(process.env.VUE_APP_BASEURL + 'product/' + id, formData, {
+        .put(process.env.VUE_APP_BASEURL + 'product/' + query.id, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
             access_token: this.state.access_token
@@ -125,29 +112,10 @@ export default new Vuex.Store({
         })
     },
 
-    editProductWithoutPic (context, product, id) {
-      const { name, description, CategoryId, price, stock } = product
-      return axios({
-        method: 'post',
-        url: process.env.VUE_APP_BASEURL + 'product/addwopic/' + id,
-        data: {
-          name,
-          description,
-          CategoryId,
-          price,
-          stock,
-          imageUrl: 'https://radscanmedical.com/wp-content/uploads/2018/11/coming-soon.png'
-        },
-        headers: {
-          access_token: this.state.access_token
-        }
-      })
-    },
-
     deleteProduct (context, id) {
       return axios({
         method: 'delete',
-        url: process.env.VUE_APP_BASEURL + 'product' + id,
+        url: process.env.VUE_APP_BASEURL + 'product/' + id,
         headers: {
           access_token: this.state.access_token
         }

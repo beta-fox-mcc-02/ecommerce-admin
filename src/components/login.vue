@@ -146,12 +146,11 @@ export default {
         .then(({ data }) => {
           localStorage.access_token = data.token
           localStorage.username = data.username
+          this.$store.commit('SET_NOTIFICATION', `Welcome back, ${this.identification}`)
           this.$store.commit('SET_USER_CREDENTIALS', data)
           this.$store.commit('SET_LOGIN', true)
         })
-        .catch(err => {
-          console.log(err)
-        })
+        .catch(err => this.$store.commit('SET_ERROR', err))
     },
 
     register () {
@@ -165,12 +164,11 @@ export default {
         .then(({ data }) => {
           localStorage.access_token = data.token
           localStorage.username = data.username
+          this.$store.commit('SET_NOTIFICATION', `Welcome, ${this.username}`)
           this.$store.commit('SET_USER_CREDENTIALS', data)
           this.$store.commit('SET_LOGIN', true)
         })
-        .catch(err => {
-          console.log(err)
-        })
+        .catch(err => this.$store.commit('SET_ERROR', err))
     }
   }
 }
