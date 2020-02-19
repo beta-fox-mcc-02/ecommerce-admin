@@ -23,6 +23,11 @@ export default {
   components: {
     Nav,
     SignIn
+  },
+  computed: {
+    getIsLogin () {
+      return this.$store.state.isLogin
+    }
   }
 }
 </script>
