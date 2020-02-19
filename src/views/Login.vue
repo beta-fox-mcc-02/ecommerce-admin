@@ -1,7 +1,7 @@
 <template>
   <div id="form-login">
     <form v-on:submit.prevent="login">
-      <h1>WELCOME!!</h1>
+      <h1>WELCOME</h1>
       <div class="inputs">
         <input type="email" v-model="email" required><br>
         <small>email</small>

@@ -6,6 +6,7 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
+    serverUrl: 'https://mysterious-beach-02436.herokuapp.com',
     products: [],
     categories: [],
     email: '',
@@ -69,26 +70,26 @@ const store = new Vuex.Store({
     }
   },
   actions: {
-    fetchProducts () {
+    fetchProducts (context) {
       axios({
         method: 'GET',
-        url: 'http://localhost:3000/products'
+        url: `${context.state.serverUrl}/products`
       })
         .then((result) => {
           this.commit('fetchProducts', { data: result.data.products })
         })
         .catch((err) => console.log(err))
     },
-    getCategories () {
+    getCategories (context) {
       return axios({
         method: 'GET',
-        url: 'http://localhost:3000/category'
+        url: `${context.state.serverUrl}/category`
       })
     },
     loginAsync (context) {
       return axios({
         method: 'POST',
-        url: 'http://localhost:3000/admin/login',
+        url: `${context.state.serverUrl}/admin/login`,
         data: {
           email: context.state.email,
           password: context.state.password
@@ -107,7 +108,7 @@ const store = new Vuex.Store({
         }
         return axios({
           method: 'POST',
-          url: 'http://localhost:3000/product',
+          url: `${context.state.serverUrl}/product`,
           data
         })
       } else return null
@@ -117,7 +118,7 @@ const store = new Vuex.Store({
       if (input.name && input.price && input.stock && input.category) {
         return axios({
           method: 'PUT',
-          url: `http://localhost:3000/product/${context.state.id}`,
+          url: `${context.state.serverUrl}/product/${context.state.id}`,
           data: {
             name: input.name,
             price: input.price,
@@ -131,7 +132,7 @@ const store = new Vuex.Store({
     deleteAsync (context, id) {
       return axios({
         method: 'DELETE',
-        url: `http://localhost:3000/product/${id}`
+        url: `${context.state.serverUrl}/product/${id}`
       })
     }
   }
