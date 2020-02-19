@@ -4,7 +4,7 @@ import Home from '../views/Home.vue'
 import AdminLogin from '../views/AdminLogin.vue'
 import Login from '../views/Login.vue'
 import Admin from '../views/Admin.vue'
-import store from '../store/index.js'
+// import store from '../store/index.js'
 
 Vue.use(VueRouter)
 
@@ -38,7 +38,7 @@ const routes = [
     name: 'admin',
     component: Admin,
     beforeEnter: (to, from, next) => {
-      console.log(store.state.isLogin)
+      // console.log(store.state.isLogin)
       if (localStorage.token) {
         next()
       } else next('/login')

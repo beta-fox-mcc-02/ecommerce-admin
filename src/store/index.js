@@ -60,8 +60,37 @@ const store = new Vuex.Store({
     fetchProducts (context) {
       axios.get('http://localhost:3000/products/list')
         .then(({ data }) => {
-          console.log(data)
+        //   console.log(data)
           context.commit('FETCH_PRODUCTS', data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    editProduct (context, payload) {
+      axios.put(`http://localhost:3000/products/${payload.id}/item`, payload,
+        {
+          headers: {
+            token: localStorage.token
+          }
+        })
+        .then(({ data }) => {
+        //   console.log(data)
+          router.push('/admin')
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    deleteProduct (context, payload) {
+      axios.delete(`http://localhost:3000/products/${payload}/item`, {
+        headers: {
+          token: localStorage.token
+        }
+      })
+        .then(({ data }) => {
+        //   console.log(data)
+          router.push('/admin')
         })
         .catch(err => {
           console.log(err)

@@ -24,7 +24,14 @@
                                 <br>
                                 Stock : {{product.stock}}
                             </p>
-                            <button class="btn btn-primary">Edit</button>
+                            <Edit
+                            :Id="product.id"
+                            :Name="product.name"
+                            :ImageUrl="product.image_url"
+                            :Price="product.price"
+                            :Stock="product.stock"
+                            ></Edit>
+                            <!-- <button class="btn btn-primary">Edit</button> -->
                         </div>
                     </div>
                 </div>
@@ -38,6 +45,7 @@
 
 <script>
 import Add from '@/components/AddProduct.vue'
+import Edit from '@/components/editProduct.vue'
 export default {
   name: 'Home',
   data () {
@@ -46,7 +54,8 @@ export default {
     }
   },
   components: {
-    Add
+    Add,
+    Edit
   },
   created () {
     this.$store.dispatch('fetchProducts')
