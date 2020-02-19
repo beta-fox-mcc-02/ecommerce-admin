@@ -1,9 +1,19 @@
 <template>
-  <v-app id="login-form">
+  <v-app v-if="!isAuthenticated" id="login-form">
     <v-content>
       <v-container class="fill-height" fluid>
         <v-row align="center" justify="center">
           <v-col cols="12" sm="8" md="4">
+            <v-alert
+              text
+              dense
+              color="teal"
+              icon="mdi-check"
+              border="left"
+              v-if="isAuthenticated"
+            >
+              Login Success
+            </v-alert>
             <v-alert
               v-if="errors.length"
               text
@@ -89,6 +99,18 @@ export default {
         password: this.password
       }
       this.$store.dispatch('login', authData)
+        .then(response => {
+          localStorage.token = response.body.token
+          this.$store.commit('AUTHENTICATED_SUCCESS')
+          this.$store.commit('AUTHENTICATED_LOADING', false)
+          setTimeout(() => {
+            this.$router.push('/')
+          }, 500)
+        })
+        .catch(err => {
+          this.$store.commit('AUTHENTICATED_FAILED', err.body)
+          this.$store.commit('AUTHENTICATED_LOADING', false)
+        })
     }
   },
   computed: {
@@ -97,6 +119,9 @@ export default {
     },
     isLoadingProcess () {
       return this.$store.getters.isLoading
+    },
+    isAuthenticated () {
+      return this.$store.getters.isAuthenticated
     },
     emailErrors () {
       const errors = []
@@ -111,6 +136,20 @@ export default {
       !this.$v.password.required && errors.push('Password is required.')
       return errors
     }
+  },
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      vm.$store.dispatch('checkAuthentication')
+        .then(response => {
+          if (response.body.id) {
+            next('/')
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+          next()
+        })
+    })
   }
 }
 </script>
