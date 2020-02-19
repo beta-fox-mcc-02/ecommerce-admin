@@ -17,24 +17,25 @@
 </template>
 
 <script>
-import NavbarAdmin from "../components/NavbarAdmin";
+import NavbarAdmin from '../components/NavbarAdmin'
 export default {
-  name: `AdminDashboard`,
+  name: 'AdminDashboard',
   components: {
     NavbarAdmin
   },
-  data() {
-    return {};
+  data () {
+    return {
+
+    }
   },
-  beforeRouteEnter(to, from, next) {
+  beforeRouteEnter (to, from, next) {
     if (!localStorage.isAdmin) {
       next('/')
-    }
-    else {
+    } else {
       next()
     }
   }
-};
+}
 </script>
 
 <style scoped>

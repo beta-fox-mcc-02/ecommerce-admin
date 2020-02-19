@@ -94,6 +94,7 @@
 </template>
 
 <script>
+import axios from '../api/axiosInstance'
 export default {
    name: 'NavbarAdmin',
    data () {
@@ -106,6 +107,9 @@ export default {
             CategoryId: ''
          }
       }
+   },
+   methods: {
+      // LANJUT DISINI YAaaaaaaaaaaaaaaaaaaaaaaaaa
    }
 };
 </script>
