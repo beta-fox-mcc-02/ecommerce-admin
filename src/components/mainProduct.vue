@@ -6,12 +6,12 @@
       </div>
       <div id="form-product-container">
         <button id="add-button" v-on:click="showAddForm"><i class="fas fa-plus"></i></button>
-        <AddProductForm v-if="isShowed" v-bind:categories="categories" v-on:closeForm="closeForm"  v-on:addProduct="addProduct"/>
+        <AddProductForm v-if="isShowed" v-on:closeForm="closeForm"  v-on:addProduct="addProduct"/>
       </div>
     </div>
     <div id="table-product-container">
       <div class="product-header">
-        Order list
+        <i class="fas fa-list"></i> Order list
       </div>
       <div class="product-table">
         <table>
@@ -26,14 +26,18 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="product in products" v-bind:key="product.id">
+            <tr v-for="product in getProducts" v-bind:key="product.id">
               <td class="id-cols">{{ product.id }}</td>
               <td>{{ product.name }}</td>
-              <td>{{ product.price }}</td>
-              <td>{{ product.stock }}</td>
-              <td>{{ product.total }}</td>
-              <td class="action-cols">Action</td>
+              <td>Rp. {{ product.price }}</td>
+              <td>{{ product.stock }} Units</td>
+              <td>Rp. {{ product.total }}</td>
+              <td class="action-cols">
+                <button id="trash-btn" v-on:click="deleteEntry(product.id)"><i class="fas fa-trash-alt"></i></button>
+                <button id="edit-btn" v-on:click="updateEntry(product)"><i class="fas fa-edit"></i></button>
+              </td>
             </tr>
+            <EditProductForm v-if="editMode" v-on:closeForm="closeForm" />
           </tbody>
         </table>
       </div>
@@ -43,44 +47,40 @@
 
 <script>
 import AddProductForm from './2TierComponents/addProductForm.vue'
+import EditProductForm from './2TierComponents/editProductForm.vue'
 import axios from 'axios'
 
 export default {
   data () {
     return {
       categories: [],
+      editProduct: '',
       isShowed: false,
-      products: []
+      editMode: false
     }
   },
-  components: { AddProductForm },
+  components: { AddProductForm, EditProductForm },
+  computed: {
+    getProducts () {
+      return this.$store.state.products
+    }
+  },
   methods: {
     showAddForm () {
-      axios({
-        method: 'GET',
-        url: 'http://localhost:3000/category/findall'
-      })
+      this.$store.dispatch('getCategories')
         .then((result) => {
-          this.categories = result.data.data
+          this.$store.commit('setCategories', { data: result.data.data })
           this.isShowed = true
         })
         .catch((err) => console.log(err))
     },
     fetchAll () {
-      axios({
-        method: 'GET',
-        url: 'http://localhost:3000/product/findall'
-      })
-        .then((result) => {
-          this.products = result.data.products
-          console.log(this.products)
-        })
-        .catch((err) => console.log(err))
+      this.$store.dispatch('fetchProducts')
     },
     addProduct (data) {
       axios({
         method: 'POST',
-        url: 'http://localhost:3000/product/create',
+        url: 'http://localhost:3000/product',
         data
       })
         .then((result) => {
@@ -89,7 +89,24 @@ export default {
         })
         .catch((err) => console.log(err))
     },
-    closeForm (params) { this.isShowed = params }
+    deleteEntry (id) {
+      this.$store.dispatch('deleteAsync', id)
+        .then((result) => this.fetchAll())
+        .catch((err) => console.log(err))
+    },
+    updateEntry (product) {
+      this.editMode = true
+      this.$store.dispatch('getCategories')
+        .then((result) => {
+          this.$store.commit('editAbleData', { product, categories: result.data.data })
+        })
+        .catch((err) => console.log(err))
+    },
+    closeForm (params) {
+      this.isShowed = params
+      this.editMode = params
+      this.fetchAll()
+    }
   },
   created () {
     this.fetchAll()
@@ -112,6 +129,7 @@ div#header-container {
 
 div#table-product-container {
   border: 0.1rem solid #d4d4d4;
+  animation: fade-in 1s;
 }
 
 div#form-product-container {
@@ -144,10 +162,13 @@ td {
 }
 th, td {
   width: 8rem;
+  text-align: center;
 }
 
 .action-cols{
   width: 12rem;
+  display: flex;
+  justify-content: center;
 }
 
 tr {
@@ -173,12 +194,42 @@ button#add-button:hover, button#filter-button:hover {
   background-color: #117111;
 }
 
+button#trash-btn, button#edit-btn {
+  margin: 0 1rem;
+  border-style: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+button#trash-btn:hover, button#edit-btn:hover {
+  animation: shaking .5s infinite;
+}
+
+button#trash-btn:hover{
+  color: red
+}
+
+button#edit-btn:hover{
+  color: blue
+}
+
 #filter-button{
   margin-left: 0.5rem
 }
 
 i.fas.fa-plus, i.fas.fa-filter {
   font-size: 15pt;
+}
+
+@keyframes fade-in {
+  0%{ opacity: 0; transform: scale(0) }
+  100%{ opacity: 1; transform: scale(1) }
+}
+
+@keyframes shaking {
+  0%{ transform: rotate(-3deg) scale(1) }
+  50%{ transform: rotate(0deg) scale(1.3) }
+  100%{ transform: rotate(3deg) scale(1) }
 }
 
 </style>

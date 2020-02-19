@@ -22,28 +22,42 @@ div#sidebar {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 39.1rem;
+  height: 100%;
   background-color: #189a1873;
 }
 
 div {
-  width: 50%;
+  width: 75%;
+  border-bottom: 0.1rem solid #189a18;
   text-align: center;
 }
 
 div button{
-    border-style: none;
-    background-color: transparent;
-    padding: 0.5rem 0;
-    width: 5rem;
-    cursor: pointer;
-    margin: 0.5rem 0;
+  border-style: none;
+  background-color: transparent;
+  padding: 0.5rem 0;
+  width: 100%;
+  cursor: pointer;
+  margin: 0.5rem 0;
+  font-size: 20pt;
+  color: white;
+  font-style: italic;
+  font-family: serif;
 }
 
 div button:hover{
   background-color: #189a18;
   border-radius: 0.2rem;
-  box-shadow: 0rem 0rem 0.2rem black
+  box-shadow: 0rem 0rem 0.2rem black;
+  animation: fade-in .1s infinite;
+}
+
+@keyframes fade-in {
+  0%{ transform: rotate(0deg); }
+  25%{ transform: rotate(-3deg); }
+  50%{ transform: rotate(0deg); }
+  75%{ transform: rotate(3deg); }
+  100%{ transform: rotate(0deg); }
 }
 
 </style>

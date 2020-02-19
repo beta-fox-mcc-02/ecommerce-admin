@@ -21,13 +21,19 @@ export default {
 
 div#nav {
   background-color: #189a18;
-  padding: 1vh;
-  text-align: right
+  height: 3rem;
+  width: 100%;
+  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 a {
   color: white;
   margin: 0 1rem;
+  font-size: 20pt;
+  font-style: italic;
 }
 
 </style>>

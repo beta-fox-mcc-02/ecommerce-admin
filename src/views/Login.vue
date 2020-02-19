@@ -17,32 +17,28 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
-  data () {
-    return {
-      email: '',
-      password: ''
+  computed: {
+    email: {
+      get () { return this.$store.state.email },
+      set (value) { this.$store.commit('setEmail', value) }
+    },
+    password: {
+      get () { return this.$store.state.password },
+      set (value) { this.$store.commit('setPassword', value) }
     }
   },
   methods: {
     login () {
-      if (this.email && this.password) {
-        axios({
-          method: 'POST',
-          url: 'http://localhost:3000/admin/login',
-          data: {
-            email: this.email,
-            password: this.password
-          }
+      this.$store.dispatch('loginAsync')
+        .then((data) => {
+          localStorage.setItem('access_token', data.data.token)
+          this.$store.commit('isAdmin', true)
+          this.$router.push('/')
         })
-          .then((result) => {
-            localStorage.setItem('access_token', result.data.token)
-            this.$router.push('/')
-          })
-          .catch((err) => console.log(err))
-      }
+        .catch(() => {
+          this.$store.commit('unsetEmailPassword')
+        })
     }
   }
 }
