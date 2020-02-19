@@ -18,4 +18,8 @@ export default {
 </script>
 
 <style>
+.form-vue {
+  width: 50%;
+  margin: 0 auto;
+}
 </style>
