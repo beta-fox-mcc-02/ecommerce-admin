@@ -52,8 +52,22 @@ export default {
   },
   methods: {
     onSubmit() {
-      window.alert(this.file.name);
-    }
+      const payload = {
+        name: this.name,
+        image_url: 'http://google.com',
+        price: this.price,
+        stock: this.stock
+      };
+      this.$store.dispatch('createProduct', payload)
+        .then(({ data }) => {
+          console.log(data);
+          this.$emit('closeModal');
+        })
+        .catch(({ response }) => {
+          console.log(response);
+        });
+    },
+
   }
 }
 </script>

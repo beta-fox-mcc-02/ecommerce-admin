@@ -30,6 +30,16 @@ const store = new Vuex.Store({
         url: '/login',
         data: payload
       });
+    },
+    createProduct(context, payload) {
+      return axios({
+        method: 'POST',
+        url: '/products',
+        headers: {
+          access_token: localStorage.access_token
+        },
+        data: payload
+      });
     }
   }
 });

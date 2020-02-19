@@ -3,17 +3,22 @@
     <h1 class="text-center mb-5">Home</h1>
     <div class="mb-3 d-flex">
       <div>
-        <b-button v-b-modal.modal-1 ok-only>Add New Product</b-button>
+        <b-button v-b-modal.modal-1>Add New Product</b-button>
 
-        <b-modal id="modal-1" title="Create New Product">
-          <CreateProduct />
+        <b-modal id="modal-1" ref="modal-1-ref" title="Create New Product">
+          <CreateProduct @closeModal="closeModal" />
           <template v-slot:modal-footer>
             <div class="w-100 h-auto"></div>
           </template>
         </b-modal>
       </div>
-      <b-nav-form class="ml-auto">
-        <b-form-input size="sm" class="mr-sm-2" placeholder="Search product name"></b-form-input>
+      <b-nav-form class="ml-auto" @submit.prevent="searchByName">
+        <b-form-input
+          size="sm"
+          class="mr-sm-2"
+          placeholder="Search product name"
+          v-model="searchInput"
+        ></b-form-input>
         <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
       </b-nav-form>
     </div>
@@ -29,6 +34,7 @@ export default {
   name: 'Home',
   data() {
     return {
+      searchInput: ''
     };
   },
   components: {
@@ -36,7 +42,12 @@ export default {
     CreateProduct
   },
   methods: {
-
+    searchByName() {
+      this.searchInput = '';
+    },
+    closeModal() {
+      this.$refs['modal-1-ref'].hide();
+    }
   }
 
 }
