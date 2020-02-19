@@ -29,8 +29,15 @@ export default new Vuex.Store({
 
     // PRODUCTS
 
-    setProducts(state, products) {
+    SET_PRODUCTS(state, products) {
       state.products = products
+    },
+
+    ADD_PRODUCT(state, product) {
+      state.products.push(product)
+    },
+    DELETE_PRODUCT(state, id) {
+      state.products = state.products.filter(i => i.id !== id)
     }
 
     // END OF PRODUCTS
@@ -56,11 +63,7 @@ export default new Vuex.Store({
           .post('/users/login', data)
           .then(({ data }) => {
             commit('auth', data)
-            if (data.user.RoleId === 1) {
-              resolve('/dashboard')
-            } else {
-              resolve('/')
-            }
+            resolve('/dashboard')
           })
           .catch(e => {
             reject(e)
@@ -83,8 +86,40 @@ export default new Vuex.Store({
         client
           .get(`/products`)
           .then(({ data }) => {
-            commit('setProducts', data.products)
+            commit('SET_PRODUCTS', data.products)
             resolve(data.products)
+          })
+          .catch(e => {
+            reject(e)
+          })
+      })
+    },
+
+    addProduct({ commit }, data) {
+      return new Promise((resolve, reject) => {
+        client
+          .post('/products', data, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          })
+          .then(response => {
+            commit('ADD_PRODUCT', response.data)
+            resolve('Success adding product.')
+          })
+          .catch(() => {
+            reject('Error adding product.')
+          })
+      })
+    },
+
+    deleteProduct({ commit }, id) {
+      return new Promise((resolve, reject) => {
+        client
+          .delete(`/products/${id}`)
+          .then(() => {
+            commit('DELETE_PRODUCT', id)
+            resolve()
           })
           .catch(e => {
             reject(e)
