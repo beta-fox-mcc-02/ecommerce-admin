@@ -23,15 +23,7 @@
             >Upload product</span>
           </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0" @submit.prevent>
-          <input
-            class="form-control mr-sm-2"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-          />
-          <button class="btn btn-outline-info my-2 my-sm-0 shadow" type="submit">Search</button>
-        </form>
+        <button class="btn btn-outline-info my-2 my-sm-0 shadow" @click="logout"><i class="fas fa-sign-out-alt"></i></button>
       </div>
     </nav>
 
@@ -114,6 +106,18 @@ export default {
     };
   },
   methods: {
+    logout() {
+      localStorage.removeItem(`token`);
+      localStorage.removeItem(`isAdmin`);
+
+      this.$router.push("/");
+      Toastify({
+        text: "Logout success, bye bye admin",
+        backgroundColor: "linear-gradient(to right, #DA22FF, #9733EE)",
+        className: "info"
+      }).showToast();
+
+    },
     createProduct() {
       axios({
         method: `POST`,
@@ -130,11 +134,11 @@ export default {
         }
       })
         .then(({ data }) => {
-          this.product.name = ""
-          this.product.image = ""
-          this.product.price = ""
-          this.product.stock = ""
-          this.product.CategoryId = ""
+          this.product.name = "";
+          this.product.image = "";
+          this.product.price = "";
+          this.product.stock = "";
+          this.product.CategoryId = "";
 
           console.log(data, `ini createeeeeeeeeeeeeeeeee`);
           this.$store.dispatch("getAllItem");

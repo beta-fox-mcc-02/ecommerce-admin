@@ -62,12 +62,7 @@ export default {
     }
   },
   computed: {
-    isLogin() {
-      return this.$store.state.isLogin;
-    },
-    isAdmin() {
-      return this.$store.state.isAdmin;
-    }
+    
   },
   created() {
     if (localStorage.token) {
