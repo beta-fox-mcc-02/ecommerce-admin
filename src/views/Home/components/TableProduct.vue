@@ -1,5 +1,14 @@
 <template>
   <div>
+    <!-- add -->
+    <div>
+      <b-modal id="modal-2" ref="modal-2-ref" title="Update Product">
+        <UpdateProduct :idProduct="idProduct" @closeModal="closeModal" />
+        <template v-slot:modal-footer>
+          <div class="w-100 h-auto"></div>
+        </template>
+      </b-modal>
+    </div>
     <b-table
       :items="items"
       :fields="fields"
@@ -7,8 +16,6 @@
       :sort-desc.sync="sortDesc"
       responsive="sm"
     >
-      <!-- <template v-slot:cell(id)="data"></template> -->
-
       <template v-slot:cell(Image)>
         <a href>
           <i class="fas fa-images"></i> Show
@@ -17,7 +24,7 @@
 
       <template v-slot:cell(id)="data">
         <a href>
-          <i class="fas fa-edit" @click.prevent="editProduct(data.value)"></i>
+          <i class="fas fa-edit" @click.prevent="updateProduct(data.value)"></i>
         </a> |
         <a href>
           <i class="fas fa-trash-alt" @click.prevent="deleteProduct(data.value)"></i>
@@ -34,6 +41,7 @@
 </template>
 
 <script>
+import UpdateProduct from './UpdateProduct.vue';
 
 export default {
   data() {
@@ -46,9 +54,14 @@ export default {
         { key: 'Price', sortable: true },
         { key: 'Stock', sortable: true },
         { key: 'id', label: 'Options' },
-      ]
+      ],
+      idProduct: ''
     };
   },
+  components: {
+    UpdateProduct
+  }
+  ,
   methods: {
     fetchData() {
       this.$store.dispatch('fetchProduct')
@@ -75,6 +88,12 @@ export default {
     },
     updateProduct(id) {
       console.log(id);
+      this.idProduct = id;
+      this.$refs['modal-2-ref'].show();
+    },
+    closeModal() {
+      this.$refs['modal-2-ref'].hide();
+
     }
   },
   computed: {

@@ -2,6 +2,7 @@
   <div>
     <h1 class="text-center mb-5">Home</h1>
     <div class="mb-3 d-flex">
+      <!-- add -->
       <div>
         <b-button v-b-modal.modal-1>Add New Product</b-button>
 
@@ -12,6 +13,7 @@
           </template>
         </b-modal>
       </div>
+
       <b-nav-form class="ml-auto" @submit.prevent="searchByName">
         <b-form-input
           size="sm"
@@ -34,12 +36,13 @@ export default {
   name: 'Home',
   data() {
     return {
-      searchInput: ''
+      searchInput: '',
+      update: false
     };
   },
   components: {
     TableProduct,
-    CreateProduct
+    CreateProduct,
   },
   methods: {
     searchByName() {

@@ -62,6 +62,21 @@ const store = new Vuex.Store({
           access_token: localStorage.access_token
         }
       });
+    },
+    updateProduct(context, payload) {
+      return axios({
+        method: 'PUT',
+        url: `/products/${payload.id}`,
+        headers: {
+          access_token: localStorage.access_token
+        },
+        data: {
+          name: payload.name,
+          image_url: 'www.facebook.com',
+          price: payload.price,
+          stock: payload.stock
+        }
+      });
     }
   }
 });
