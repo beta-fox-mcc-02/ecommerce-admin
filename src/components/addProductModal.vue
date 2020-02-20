@@ -20,7 +20,7 @@
               <div class="row">
                 <div class="input-field col s4">
                   <select class="browser-default" v-model="CategoryId">
-                    <option value="1" selected>Computer</option>
+                    <option value="1">Computer</option>
                     <option value="2">Smartphone</option>
                     <option value="3">Peripheral</option>
                     <option value="4">Accessories</option>
@@ -66,7 +66,7 @@ export default {
     return {
       name: '',
       description: '',
-      CategoryId: '',
+      CategoryId: 1,
       price: '',
       stock: '',
       imageUrl: ''
