@@ -6,7 +6,7 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    serverUrl: 'http://localhost:3000',
+    serverUrl: 'https://mysterious-beach-02436.herokuapp.com',
     admins: [],
     products: [],
     categories: [],
