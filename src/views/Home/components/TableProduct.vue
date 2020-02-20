@@ -9,6 +9,7 @@
         </template>
       </b-modal>
     </div>
+
     <b-table
       :items="items"
       :fields="fields"
@@ -16,6 +17,9 @@
       :sort-desc.sync="sortDesc"
       responsive="sm"
     >
+      <template v-slot:cell(Stock)="data">{{printStock(data.value)}}</template>
+      <template v-slot:cell(Price)="data">{{printPrice(data.value)}}</template>
+
       <template v-slot:cell(Image)>
         <a href>
           <i class="fas fa-images"></i> Show
@@ -93,7 +97,15 @@ export default {
     },
     closeModal() {
       this.$refs['modal-2-ref'].hide();
-
+    },
+    printStock(value) {
+      if (Number(value) === 1)
+        return `${value} item`;
+      else
+        return `${value} items`;
+    },
+    printPrice(value) {
+      return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(value);
     }
   },
   computed: {

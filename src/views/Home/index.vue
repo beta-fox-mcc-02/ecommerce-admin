@@ -47,6 +47,9 @@ export default {
   methods: {
     searchByName() {
       this.searchInput = '';
+      // const result = this.$store.state.items.filter(el => {
+      //   el;
+      // });
     },
     closeModal() {
       this.$refs['modal-1-ref'].hide();

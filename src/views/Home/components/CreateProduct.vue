@@ -20,6 +20,7 @@
           type="number"
           required
           placeholder="Enter product price"
+          min="1"
         ></b-form-input>
       </b-form-group>
 
@@ -30,6 +31,7 @@
           type="number"
           required
           placeholder="Enter product stock"
+          min="1"
         ></b-form-input>
       </b-form-group>
 
