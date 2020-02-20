@@ -1,13 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import jwt from 'jsonwebtoken'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     products: [],
-    isAdmin: '',
+    isAdmin: false,
     error: {}
   },
   mutations: {
@@ -23,6 +24,14 @@ export default new Vuex.Store({
     },
     ERROR (state, err) {
       state.error = err
+    },
+    VERIFY_TOKEN (state, data) {
+      console.log(data, 'INI DATA')
+      const decoded = jwt.verify(data, process.env.VUE_APP_SECRET)
+      console.log(decoded, 'INI DECODE')
+      if (decoded.role) {
+        state.isAdmin = true
+      }
     }
   },
   actions: {
@@ -71,6 +80,7 @@ export default new Vuex.Store({
         }
       })
         .then(data => {
+          context.dispatch('fetchProduct')
           console.log(data)
         })
         .catch(err => {

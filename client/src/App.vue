@@ -3,12 +3,27 @@
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
-      <router-link to="/admin">Admin</router-link> |
+      <router-link v-if="checkAdmin" to="/admin">Admin</router-link> |
       <router-link to="/login">Login</router-link>
     </div>
     <router-view/>
   </div>
 </template>
+
+<script>
+export default {
+  computed: {
+    checkAdmin () {
+      return this.$store.state.isAdmin
+    }
+  },
+  created () {
+    if (localStorage.token) {
+      this.$store.commit('VERIFY_TOKEN', localStorage.token)
+    }
+  }
+}
+</script>
 
 <style>
 #app {

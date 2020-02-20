@@ -4,7 +4,7 @@
       <i class="fas fa-plus-circle" id="icon">ADD PRODUCTS</i>
     </a>
     <b-modal id="modal-center" centered title="Add Products" :hide-footer="true">
-      <form v-on:submit.prevent="addProduct">
+      <form @submit.prevent="addProduct">
         <label>Prdouct Name</label><br>
         <input type="text" required v-model="name"><br>
         <label>Price</label><br>
@@ -24,7 +24,7 @@
           <input type="checkbox" id="Badminton" value="4" v-model="category">
           <label for="Badminton">Badminton</label>
           <br>
-        <button type="submit" class="btn btn-primary">ADD</button>
+        <button type="submit" class="btn btn-primary" >ADD</button>
       </form>
     </b-modal>
   </div>
@@ -51,8 +51,8 @@ export default {
         image_url: this.image_url,
         category: this.category
       }
+      this.$bvModal.hide('modal-center')
       this.$store.dispatch('addProduct', payload)
-      // this.$router.push({ path: '/admin' })
     }
   }
 }
