@@ -22,7 +22,6 @@
 
 <script>
 import axios from 'axios'
-import router from '../router'
 
 export default {
   name: 'Login',
@@ -43,8 +42,10 @@ export default {
         }
       })
         .then(response => {
+          console.log(response)
           localStorage.setItem('access_token', response.data.access_token)
-          router.push('Home')
+          this.$store.commit('SET_LOGIN', true)
+          this.$router.push('Home')
         })
         .catch(err => {
           console.log(err)
