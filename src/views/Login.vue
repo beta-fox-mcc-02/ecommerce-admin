@@ -1,21 +1,20 @@
 <template>
   <div class="home bg-gradient-primary">
     <Navbar></Navbar>
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <LoginForm />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue';
 import Navbar from '@/components/Navbar.vue';
+import LoginForm from '@/components/LoginForm.vue';
 
 export default {
-  name: 'Home',
+  name: 'Login',
   components: {
-    HelloWorld,
     Navbar,
+    LoginForm,
   },
 };
 </script>
