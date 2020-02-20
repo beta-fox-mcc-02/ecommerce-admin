@@ -1,6 +1,8 @@
 <template>
   <div class="mt-5">
-    <div id="content">
+    <Loading v-if="loading"/>
+
+    <div id="content" v-if="!loading">
       <div class="container mt-5 mb-5">
         <div class="row">
           <div class="col">
@@ -127,8 +129,12 @@
 
 <script>
 import axios from "../api/axiosInstance";
+import Loading from '../components/Loading'
 export default {
   name: "ProductDetail",
+  components: {
+    Loading
+  },
   data() {
     return {
       product: ""
@@ -202,6 +208,11 @@ export default {
   },
   created() {
     this.getProduct();
+  },
+  computed: {
+    loading() {
+      return this.$store.state.loading
+    }
   }
 };
 </script>

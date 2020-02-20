@@ -1,6 +1,7 @@
 <template>
   <div id="Allproducts">
-    <div class="container my-5">
+    <Loading v-if="loading"/>
+    <div class="container my-5" v-if="!loading">
       <div class="row" style="display: flex; justify-content: space-around">
         <div class="content" v-for="product in allProducts" :key="product.id">
           <div class="card" style="width: 18rem; cursor: pointer" @click="getDetail(product.id)">
@@ -28,10 +29,11 @@
   </div>
 </template>
 <script>
+import Loading from '../components/Loading'
 export default {
   name: "AllProduct",
   components: {
-     
+     Loading
   },
   data() {
     return {};
@@ -47,6 +49,9 @@ export default {
   computed: {
     allProducts() {
       return this.$store.state.allProduct;
+    },
+    loading() {
+      return this.$store.state.loading
     }
   }
 };

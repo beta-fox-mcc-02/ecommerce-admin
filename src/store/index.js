@@ -7,15 +7,20 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     allProduct: [],
-    detailProduct: {}
+    detailProduct: {},
+    loading: true
   },
   mutations: {
     SET_ALL_PRODUCT (state, payload) {
       state.allProduct = payload
+    },
+    SET_LOADING (state, payload) {
+      state.loading = payload
     }
   },
   actions: {
     getAllItem ({ commit }) {
+      commit('SET_LOADING', true)
       axios({
         method: `GET`,
         url: `/products`,
@@ -24,6 +29,7 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
+          commit('SET_LOADING', false)
           commit('SET_ALL_PRODUCT', data.data)
         })
         .catch(err => {
