@@ -6,7 +6,8 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
-    isAuth: false
+    isAuth: false,
+    items: []
   },
   mutations: {
     SUCCESS_AUTH(state) {
@@ -14,6 +15,9 @@ const store = new Vuex.Store({
     },
     LOGOUT(state) {
       state.isAuth = false;
+    },
+    SET_ITEMS(state, payload) {
+      state.items = payload;
     }
   },
   actions: {
@@ -39,6 +43,24 @@ const store = new Vuex.Store({
           access_token: localStorage.access_token
         },
         data: payload
+      });
+    },
+    fetchProduct() {
+      return axios({
+        method: 'GET',
+        url: '/products',
+        headers: {
+          access_token: localStorage.access_token
+        }
+      });
+    },
+    deleteProduct(context, id) {
+      return axios({
+        method: 'DELETE',
+        url: `/products/${id}`,
+        headers: {
+          access_token: localStorage.access_token
+        }
       });
     }
   }

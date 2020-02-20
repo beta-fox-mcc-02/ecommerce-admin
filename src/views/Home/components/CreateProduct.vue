@@ -62,6 +62,11 @@ export default {
         .then(({ data }) => {
           console.log(data);
           this.$emit('closeModal');
+          return this.$store.dispatch('fetchProduct');
+        })
+        .then(({ data }) => {
+          console.log(data.data);
+          this.$store.commit('SET_ITEMS', data.data);
         })
         .catch(({ response }) => {
           console.log(response);
