@@ -1,9 +1,19 @@
 <template>
   <div>
-    <!-- add -->
+    <!-- update -->
     <div>
       <b-modal id="modal-2" ref="modal-2-ref" title="Update Product">
         <UpdateProduct :idProduct="idProduct" @closeModal="closeModal" />
+        <template v-slot:modal-footer>
+          <div class="w-100 h-auto"></div>
+        </template>
+      </b-modal>
+    </div>
+
+    <!-- delete -->
+    <div>
+      <b-modal id="modal-3" ref="modal-3-ref" title="Delete Product">
+        <DeleteProduct :idProduct="idProduct" @closeModal="closeModal" />
         <template v-slot:modal-footer>
           <div class="w-100 h-auto"></div>
         </template>
@@ -46,6 +56,7 @@
 
 <script>
 import UpdateProduct from './UpdateProduct.vue';
+import DeleteProduct from './DeleteProduct.vue';
 
 export default {
   data() {
@@ -63,7 +74,8 @@ export default {
     };
   },
   components: {
-    UpdateProduct
+    UpdateProduct,
+    DeleteProduct
   }
   ,
   methods: {
@@ -78,17 +90,8 @@ export default {
         });
     },
     deleteProduct(id) {
-      this.$store.dispatch('deleteProduct', id)
-        .then(() => {
-          return this.$store.dispatch('fetchProduct');
-        })
-        .then(({ data }) => {
-          console.log(data.data);
-          this.$store.commit('SET_ITEMS', data.data);
-        })
-        .catch(({ response }) => {
-          console.log(response);
-        });
+      this.$refs['modal-3-ref'].show();
+      this.idProduct = id;
     },
     updateProduct(id) {
       console.log(id);
@@ -97,6 +100,7 @@ export default {
     },
     closeModal() {
       this.$refs['modal-2-ref'].hide();
+      this.$refs['modal-3-ref'].hide();
     },
     printStock(value) {
       if (Number(value) === 1)
