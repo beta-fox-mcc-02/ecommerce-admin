@@ -6,7 +6,8 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    serverUrl: 'https://mysterious-beach-02436.herokuapp.com',
+    serverUrl: 'http://localhost:3000',
+    admins: [],
     products: [],
     categories: [],
     email: '',
@@ -21,6 +22,9 @@ const store = new Vuex.Store({
   mutations: {
     fetchProducts (state, obj) {
       state.products = obj.data
+    },
+    getAdmins (state, params) {
+      state.admins = params
     },
     setEmail (state, params) {
       state.email = params
@@ -134,6 +138,27 @@ const store = new Vuex.Store({
         method: 'DELETE',
         url: `${context.state.serverUrl}/product/${id}`
       })
+    },
+    fetchAdmins (context) {
+      return axios({
+        method: 'GET',
+        url: `${context.state.serverUrl}/admins`
+      })
+    },
+    createAdminAsync (context) {
+      const input = context.state
+      const token = localStorage.getItem('access_token')
+      if (input.email && input.password) {
+        return axios({
+          method: 'POST',
+          url: `${context.state.serverUrl}/admin/register`,
+          headers: { token },
+          data: {
+            email: input.email,
+            password: input.password
+          }
+        })
+      } else return null
     }
   }
 })

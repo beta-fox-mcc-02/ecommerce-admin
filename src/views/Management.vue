@@ -2,18 +2,18 @@
   <div>
     <Upperbar />
     <Sidebar />
-    <Summaries />
+    <Management />
   </div>
 </template>
 
 <script>
 import Sidebar from '../components/sidebar.vue'
 import Upperbar from '../components/upperbar.vue'
-import Summaries from '../components/summaries.vue'
+import Management from '../components/managementComps.vue'
 
 export default {
   name: 'Summary',
-  components: { Sidebar, Upperbar, Summaries }
+  components: { Sidebar, Upperbar, Management }
 }
 </script>
 

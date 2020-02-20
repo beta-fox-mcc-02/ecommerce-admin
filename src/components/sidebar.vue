@@ -1,6 +1,6 @@
 <template>
   <div id="sidebar">
-    <div><button v-on:click="summaryPage">summary</button></div>
+    <div><button v-on:click="managementPage">management</button></div>
     <div><button v-on:click="productPage">product</button></div>
   </div>
 </template>
@@ -8,7 +8,7 @@
 <script>
 export default {
   methods: {
-    summaryPage () { this.$router.push('/summary') },
+    managementPage () { this.$router.push('/management') },
     productPage () { this.$router.push('/product') }
   }
 }
@@ -18,7 +18,7 @@ export default {
 
 div#sidebar {
   width: 10rem;
-  position: fixed;
+  position: absolute;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -39,7 +39,7 @@ div button{
   width: 100%;
   cursor: pointer;
   margin: 0.5rem 0;
-  font-size: 20pt;
+  font-size: 15pt;
   color: white;
   font-style: italic;
   font-family: serif;

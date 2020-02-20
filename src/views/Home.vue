@@ -1,9 +1,10 @@
 <template>
   <div>
     <Loading v-if="isLoading" />
-    <div v-else>
+    <div id="homePage" v-else>
       <Upperbar />
       <Sidebar />
+      <img src="welcome.jpg" />
     </div>
   </div>
 </template>
@@ -30,5 +31,13 @@ export default {
 </script>
 
 <style scoped>
+
+div#homePage {
+    position: relative;
+}
+
+img {
+  width: 100%;
+}
 
 </style>
