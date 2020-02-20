@@ -14,6 +14,9 @@ const store = new Vuex.Store({
     setLogin(state, payload) {
       state.isLogin = true;
       state.personData = payload;
+      if (payload.user_role === 'admin') {
+        state.isAdmin = true;
+      }
     },
     setError(state, error) {
       state.error = error;
@@ -38,6 +41,10 @@ const store = new Vuex.Store({
       context.commit('setLoading');
       context.commit('setLogout');
       context.commit('stopLoading');
+    },
+    registerUser(context, payload) {
+      context.commit('setLoading');
+      return userAPI.post('/register', payload);
     },
   },
 });

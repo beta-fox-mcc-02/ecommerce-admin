@@ -62,6 +62,11 @@ export default {
 body {
   background: #f6f5f7;
 }
+
+/* .quick-menu {
+  top: 50px !important;
+} */
+
 h1 {
   font-weight: 700;
   margin: 15px 0;

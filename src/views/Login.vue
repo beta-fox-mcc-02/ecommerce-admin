@@ -3,10 +3,10 @@
     <Navigation></Navigation>
     <div v-bind:class="{ active: isActive }" class="box">
       <div class="form-container sign-up-container">
-        <form @submit.prevent="register()">
+        <form @submit.prevent="registerUser()">
           <h1>Create Account</h1>
           <div v-if="error" class="alert alert-danger">{{ error }}</div>
-          <input v-model="email" type="email" placeholder="Email" />
+          <input :autofocus="isActive" v-model="email" type="email" placeholder="Email" />
           <input v-model="password" type="password" placeholder="Password" />
           <button type="submit">Sign Up</button>
         </form>
@@ -15,7 +15,7 @@
         <form @submit.prevent="login()">
           <h1>Sign in</h1>
           <div v-if="error" class="alert alert-danger">{{ error }}</div>
-          <input v-model="email" type="email" placeholder="Email" />
+          <input :autofocus="!isActive" v-model="email" type="email" placeholder="Email" />
           <input v-model="password" type="password" placeholder="Password" />
           <button type="submit">Sign In</button>
         </form>
@@ -99,9 +99,41 @@ export default {
           this.$store.commit('stopLoading');
         });
     },
-    register() {
+    registerUser() {
       this.resetError();
+      const data = {
+        email: this.email,
+        password: this.password,
+        user_role: 'user',
+      };
+      this.$store.dispatch('registerUser', data)
+        .then((response) => {
+          const payload = {
+            id: response.data.id,
+            email: response.data.email,
+            user_role: response.data.user_role,
+          };
+          this.$store.commit('setLogin', payload);
+          localStorage.token = response.data.token;
+          localStorage.person_id = response.data.id;
+          this.$router.push('/');
+        })
+        .catch((err) => {
+          const error = Array.isArray(err.response.data.error)
+            ? err.response.data.error[0] : err.response.data.error;
+          this.$store.commit('setError', error);
+        })
+        .finally(() => {
+          this.$store.commit('stopLoading');
+        });
     },
+  },
+  beforeRouteEnter(to, from, next) {
+    if (localStorage.token) {
+      next('/');
+    } else {
+      next();
+    }
   },
 };
 </script>
