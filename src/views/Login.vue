@@ -7,7 +7,7 @@
         <div class="col-sm">
             <div class="card card-signup z-depth-0 text-center">
                 <div class="card-header">
-                    <img alt="Vuelogo" src="../assets/logo.png" style="width: 100px">
+                    <img alt="Vuelogo" src="../assets/Zeon_Emblem.png" style="width: 100px">
                 </div>
                 <div class="card-body">
                     <label>LOGIN</label><div>

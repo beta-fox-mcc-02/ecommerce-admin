@@ -1,55 +1,7 @@
 <template>
   <div>
-    <a data-toggle="modal" :data-target="'#edit'+id" class="btn btn-success">Edit</a>
-    <a data-toggle="modal" :data-target="'#del'+id" class="btn btn-success">Delete</a>
-    <div class="modal fade" :id="'del'+id" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <p class="modal-title">Delete Gundam</p>
-                </div>
-                <div class="modal-body">
-                    <p>Are you Sure?</p>
-                </div>
-                <div class="modal-footer">
-                    <button @click="del" class="btn btn-danger">Yes</button>
-                    <button data-dismiss="modal" class="btn btn-success">No</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" :id="'edit'+id" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <p class="modal-title">Edit Gundam</p>
-                </div>
-                <div class="modal-body">
-                    <form @submit.prevent="edit">
-                        <div class="form-group">
-                            <label>Name</label>
-                            <input type="text" v-model="name" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label>Image Url</label>
-                            <input type="text" v-model="imageUrl" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label>Price</label>
-                            <input type="number" v-model="price" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label>Stock</label>
-                            <input type="number" v-model="stock" class="form-control">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Edit</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- <b-button data-toggle="modal" :data-target="'add'+id" class="btn btn-success text-light">Edit Beneran</b-button>
-    <b-modal :id="'add'+id" title="Edit Gundam">
+    <b-button data-toggle="modal" v-b-modal="'edit'+id" class="btn btn-success text-light"><i class="fas fa-edit"></i></b-button>
+    <b-modal :id='"edit"+id' title="Edit Gundam" hide-footer>
         <b-form @submit.prevent="edit" class="text-center">
               <b-form-group id="input-group-1" label="Gundam Name:" label-for="input-1">
               <b-form-input
@@ -86,9 +38,15 @@
               placeholder="Enter Gundam Stock"
             ></b-form-input>
             </b-form-group>
-            <b-button class="btn-success" type="submit" variant="primary">Add Gundam</b-button>
+            <b-button class="btn-success" type="submit" variant="primary">Update Gundam</b-button>
         </b-form>
-    </b-modal> -->
+    </b-modal>
+    <b-button data-toggle="modal" v-b-modal="'del'+id" class="btn btn-success text-light"><i class="fas fa-trash-alt"></i></b-button>
+    <b-modal :id="'del'+id" title="Delete Gundam" hide-footer>
+      <p>Are you realy sure?</p>
+      <button @click="del" class="btn btn-danger"><i class="far fa-thumbs-up"></i></button>
+      <button @click="no" class="btn btn-success"><i class="far fa-thumbs-down"></i></button>
+    </b-modal>
   </div>
 </template>
 
@@ -120,15 +78,28 @@ export default {
         price: this.price,
         stock: this.stock
       }
-      console.log(updateGundam)
-      this.name = ''
-      this.imageUrl = ''
-      this.price = ''
-      this.stock = ''
+      // console.log(updateGundam)
       this.$store.dispatch('editProduct', updateGundam)
+        .then(({ data }) => {
+          this.$store.dispatch('fetchProducts')
+          this.$bvModal.hide(`edit${this.id}`)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     },
     del () {
       this.$store.dispatch('deleteProduct', this.id)
+        .then(({ data }) => {
+          this.$store.dispatch('fetchProducts')
+          this.$bvModal.hide(`edit${this.id}`)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    no () {
+      this.$bvModal.hide(`edit${this.id}`)
     }
   }
 }

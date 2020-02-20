@@ -1,7 +1,7 @@
 <template>
   <div>
-    <b-button v-b-modal.add class="btn btn-success text-light">+</b-button>
-    <b-modal id="add" title="New Gundam">
+    <b-button v-b-modal.add class="btn btn-success text-light"><i class="fas fa-plus-square"></i></b-button>
+    <b-modal id="add" title="New Gundam" hide-footer>
         <b-form @submit.prevent="register" class="text-center">
               <b-form-group id="input-group-1" label="Gundam Name:" label-for="input-1">
               <b-form-input
@@ -64,6 +64,13 @@ export default {
         stock: this.stock
       }
       this.$store.dispatch('addProduct', NewGundam)
+        .then(({ data }) => {
+          this.$store.dispatch('fetchProducts')
+          this.$bvModal.hide('add')
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   }
 }

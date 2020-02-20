@@ -20,7 +20,7 @@
                                 <br>
                                 Stock : {{product.stock}}
                             </p>
-                            <button class="btn btn-primary">Edit</button>
+                            <button class="btn btn-primary"><i class="fas fa-cart-plus"></i></button>
                         </div>
                     </div>
                 </div>

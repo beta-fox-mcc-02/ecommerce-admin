@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import router from '../router'
+import Toastify from 'toastify-js'
 // import url from '@/axios/config'
 
 Vue.use(Vuex)
@@ -28,8 +29,13 @@ const store = new Vuex.Store({
           context.commit('ISLOGIN', true)
           router.push('/admin')
         })
-        .catch(err => {
-          console.log(err)
+        .catch(({ response }) => {
+          console.log(response.data.err)
+          Toastify({
+            text: response.data.err,
+            backgroundColor: 'linear-gradient(to right, #00b09b, #96c93d)',
+            className: 'info'
+          }).showToast()
         })
     },
     registerAdmin (context, payload) {
@@ -44,17 +50,11 @@ const store = new Vuex.Store({
         })
     },
     addProduct (context, payload) {
-      axios.post('http://localhost:3000/products/list', payload,
+      return axios.post('http://localhost:3000/products/list', payload,
         {
           headers: {
             token: localStorage.token
           }
-        })
-        .then(({ data }) => {
-          this.fetchProducts()
-        })
-        .catch(err => {
-          console.log(err)
         })
     },
     fetchProducts (context) {
@@ -68,33 +68,19 @@ const store = new Vuex.Store({
         })
     },
     editProduct (context, payload) {
-      axios.put(`http://localhost:3000/products/${payload.id}/item`, payload,
+      return axios.put(`http://localhost:3000/products/${payload.id}/item`, payload,
         {
           headers: {
             token: localStorage.token
           }
         })
-        .then(({ data }) => {
-        //   console.log(data)
-          router.push('/admin')
-        })
-        .catch(err => {
-          console.log(err)
-        })
     },
     deleteProduct (context, payload) {
-      axios.delete(`http://localhost:3000/products/${payload}/item`, {
+      return axios.delete(`http://localhost:3000/products/${payload}/item`, {
         headers: {
           token: localStorage.token
         }
       })
-        .then(({ data }) => {
-        //   console.log(data)
-          router.push('/admin')
-        })
-        .catch(err => {
-          console.log(err)
-        })
     }
   }
 })
