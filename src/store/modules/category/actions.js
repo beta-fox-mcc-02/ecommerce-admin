@@ -30,6 +30,10 @@ const actions = {
   createCategory: ({ commit }, payload) => {
     commit('SET_LOADING', true)
     return resource.createCategory(payload)
+  },
+  deleteCategory: ({ commit }, payload) => {
+    commit('SET_LOADING', true)
+    return resource.deleteCategory({ id: payload.id })
   }
 }
 

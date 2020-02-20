@@ -17,7 +17,8 @@ const customActions = {
   login: { method: 'POST', url: 'admin/login' },
   getAdmin: { method: 'GET', url: 'admin' },
   getCategories: { method: 'GET', url: 'categories' },
-  createCategory: { method: 'POST', url: 'categories' }
+  createCategory: { method: 'POST', url: 'categories' },
+  deleteCategory: { method: 'DELETE', url: 'categories{/id}' }
 }
 const resources = Vue.resource('', {}, customActions)
 export default resources

@@ -28,7 +28,7 @@
             <td>{{ category.path }}</td>
             <td>
                <v-icon class="pointer color-blue">mdi-pencil</v-icon>
-               <v-icon class="pointer color-red">mdi-delete</v-icon>
+               <v-icon class="pointer color-red" @click="openModalDelete(category.id, 'categories')">mdi-delete</v-icon>
             </td>
           </tr>
           <tr v-if="!categories.length">
@@ -38,25 +38,34 @@
       </template>
     </v-simple-table>
     <CategoryModal />
+    <DeleteModal :id="id" :type="type" :dialog="dialog" />
   </Fragment>
 </template>
 
 <script>
 import CategoryModal from '@/components/CategoryModal.vue'
+import DeleteModal from '@/components/DeleteModal.vue'
 import { Fragment } from 'vue-fragment'
 export default {
   name: 'Category',
   components: {
     CategoryModal,
-    Fragment
+    Fragment,
+    DeleteModal
   },
   data: () => ({
+    id: 0,
     dialog: false,
-    id: 0
+    type: ''
   }),
   methods: {
     openModal (payload) {
       this.$store.dispatch('openModalCategory', payload)
+    },
+    openModalDelete (id, type) {
+      this.dialog = !this.dialog
+      this.id = id
+      this.type = type
     }
   },
   created () {

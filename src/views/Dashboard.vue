@@ -41,8 +41,10 @@ export default {
       if (localStorage.token) {
         vm.$store.dispatch('checkAuthentication')
           .then(response => {
-            if (response.body.id) {
+            if (response.body.role.name === 'Admin') {
               next()
+            } else {
+              next('/login')
             }
           })
           .catch((err) => {

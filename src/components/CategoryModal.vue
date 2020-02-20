@@ -1,8 +1,9 @@
 <template>
   <v-row justify="center">
     <v-dialog
-      :scrollable="scrollable"
-      persistent v-model="dialog"
+      persistent
+      v-model="dialog"
+      content-class ="height-100"
       max-width="600px">
       <v-card>
         <v-card-title>
@@ -10,13 +11,7 @@
         </v-card-title>
         <v-card-text>
           <v-container>
-              <v-alert
-              v-if="errors.length"
-              text
-              outlined
-              color="deep-orange"
-              icon="mdi-fire"
-            >{{ errors.join('\n') }}</v-alert>
+            <Alert :errors="errors" />
             <v-row>
               <v-col cols="12">
                 <v-text-field label="Name"
@@ -59,13 +54,14 @@
 <script>
 import { required } from 'vuelidate/lib/validators'
 import CircularLoading from './CircularLoading'
+import Alert from './Alert'
 export default {
   name: 'CategoryModal',
   components: {
-    CircularLoading
+    CircularLoading,
+    Alert
   },
   data: () => ({
-    scrollable: false,
     name: '',
     path: ''
   }),
@@ -135,7 +131,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .v-dialog {
-    max-height: 100% !important;
-  }
+.v-dialog--persistent {
+  max-height: 100% !important;
+}
 </style>
