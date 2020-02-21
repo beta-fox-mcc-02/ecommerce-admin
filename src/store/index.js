@@ -45,8 +45,13 @@ const store = new Vuex.Store({
           context.commit('ISLOGIN', true)
           router.push('/admin')
         })
-        .catch(err => {
-          console.log(err)
+        .catch(({ response }) => {
+          console.log(response.data.err)
+          Toastify({
+            text: response.data.err,
+            backgroundColor: 'linear-gradient(to right, #00b09b, #96c93d)',
+            className: 'info'
+          }).showToast()
         })
     },
     addProduct (context, payload) {
@@ -63,8 +68,13 @@ const store = new Vuex.Store({
         //   console.log(data)
           context.commit('FETCH_PRODUCTS', data)
         })
-        .catch(err => {
-          console.log(err)
+        .catch(({ response }) => {
+          console.log(response.data.err)
+          Toastify({
+            text: response.data.err,
+            backgroundColor: 'linear-gradient(to right, #00b09b, #96c93d)',
+            className: 'info'
+          }).showToast()
         })
     },
     editProduct (context, payload) {

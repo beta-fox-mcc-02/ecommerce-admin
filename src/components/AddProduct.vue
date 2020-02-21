@@ -45,6 +45,7 @@
 </template>
 
 <script>
+import Toastify from 'toastify-js'
 export default {
 //   name: 'NewGundam',
   data () {
@@ -68,8 +69,15 @@ export default {
           this.$store.dispatch('fetchProducts')
           this.$bvModal.hide('add')
         })
-        .catch(err => {
-          console.log(err)
+        .catch(({ response }) => {
+          console.log(response.data.err)
+          response.data.err.forEach(element => {
+            Toastify({
+              text: element,
+              backgroundColor: 'linear-gradient(to right, #00b09b, #96c93d)',
+              className: 'info'
+            }).showToast()
+          })
         })
     }
   }
