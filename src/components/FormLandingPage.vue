@@ -58,12 +58,14 @@ export default {
         };
         this.$store.dispatch("registerAdmin", payload)
           .then(({ data }) => {
+            this.$store.commit('SET_LOADING', false);
             this.$store.commit("SUCCESS_AUTH", data.access_token);
             localStorage.access_token = data.access_token;
             this.$router.push('/home');
             console.log(data.access_token);
           })
           .catch(({ response }) => {
+            this.$store.commit('SET_LOADING', false);
             console.log(response);
           });
       } else if (this.titleForm === 'Login') { //login
@@ -73,12 +75,14 @@ export default {
         };
         this.$store.dispatch("loginAdmin", payload)
           .then(({ data }) => {
+            this.$store.commit('SET_LOADING', false);
             this.$store.commit("SUCCESS_AUTH", data.access_token);
             localStorage.access_token = data.access_token;
             this.$router.push('/home');
             console.log(data.access_token);
           })
           .catch(({ response }) => {
+            this.$store.commit('SET_LOADING', false);
             console.log(response);
           });
       }

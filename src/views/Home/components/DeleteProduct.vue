@@ -26,11 +26,12 @@ export default {
           return this.$store.dispatch('fetchProduct');
         })
         .then(({ data }) => {
-          console.log(data.data);
+          this.$store.commit('SET_LOADING', false);
           this.$store.commit('SET_ITEMS', data.data);
           this.$emit('closeModal');
         })
         .catch(({ response }) => {
+          this.$store.commit('SET_LOADING', false);
           console.log(response);
         });
     },

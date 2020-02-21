@@ -82,10 +82,12 @@ export default {
     fetchData() {
       this.$store.dispatch('fetchProduct')
         .then(({ data }) => {
+          this.$store.commit('SET_LOADING', false);
           console.log(data.data);
           this.$store.commit('SET_ITEMS', data.data);
         })
         .catch(({ response }) => {
+          this.$store.commit('SET_LOADING', false);
           console.log(response);
         });
     },

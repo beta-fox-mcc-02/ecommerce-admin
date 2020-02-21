@@ -7,7 +7,8 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     isAuth: false,
-    items: []
+    items: [],
+    loading: false
   },
   mutations: {
     SUCCESS_AUTH(state) {
@@ -18,10 +19,14 @@ const store = new Vuex.Store({
     },
     SET_ITEMS(state, payload) {
       state.items = payload;
+    },
+    SET_LOADING(state, status) {
+      state.loading = status;
     }
   },
   actions: {
     registerAdmin(context, payload) {
+      this.commit('SET_LOADING', true);
       return axios({
         method: 'POST',
         url: '/register',
@@ -29,6 +34,7 @@ const store = new Vuex.Store({
       });
     },
     loginAdmin(context, payload) {
+      this.commit('SET_LOADING', true);
       return axios({
         method: 'POST',
         url: '/login',
@@ -36,6 +42,7 @@ const store = new Vuex.Store({
       });
     },
     createProduct(context, payload) {
+      this.commit('SET_LOADING', true);
       return axios({
         method: 'POST',
         url: '/products',
@@ -46,6 +53,7 @@ const store = new Vuex.Store({
       });
     },
     fetchProduct() {
+      this.commit('SET_LOADING', true);
       return axios({
         method: 'GET',
         url: '/products',
@@ -55,6 +63,7 @@ const store = new Vuex.Store({
       });
     },
     deleteProduct(context, id) {
+      this.commit('SET_LOADING', true);
       return axios({
         method: 'DELETE',
         url: `/products/${id}`,
@@ -64,6 +73,7 @@ const store = new Vuex.Store({
       });
     },
     updateProduct(context, payload) {
+      this.commit('SET_LOADING', true);
       return axios({
         method: 'PUT',
         url: `/products/${payload.id}`,
