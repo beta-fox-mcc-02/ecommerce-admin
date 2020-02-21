@@ -79,4 +79,7 @@ export default {
   transform: rotate(360deg);
   transition: .7s
 }
+td {
+  padding: 5px;
+}
 </style>

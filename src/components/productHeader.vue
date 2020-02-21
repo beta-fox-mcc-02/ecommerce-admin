@@ -8,6 +8,9 @@
           <label for="searchQuery">Search Product</label>
         </div>
       </form>
+      <div class="col clearQuery" :class="{ disabled: !searchQuery }" @click.prevent="clearQuery">
+        <i class="material-icons">close</i>
+      </div>
       <div class="col addButton" @click.prevent="addProduct">
         <i class="material-icons">add_circle</i>
       </div>
@@ -25,10 +28,17 @@ export default {
   methods: {
     searchProduct () {
       this.$emit('filterProduct', this.searchQuery)
-      this.searchQuery = ''
     },
     addProduct () {
       this.$store.commit('SHOW_ADD_FORM', true)
+    },
+    clearQuery () {
+      this.searchQuery = ''
+    }
+  },
+  watch: {
+    searchQuery (value) {
+      this.searchProduct()
     }
   }
 }
@@ -39,11 +49,26 @@ export default {
   font-size: 3rem;
   color: #2c3b41;
   transition: 1s;
+  cursor: pointer;
 }
 .addButton i:hover {
-  font-size: 3rem;
   color: blue;
   transform: rotate(360deg);
+  transition: 1s;
+}
+.disabled {
+  visibility: hidden;
+}
+.clearQuery {
+  padding-left: 0;
+}
+.clearQuery i {
+  color: #2c3b41;
+  transition: 1s;
+  cursor: pointer;
+}
+.clearQuery i:hover {
+  color: red;
   transition: 1s;
 }
 </style>

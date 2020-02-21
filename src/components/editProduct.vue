@@ -15,7 +15,7 @@
         </div>
         <div class="row">
           <div class="input-field col s4">
-            <select class="browser-default">
+            <select class="browser-default" v-model="CategoryId">
               <option value="1">Computer</option>
               <option value="2">Smartphone</option>
               <option value="3">Peripheral</option>

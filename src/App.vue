@@ -40,11 +40,15 @@ export default {
     },
     fetchProduct () {
       this.$store.dispatch('fetchProducts')
+    },
+    fetchAllUsers () {
+      this.$store.dispatch('fetchAllUsers')
     }
   },
   created () {
     this.checkToken()
     this.fetchProduct()
+    this.fetchAllUsers()
     // console.log(this.$store.state.products)
   }
 }
