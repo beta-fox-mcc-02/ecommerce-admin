@@ -1,10 +1,17 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link v-if="checkAdmin" to="/admin">Admin</router-link> |
-      <router-link to="/login">Login</router-link>
+      <div class="nav-left">
+        LOGO E-COMMERCE
+      </div>
+      <div class="nav-center">
+        <router-link class="content" to="/admin">Dashboard</router-link>
+      </div>
+      <div class="nav-right">
+        <router-link class="content" v-if="!checkLogin" to="/login">Login</router-link>
+        <router-link class="content" v-if="!checkLogin" to="/register">Register</router-link>
+        <router-link @click.native="logout" v-if="checkLogin" class="content" to="/login">Logout</router-link>
+      </div>
     </div>
     <router-view/>
   </div>
@@ -15,11 +22,25 @@ export default {
   computed: {
     checkAdmin () {
       return this.$store.state.isAdmin
+    },
+    checkLogin () {
+      console.log(this.$store.state.isLogin, 'bambaangg')
+      return this.$store.state.isLogin
     }
   },
   created () {
     if (localStorage.token) {
       this.$store.commit('VERIFY_TOKEN', localStorage.token)
+      this.$store.commit('ISLOGIN', true)
+    } else {
+      this.$router.push({ path: '/login' })
+    }
+  },
+  methods: {
+    logout () {
+      console.log('masuk bambang')
+      localStorage.clear()
+      this.$store.commit('ISLOGIN', false)
     }
   }
 }
@@ -36,10 +57,14 @@ export default {
 
 #nav {
   padding: 10px;
-  background-color: #434e52;
+  background-color: black;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+}
+
+.content {
+  padding: 5px 5px;
 }
 
 #nav a {

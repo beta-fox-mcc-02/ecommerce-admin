@@ -1,6 +1,6 @@
 <template>
   <div class="center-bar">
-    <AdminCenterBarUp/>
+    <!-- <AdminCenterBarUp/> -->
     <div class="center-bar-down">
         <table class="product-table">
           <tr>
@@ -24,8 +24,12 @@
               <img class="image" :src="product.image_url">
             </td>
             <td>
-              <a href=""><i class="fas fa-edit"></i></a> |
-              <a href=""><i class="fas fa-trash-alt"></i></a>
+              <a href=""
+              @click.prevent="formEdit(product.id)"
+              ><i class="fas fa-edit"></i></a> |
+              <a href=""
+              @click.prevent="destroyProduct(product.id)"
+              ><i class="fas fa-trash-alt"></i></a>
             </td>
           </tr>
         </table>
@@ -34,16 +38,23 @@
 </template>
 
 <script>
-import AdminCenterBarUp from '../components/AdminCenterBarUp'
+// import AdminCenterBarUp from '../components/AdminCenterBarUp'
 
 export default {
   name: 'AdminCenterBar',
   components: {
-    AdminCenterBarUp
+    // AdminCenterBarUp
   },
   methods: {
     fetchProduct () {
       this.$store.dispatch('fetchProduct')
+    },
+    destroyProduct (id) {
+      this.$store.dispatch('deleteProduct', id)
+    },
+    formEdit (id) {
+      console.log('masuuukkk siniiii')
+      this.$store.dispatch('formEdit', id)
     }
   },
   created () {

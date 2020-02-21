@@ -2,10 +2,14 @@
   <div class="admin">
     <div class="content-admin">
       <div class="side-bar">
-        <div class="side-content">MANAGE PRODUCTS</div>
-        <div class="side-content">MANAGE USERS</div>
+        <div class="side-content">
+          <router-link class="content" to="/admin/list-products">LIST PRODUCTS</router-link>
+        </div>
+        <div class="side-content">
+          <router-link class="content" to="/admin/add-products">ADD PRODUCTS</router-link>
+        </div>
       </div>
-      <AdminCenterBar/>
+      <router-view/>
       <div class="end-bar">
         jiwa
       </div>
@@ -14,7 +18,8 @@
 </template>
 
 <script>
-import AdminCenterBar from '../components/AdminCenterBar'
+// import Products from '../components/Products'
+// import AddProducts from '../components/AddProducts'
 
 export default {
   name: 'Admin',
@@ -23,9 +28,13 @@ export default {
     }
   },
   components: {
-    AdminCenterBar
+    // Products,
+    // AddProducts
   },
   created () {
+    if (!localStorage.token) {
+      this.$router.push({ path: '/login' })
+    }
   }
 }
 </script>
@@ -39,7 +48,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  width: 30vh;
+  width: 40vh;
   height: 100vh;
   background-color: #21243d;
   color: white
