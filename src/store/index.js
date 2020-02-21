@@ -39,7 +39,11 @@ export default new Vuex.Store({
     access_token: '',
     isLogin: false,
     username: '',
-    oneProduct: {}
+    oneProduct: {},
+    admin: [],
+    inactiveAdmin: [],
+    allUsers: [],
+    superAdmin: false
   },
   mutations: {
     FETCH_PRODUCTS (state, data) {
@@ -66,6 +70,18 @@ export default new Vuex.Store({
     },
     SET_LOGIN (state, data) {
       state.isLogin = data
+    },
+    // FETCH_ADMIN (state, data) {
+    //   state.admin = data.filter(admin => admin.isActivated)
+    // },
+    // FETCH_INACTIVE_ADMIN (state, data) {
+    //   state.inactiveAdmin = data.filter(admin => !admin.isActivated)
+    // },
+    FETCH_ALL_USERS (state, data) {
+      state.allUsers = data
+    },
+    SET_SUPER_ADMIN (state, data) {
+      state.superAdmin = data
     }
   },
   actions: {
@@ -144,6 +160,91 @@ export default new Vuex.Store({
           isAdmin: data.isAdmin
         }
       })
+    },
+
+    // fetchAdmin (context) {
+    //   axios({
+    //     method: 'get',
+    //     url: process.env.VUE_APP_BASEURL + 'showAdmin'
+    //   })
+    //     .then(({ data }) => {
+    //       context.commit('FETCH_ADMIN', data)
+    //     })
+    //     .catch(err => {
+    //       context.commit('SET_ERROR', err)
+    //     })
+    // },
+
+    // fetchInactiveAdmin (context) {
+    //   axios({
+    //     method: 'get',
+    //     url: process.env.VUE_APP_BASEURL + 'showAdmin'
+    //   })
+    //     .then(({ data }) => {
+    //       context.commit('FETCH_INACTIVE_ADMIN', data)
+    //     })
+    //     .catch(err => {
+    //       context.commit('SET_ERROR', err)
+    //     })
+    // },
+
+    fetchAllUsers (context) {
+      axios({
+        method: 'get',
+        url: process.env.VUE_APP_BASEURL + 'showUsers'
+      })
+        .then(({ data }) => {
+          context.commit('FETCH_ALL_USERS', data)
+        })
+        .catch(err => {
+          context.commit('SET_ERROR', err)
+        })
+    },
+
+    deleteAdmin (context, id) {
+      return axios({
+        method: 'delete',
+        url: process.env.VUE_APP_BASEURL + 'deleteAdmin/' + id,
+        headers: {
+          access_token: this.state.access_token
+        }
+      })
+    },
+
+    deleteUser (context, id) {
+      return axios({
+        method: 'delete',
+        url: process.env.VUE_APP_BASEURL + 'deleteUser/' + id,
+        headers: {
+          access_token: this.state.access_token
+        }
+      })
+    },
+
+    activateAdmin (context, id) {
+      return axios({
+        method: 'patch',
+        url: process.env.VUE_APP_BASEURL + 'updateAdmin/' + id,
+        data: {
+          isActivated: true
+        },
+        headers: {
+          access_token: this.state.access_token
+        }
+      })
+    },
+
+    changeUserPassword (context, data) {
+      return axios({
+        method: 'patch',
+        url: process.env.VUE_APP_BASEURL + 'updateUserPassword/' + data.id,
+        data: {
+          password: data.password
+        },
+        headers: {
+          access_token: this.state.access_token
+        }
+      })
     }
   },
 
@@ -153,6 +254,15 @@ export default new Vuex.Store({
     getFilteredProducts (state, words) {
       const regex = new RegExp(words, 'gi')
       return state.products.filter(product => product.name.match(regex))
+    },
+    getAdmins (state, words) {
+      return state.allUsers.filter(users => users.isActivated)
+    },
+    getInactiveAdmins (state, words) {
+      return state.allUsers.filter(users => !users.isActivated && users.isAdmin)
+    },
+    getUsers (state, words) {
+      return state.allUsers.filter(users => !users.isAdmin)
     }
   }
 })
