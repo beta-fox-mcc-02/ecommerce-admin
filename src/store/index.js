@@ -2,11 +2,12 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 
+const serverUrl = 'https://mysterious-beach-02436.herokuapp.com'
+
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    serverUrl: 'https://mysterious-beach-02436.herokuapp.com',
     admins: [],
     products: [],
     categories: [],
@@ -77,7 +78,7 @@ const store = new Vuex.Store({
     fetchProducts (context) {
       axios({
         method: 'GET',
-        url: `${context.state.serverUrl}/products`
+        url: `${serverUrl}/products`
       })
         .then((result) => {
           this.commit('fetchProducts', { data: result.data.products })
@@ -87,13 +88,13 @@ const store = new Vuex.Store({
     getCategories (context) {
       return axios({
         method: 'GET',
-        url: `${context.state.serverUrl}/category`
+        url: `${serverUrl}/category`
       })
     },
     loginAsync (context) {
       return axios({
         method: 'POST',
-        url: `${context.state.serverUrl}/admin/login`,
+        url: `${serverUrl}/admin/login`,
         data: {
           email: context.state.email,
           password: context.state.password
@@ -112,7 +113,7 @@ const store = new Vuex.Store({
         }
         return axios({
           method: 'POST',
-          url: `${context.state.serverUrl}/product`,
+          url: `${serverUrl}/product`,
           data
         })
       } else return null
@@ -122,7 +123,7 @@ const store = new Vuex.Store({
       if (input.name && input.price && input.stock && input.category) {
         return axios({
           method: 'PUT',
-          url: `${context.state.serverUrl}/product/${context.state.id}`,
+          url: `${serverUrl}/product/${context.state.id}`,
           data: {
             name: input.name,
             price: input.price,
@@ -136,13 +137,13 @@ const store = new Vuex.Store({
     deleteAsync (context, id) {
       return axios({
         method: 'DELETE',
-        url: `${context.state.serverUrl}/product/${id}`
+        url: `${serverUrl}/product/${id}`
       })
     },
     fetchAdmins (context) {
       return axios({
         method: 'GET',
-        url: `${context.state.serverUrl}/admins`
+        url: `${serverUrl}/admins`
       })
     },
     createAdminAsync (context) {
@@ -151,7 +152,7 @@ const store = new Vuex.Store({
       if (input.email && input.password) {
         return axios({
           method: 'POST',
-          url: `${context.state.serverUrl}/admin/register`,
+          url: `${serverUrl}/admin/register`,
           headers: { token },
           data: {
             email: input.email,
