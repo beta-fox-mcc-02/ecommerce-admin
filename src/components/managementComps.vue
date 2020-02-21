@@ -91,22 +91,32 @@ export default {
 
 <style scoped>
 
+section{
+    margin-left: 23vw;
+    margin-top: 1rem;
+}
+
 #admin-cards-header {
   display: flex;
   position: relative;
   align-items: center;
 }
 
-section {
-  margin-left: 12rem;
-  margin-top: 2rem;
+div#administrator-list {
+    background-color: whitesmoke;
+    width: 40vw;
+    height: 70vh;
+    min-height: 25rem;
+    padding: 1rem;
+    margin: 1rem 0;
+    box-shadow: 0 0 0.5rem #c5c5c5;
 }
 
 .header-desc {
-  width: 27rem;
-  font-weight: bold;
-  padding: 0.6rem;
-  border-radius: 0 0.6rem 0.6rem 0;
+    width: 12rem;
+    font-weight: bold;
+    padding: 0.6rem;
+    border-radius: 0 0.6rem 0.6rem 0;
 }
 
 #admin-cards-header:hover .header-desc{
@@ -155,19 +165,24 @@ input[type="email"], input[type="password"] {
 }
 
 .admincards-container {
-  display: flex;
-  width: 30rem;
-  padding: 0.5rem;
-  align-items: center;
-  margin: 0.3rem 0;
-  background-color: #efefef;
+    display: flex;
+    padding: 0.5rem;
+    color: white;
+    font-size: 15pt;
+    font-family: monospace;
+    align-items: center;
+    margin: 0.3rem 0;
+    background-color: #189a18;
+    border-radius: 1rem;
 }
 
 .adminbox-id {
-  margin: 0.2rem 0.5rem;
-  padding: 0.1rem 0.5rem;
-  border-left: 0.1rem dashed #bbbbbb;
-  border-right: 0.1rem dashed #bbbbbb;
+    margin: 0.2rem 0.5rem;
+    padding: 0.1rem 0.5rem;
+    width: 5%;
+    text-align: center;
+    font-family: none;
+    border-right: 0.1rem dashed #f5f5f5;
 }
 
 .adminbox-email {

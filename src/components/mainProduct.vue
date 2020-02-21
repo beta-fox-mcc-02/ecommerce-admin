@@ -1,9 +1,6 @@
 <template>
   <section id="main-product">
     <div id="header-container">
-      <div>
-        <button id="add-button"><i class="fas fa-filter"></i></button>
-      </div>
       <div id="form-product-container">
         <button id="add-button" v-on:click="showAddForm"><i class="fas fa-plus"></i></button>
         <AddProductForm v-if="isShowed" v-on:closeForm="closeForm" />
@@ -102,10 +99,10 @@ export default {
 <style scoped>
 
 section#main-product {
-  margin-left: 12rem;
-  margin-top: 1.5rem;
-  max-height: 35rem;
-  width: 50rem;
+    margin-left: 23vw;
+    margin-top: 1.5rem;
+    max-height: 35rem;
+    width: 74vw;
 }
 
 div#header-container {
@@ -139,19 +136,18 @@ tr#rowhead {
 }
 
 .id-cols{
-  width: 2rem;
+    width: 5%;
 }
 
 td {
   text-align: right;
 }
 th, td {
-  width: 8rem;
-  text-align: center;
+    width: 19%;
+    text-align: center;
 }
 
 .action-cols{
-  width: 12rem;
   display: flex;
   justify-content: center;
 }
@@ -161,14 +157,15 @@ tr {
   padding-bottom: 0.2rem;
 }
 
-#add-button, #filter-button {
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  margin: 0.3rem 0;
-  cursor: pointer;
-  background-color: #189a18;
-  color: white;
-  border-style: none;
+#add-button {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    margin: 0.3rem 0;
+    cursor: pointer;
+    background-color: #189a18;
+    color: white;
+    border-style: none;
+    box-shadow: 0 0 0.3rem #afafaf;
 }
 
 #add-button{

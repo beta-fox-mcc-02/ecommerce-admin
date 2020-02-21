@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div id="homePage">
     <Loading v-if="isLoading" />
-    <div id="homePage" v-else>
+    <div id="home-navbar" v-else>
       <Upperbar />
       <Sidebar />
-      <img src="welcome.jpg" />
+      <section id="main-content">asdasdas</section>
     </div>
   </div>
 </template>
@@ -33,6 +33,11 @@ export default {
 <style scoped>
 
 div#homePage {
+    width: 100vw;
+    height: 100vh;
+}
+
+div#home-navbar {
     position: relative;
 }
 

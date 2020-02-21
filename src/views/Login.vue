@@ -1,19 +1,21 @@
 <template>
   <div id="form-login">
-    <form v-on:submit.prevent="login">
-      <h1>WELCOME</h1>
-      <div class="inputs">
-        <input type="email" v-model="email" required><br>
-        <small>email</small>
-      </div>
-      <div class="inputs">
-        <input type="password" v-model="password" required><br>
-        <small>password</small>
-      </div>
-      <div class="button">
-        <button type="submit" id="login-btn">Login</button>
-      </div>
-    </form>
+    <div id="login-container">
+      <form v-on:submit.prevent="login">
+        <h1 id="login-header">Master Login</h1>
+        <div class="inputs">
+          <input type="email" v-model="email" required>
+          <small>email required!</small>
+        </div>
+        <div class="inputs">
+          <input type="password" v-model="password" required>
+          <small>password required!</small>
+        </div>
+        <div class="button">
+          <button type="submit" id="login-btn">Login</button>
+        </div>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -48,44 +50,78 @@ export default {
 <style scoped>
 
 div#form-login {
-  width: 30rem;
-  margin: auto;
-  margin-top: 5rem;
-  animation: fade-out 3s;
+    width: 100vw;
+    height: 100vh;
+    animation: fade-out-data-v-26084dc2 3s;
 }
 
-.inputs {
-  width: 50%;
-  padding: 1rem;
+#login-header {
+    margin-bottom: 1rem;
+    font-variant: small-caps;
+    border-bottom: 0.1rem solid #d8d8d8;
 }
 
-input {
-  outline: 0;
-  height: 2rem;
-  width: 100%;
-  border-style: none;
-  border-bottom: 0.1rem solid #dadada;
-  font-size: 17pt;
-  color: #777777;
-  font-style: italic;
-  font-family: none;
+div#login-container {
+    height: inherit;
+    display: flex;
+    background-color: #e6e6e6;
 }
 
 form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 1rem auto
+    width: 30vw;
+    min-width: 20rem;
+    height: 75vh;
+    min-height: 30rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 0 0.5rem silver;
+}
+
+.inputs {
+    padding: 0.2rem;
+    width: 60%;
+    margin: 0.5rem;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 0.5rem #c3c3c3;
+}
+
+input {
+    outline: 0;
+    height: 50%;
+    width: 85%;
+    margin: 0.2rem auto;
+    border-style: none;
+    font-size: 15pt;
+    font-style: italic;
+    font-family: none;
+    color: #14b314;
+}
+
+small {
+    margin-left: 1rem;
+    font-style: italic;
+    color: #e6e6e6;
 }
 
 button#login-btn {
-  padding: 0.5rem 3rem;
-  cursor: pointer;
-  font-family: none;
-  font-size: 15pt;
-  -webkit-text-stroke-width: thin;
-  box-shadow: 0rem 0rem 0.2rem #a0a0a0;
+    padding: 0.5rem 3rem;
+    cursor: pointer;
+    margin-top: 1rem;
+    font-family: none;
+    font-size: 15pt;
+    color: white;
+    border-radius: 2rem;
+    background-color: #007300;
+    border-style: none;
+    font-variant-caps: all-small-caps;
+    box-shadow: 0 0 0.5rem #989898;
 }
 
 @keyframes fade-out {
