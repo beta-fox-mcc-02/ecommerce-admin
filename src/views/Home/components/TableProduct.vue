@@ -32,7 +32,11 @@
 
       <template v-slot:cell(Image)>
         <a href>
-          <i class="fas fa-images"></i> Show
+          <i class="fas fa-images"></i>
+          <small>Show</small>
+        </a> |
+        <a href>
+          <small @click.prevent="changeImage(data.value)">Edit</small>
         </a>
       </template>
 
@@ -112,6 +116,9 @@ export default {
     },
     printPrice(value) {
       return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(value);
+    },
+    changeImage(id) {
+      console.log(id);
     }
   },
   computed: {

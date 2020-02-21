@@ -11,8 +11,6 @@
         ></b-form-input>
       </b-form-group>
 
-      <b-form-file v-model="file" class="my-3" plain required></b-form-file>
-
       <b-form-group id="input-group-3" label="Price:" label-for="input-3">
         <b-form-input
           id="input-3"
@@ -49,7 +47,7 @@ export default {
   data() {
     return {
       name: '',
-      file: null,
+      file: '',
       price: '',
       stock: ''
 
@@ -59,7 +57,7 @@ export default {
     onSubmit() {
       const payload = {
         name: this.name,
-        image_url: 'http://google.com',
+        image_url: this.file,
         price: this.price,
         stock: this.stock,
         id: this.idProduct
@@ -83,7 +81,7 @@ export default {
     this.$store.state.items.forEach(el => {
       if (el.id === this.idProduct) {
         this.name = el.name;
-        this.file = 'boleh';
+        this.file = el.image_url;
         this.price = el.price;
         this.stock = el.stock;
       }
