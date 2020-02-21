@@ -12,7 +12,7 @@
           :state="emailState"
           autofocus
         ></b-form-input>
-        <b-form-invalid-feedback id="email-live-feedback">Invalid email</b-form-invalid-feedback>
+        <b-form-invalid-feedback id="email-live-feedback">Enter a valid email</b-form-invalid-feedback>
       </b-form-group>
 
       <b-form-group id="input-group-2" label="Your password:" label-for="input-2">
@@ -59,14 +59,14 @@ export default {
         this.$store.dispatch("registerAdmin", payload)
           .then(({ data }) => {
             this.$store.commit('SET_LOADING', false);
+            this.$store.commit('SET_ERROR_STATUS', false);
             this.$store.commit("SUCCESS_AUTH", data.access_token);
             localStorage.access_token = data.access_token;
             this.$router.push('/home');
-            console.log(data.access_token);
           })
           .catch(({ response }) => {
             this.$store.commit('SET_LOADING', false);
-            console.log(response);
+            this.$store.commit('SET_ERROR_MESSAGE', response.data.message);
           });
       } else if (this.titleForm === 'Login') { //login
         const payload = {
@@ -76,14 +76,14 @@ export default {
         this.$store.dispatch("loginAdmin", payload)
           .then(({ data }) => {
             this.$store.commit('SET_LOADING', false);
+            this.$store.commit('SET_ERROR_STATUS', false);
             this.$store.commit("SUCCESS_AUTH", data.access_token);
             localStorage.access_token = data.access_token;
             this.$router.push('/home');
-            console.log(data.access_token);
           })
           .catch(({ response }) => {
             this.$store.commit('SET_LOADING', false);
-            console.log(response);
+            this.$store.commit('SET_ERROR_MESSAGE', response.data.message);
           });
       }
     },

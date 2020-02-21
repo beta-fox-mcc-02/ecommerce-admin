@@ -65,15 +65,23 @@ export default {
       this.$store.dispatch('updateProduct', payload)
         .then(() => {
           this.$emit('closeModal');
+          this.$store.commit('SET_ERROR_STATUS', false);
           return this.$store.dispatch('fetchProduct');
         })
         .then(({ data }) => {
           this.$store.commit('SET_LOADING', false);
+          this.$store.commit('SET_ERROR_STATUS', false);
           this.$store.commit('SET_ITEMS', data.data);
         })
         .catch(({ response }) => {
           this.$store.commit('SET_LOADING', false);
-          console.log(response);
+          this.$store.commit('SET_ERROR_MESSAGE', response.data.message);
+          if (response.status === 401) {
+            this.$router.push('/');
+            this.$store.commit('LOGOUT');
+            localStorage.removeItem("access_token");
+          }
+          // console.log(response);
         });
     },
   },
