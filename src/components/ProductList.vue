@@ -38,7 +38,11 @@
           </tbody>
         </template>
       </v-simple-table>
-      <DeleteModal :id="id" :type="type" :dialog="dialog" />
+      <DeleteModal
+        @closeModalDelete="closeModalDelete"
+        :id="id"
+        :type="type"
+        :dialog="dialog" />
   </Fragment>
 </template>
 
@@ -59,8 +63,11 @@ export default {
     dialog: false
   }),
   methods: {
+    closeModalDelete (payload) {
+      this.dialog = payload
+    },
     openModalDelete (id, type) {
-      this.dialog = !this.dialog
+      this.dialog = true
       this.id = id
       this.type = type
     }

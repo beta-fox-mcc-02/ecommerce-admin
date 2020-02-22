@@ -18,7 +18,6 @@ const actions = {
         commit('SET_PRODUCTS', response.body.products)
       })
       .catch((err) => {
-        console.log(err)
         commit('SET_PRODUCT_LOADING', false)
         commit('SET_PRODUCT_ERRORS', err.body.errors)
       })

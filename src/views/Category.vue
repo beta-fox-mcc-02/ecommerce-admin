@@ -10,7 +10,7 @@
         indeterminate
         ></v-progress-circular>
     </v-row>
-    <v-btn @click="openModal(0)" class="ma-2" tile outlined color="success">
+    <v-btn @click="openModal(0, 'add')" class="ma-2" tile outlined color="success">
       <v-icon left>mdi-plus</v-icon> Add Category
     </v-btn>
     <v-simple-table v-if="!isLoading" fixed-header>
@@ -37,8 +37,15 @@
         </tbody>
       </template>
     </v-simple-table>
-    <CategoryModal />
-    <DeleteModal :id="id" :type="type" :dialog="dialog" />
+    <CategoryModal
+        @closeModalCategory="closeModal"
+        :modalType="modalType"
+        :isOpen="isOpenModal" />
+    <DeleteModal
+      @closeModalDelete="closeModalDelete"
+      :id="id"
+      :type="type"
+      :dialog="dialog" />
   </Fragment>
 </template>
 
@@ -56,14 +63,23 @@ export default {
   data: () => ({
     id: 0,
     dialog: false,
+    isOpenModal: false,
+    modalType: '',
     type: ''
   }),
   methods: {
-    openModal (payload) {
-      this.$store.dispatch('openModalCategory', payload)
+    openModal (id, type) {
+      this.isOpenModal = true
+      this.modalType = type
+    },
+    closeModal (payload) {
+      this.isOpenModal = payload
+    },
+    closeModalDelete (payload) {
+      this.dialog = payload
     },
     openModalDelete (id, type) {
-      this.dialog = !this.dialog
+      this.dialog = true
       this.id = id
       this.type = type
     }

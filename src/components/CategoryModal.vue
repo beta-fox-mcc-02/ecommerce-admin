@@ -61,9 +61,14 @@ export default {
     CircularLoading,
     Alert
   },
+  props: {
+    isOpen: Boolean,
+    modalType: String
+  },
   data: () => ({
     name: '',
-    path: ''
+    path: '',
+    dialog: false
   }),
   validations: {
     name: {
@@ -73,15 +78,14 @@ export default {
       required
     }
   },
+  watch: {
+    isOpen (value) {
+      this.dialog = value
+    }
+  },
   computed: {
-    dialog () {
-      return this.$store.state.category.isOpenModal
-    },
     isLoading () {
       return this.$store.state.category.isLoading
-    },
-    modalType () {
-      return this.$store.state.category.modalType
     },
     nameErrors () {
       const errors = []
@@ -101,10 +105,10 @@ export default {
   },
   methods: {
     closeModal () {
-      this.$store.dispatch('closeModalCategory')
       this.name = ''
       this.path = ''
       this.$v.$reset()
+      this.$emit('closeModalCategory', false)
     },
     saveCategory () {
       const category = {
@@ -114,12 +118,12 @@ export default {
       this.$store.dispatch('createCategory', category)
         .then(response => {
           this.$store.dispatch('fetchCategories')
-          this.$store.commit('SET_MODAL_OPENED', false)
           this.$store.commit('SET_LOADING', false)
           this.$store.commit('SET_ERRORS', [])
           this.name = ''
           this.path = ''
           this.$v.$reset()
+          this.$emit('closeModalCategory', false)
         })
         .catch(err => {
           this.$store.commit('SET_LOADING', false)

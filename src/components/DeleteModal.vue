@@ -8,7 +8,7 @@
         <CircularLoading v-if="isLoading" />
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn v-if="!isLoading" color="red darken-1" text @click="isOpen = false">Cancel</v-btn>
+          <v-btn v-if="!isLoading" color="red darken-1" text @click="closeModal">Cancel</v-btn>
           <v-btn v-if="!isLoading" color="green darken-1" text @click="deleteData">Agree</v-btn>
         </v-card-actions>
       </v-card>
@@ -34,6 +34,9 @@ export default {
     isOpen: false
   }),
   methods: {
+    closeModal () {
+      this.$emit('closeModalDelete', false)
+    },
     deleteData () {
       switch (this.type) {
         case 'categories':
@@ -42,7 +45,7 @@ export default {
               this.$store.commit('SET_LOADING', false)
               this.$store.dispatch('fetchCategories')
               this.$store.commit('SET_ERRORS', [])
-              this.isOpen = !this.isOpen
+              this.$emit('closeModalDelete', false)
             })
             .catch(err => {
               this.$store.commit('SET_LOADING', false)
@@ -53,8 +56,9 @@ export default {
           this.$store.dispatch('deleteProduct', { id: this.id })
             .then(response => {
               this.$store.commit('SET_PRODUCT_LOADING', false)
-              this.$stored.dispatch('getProducts')
+              this.$store.dispatch('getProducts')
               this.$store.commit('SET_PRODUCT_ERRORS', [])
+              this.$emit('closeModalDelete', false)
             })
             .catch(err => {
               this.$store.commit('SET_PRODUCT_LOADING', false)
@@ -66,15 +70,15 @@ export default {
   },
   watch: {
     dialog (value) {
-      this.isOpen = !this.isOpen
+      this.isOpen = value
     }
   },
   computed: {
     isLoading () {
-      return (this.$store.state.category.isLoading || this.$store.state.product.isLoading)
+      return this.$store.state.category.isLoading || this.$store.state.product.isLoading
     },
     errors () {
-      return (this.$store.state.category.errors || this.$store.state.product.errors)
+      return this.$store.state.category.errors || this.$store.state.product.errors
     }
   }
 }

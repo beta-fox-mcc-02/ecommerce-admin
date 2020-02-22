@@ -2,9 +2,11 @@ const mutations = {
 
   SET_AUTH_ERRORS (state, payload) {
     state.errors = payload
+    state.success = []
   },
   SET_AUTH_SUCCESS (state, payload) {
     state.success = [payload]
+    state.errors = []
   },
   AUTHENTICATED_FAILED (state, payload) {
     state.isAuthenticated = false

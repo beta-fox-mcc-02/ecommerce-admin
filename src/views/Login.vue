@@ -20,7 +20,7 @@
               color="teal"
               icon="mdi-check"
               border="left"
-              v-if="success"
+              v-if="success.length"
             >
               {{ success.join('\n') }}
             </v-alert>
