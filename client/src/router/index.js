@@ -43,7 +43,15 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: Login
+    component: Login,
+    beforeEnter: (to, from, next) => {
+      if (from.path === '/login') {
+        next({ path: '/login' })
+      } else {
+        next()
+      }
+      console.log(from)
+    }
   },
   {
     path: '/register',

@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import jwt from 'jsonwebtoken'
-import router from '../router'
 
 Vue.use(Vuex)
 
@@ -10,7 +9,6 @@ export default new Vuex.Store({
   state: {
     products: [],
     isAdmin: false,
-    error: {},
     isLogin: false,
     productToEdit: [],
     isEdit: false,
@@ -26,9 +24,6 @@ export default new Vuex.Store({
       } else {
         state.isAdmin = false
       }
-    },
-    ERROR (state, err) {
-      state.error = err
     },
     VERIFY_TOKEN (state, data) {
       console.log(data, 'INI DATA')
@@ -54,19 +49,13 @@ export default new Vuex.Store({
   },
   actions: {
     fetchProduct (context) {
-      axios({
+      return axios({
         method: 'get',
         url: 'http://localhost:3000/products'
       })
-        .then(({ data }) => {
-          context.commit('FETCH_PRODUCT', data)
-        })
-        .catch(err => {
-          context.commit('ERROR', err)
-        })
     },
-    login (context, payload) {
-      axios({
+    setLogin (context, payload) {
+      return axios({
         method: 'post',
         url: 'http://localhost:3000/login',
         data: {
@@ -74,19 +63,9 @@ export default new Vuex.Store({
           password: payload.password
         }
       })
-        .then(({ data }) => {
-          localStorage.setItem('token', data.token)
-          router.push({ path: '/admin' })
-          context.commit('ISADMIN', data)
-          context.commit('ISLOGIN', true)
-        })
-        .catch(err => {
-          console.log(err)
-          context.commit('ERROR', err)
-        })
     },
     addProduct (context, payload) {
-      axios({
+      return axios({
         method: 'post',
         url: 'http://localhost:3000/products',
         data: {
@@ -100,20 +79,9 @@ export default new Vuex.Store({
           token: localStorage.token
         }
       })
-        .then(data => {
-          router.push({
-            path: '/admin/list-products'
-          })
-          context.dispatch('fetchProduct')
-          console.log(data)
-        })
-        .catch(err => {
-          console.log(err)
-        })
     },
     register (context, payload) {
-      // const { first_name, address, email, password, role } = payload
-      axios({
+      return axios({
         method: 'post',
         url: 'http://localhost:3000/register',
         data: {
@@ -124,55 +92,40 @@ export default new Vuex.Store({
           role: payload.role
         }
       })
-        .then(({ user }) => {
-          router.push({ path: '/login' })
-        })
-        .catch(err => {
-          console.log(err)
-        })
     },
     deleteProduct (context, payload) {
-      axios({
+      return axios({
         method: 'delete',
         url: `http://localhost:3000/products/${payload}`,
         headers: {
           token: localStorage.token
         }
       })
-        .then(info => {
-          context.dispatch('fetchProduct')
-        })
-        .catch(err => {
-          console.log(err)
-        })
     },
     formEdit (context, payload) {
-      axios({
+      return axios({
         method: 'get',
         url: `http://localhost:3000/products/${payload}`,
         headers: {
           token: localStorage.token
         }
       })
-        .then(({ data }) => {
-          context.commit('PRODUCTTOEDIT', data)
-          context.commit('ISEDIT', true)
-          context.commit('IDPARAMS', payload)
-          router.push({ path: '/admin/edit-products' })
-        })
-        .catch(err => {
-          console.log(err)
-        })
     },
     editProduct (context, payload) {
-      axios({
+      return axios({
         method: 'put',
-        url: `http://localhost:3000/products/${payload}`,
+        url: `http://localhost:3000/products/${payload.id}`,
+        data: {
+          name: payload.name,
+          price: payload.price,
+          stock: payload.stock,
+          image_url: payload.image_url,
+          category: payload.category
+        },
         headers: {
           token: localStorage.token
         }
       })
-        .then()
     }
   },
   modules: {

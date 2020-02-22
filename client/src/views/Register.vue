@@ -39,6 +39,18 @@ export default {
         role: true
       }
       this.$store.dispatch('register', payload)
+        .then(({ user }) => {
+          this.$router.push({ path: '/login' })
+          this.$vToastify.success('REGISTER NEW ADMIN SUCCESSS', 'BRO')
+        })
+        .catch(err => {
+          this.$vToastify.warning({
+            title: 'BRO',
+            body: `${err.response.data.msg}`,
+            type: 'warning',
+            duration: 3000
+          })
+        })
     }
   }
 }

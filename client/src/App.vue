@@ -24,7 +24,6 @@ export default {
       return this.$store.state.isAdmin
     },
     checkLogin () {
-      console.log(this.$store.state.isLogin, 'bambaangg')
       return this.$store.state.isLogin
     }
   },
@@ -32,13 +31,13 @@ export default {
     if (localStorage.token) {
       this.$store.commit('VERIFY_TOKEN', localStorage.token)
       this.$store.commit('ISLOGIN', true)
-    } else {
-      this.$router.push({ path: '/login' })
     }
+    // else {
+    //   this.$router.push({ path: '/login' })
+    // }
   },
   methods: {
     logout () {
-      console.log('masuk bambang')
       localStorage.clear()
       this.$store.commit('ISLOGIN', false)
     }

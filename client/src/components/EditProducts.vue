@@ -47,7 +47,19 @@ export default {
         image_url: this.image_url,
         category: this.category
       }
-      console.log(payload)
+      this.$store.dispatch('editProduct', payload)
+        .then(data => {
+          this.$vToastify.success('EDIT PRODUCT SUCCESSS', 'BRO')
+          this.$router.push({ path: '/admin/list-products' })
+        })
+        .catch(err => {
+          this.$vToastify.warning({
+            title: 'BRO',
+            body: `${err.response.data.msg}`,
+            type: 'warning',
+            duration: 3000
+          })
+        })
     }
   }
 }

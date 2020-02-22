@@ -2,7 +2,7 @@
   <div>
     <div class="container">
         <div id="form-login">
-          <h1>LOG IN</h1>
+          <h1>ADMIN LOG IN</h1>
           <form v-on:submit.prevent="login">
             <label>EMAIL</label><br>
             <input type="email" required v-model="email"><br><br>
@@ -27,11 +27,26 @@ export default {
   },
   methods: {
     login () {
-      const data = {
+      const payload = {
         email: this.email,
         password: this.password
       }
-      this.$store.dispatch('login', data)
+      this.$store.dispatch('setLogin', payload)
+        .then(({ data }) => {
+          localStorage.setItem('token', data.token)
+          this.$router.push({ path: '/admin' })
+          this.$vToastify.success('LOGIN SUCCESSS', 'BRO')
+          this.$store.commit('ISADMIN', data)
+          this.$store.commit('ISLOGIN', true)
+        })
+        .catch(err => {
+          this.$vToastify.warning({
+            title: 'BRO',
+            body: `${err.response.data.msg}`,
+            type: 'warning',
+            duration: 3000
+          })
+        })
     }
   }
 }

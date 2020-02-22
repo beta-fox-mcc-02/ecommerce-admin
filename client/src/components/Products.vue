@@ -1,6 +1,5 @@
 <template>
   <div class="center-bar">
-    <!-- <AdminCenterBarUp/> -->
     <div class="center-bar-down">
         <table class="product-table">
           <tr>
@@ -38,23 +37,56 @@
 </template>
 
 <script>
-// import AdminCenterBarUp from '../components/AdminCenterBarUp'
-
 export default {
   name: 'AdminCenterBar',
   components: {
-    // AdminCenterBarUp
   },
   methods: {
     fetchProduct () {
       this.$store.dispatch('fetchProduct')
+        .then(({ data }) => {
+          this.$store.commit('FETCH_PRODUCT', data)
+        })
+        .catch(err => {
+          this.$vToastify.warning({
+            title: 'BRO',
+            body: `${err.response.data.msg}`,
+            type: 'warning',
+            duration: 3000
+          })
+        })
     },
     destroyProduct (id) {
       this.$store.dispatch('deleteProduct', id)
+        .then(info => {
+          this.fetchProduct()
+          this.$vToastify.success('DELETE PRODUCT SUCCESSS', 'BRO')
+        })
+        .catch(err => {
+          this.$vToastify.warning({
+            title: 'BRO',
+            body: `${err.response.data.msg}`,
+            type: 'warning',
+            duration: 3000
+          })
+        })
     },
     formEdit (id) {
-      console.log('masuuukkk siniiii')
       this.$store.dispatch('formEdit', id)
+        .then(({ data }) => {
+          this.$store.commit('PRODUCTTOEDIT', data)
+          this.$store.commit('ISEDIT', true)
+          this.$store.commit('IDPARAMS', id)
+          this.$router.push({ path: '/admin/edit-products' })
+        })
+        .catch(err => {
+          this.$vToastify.warning({
+            title: 'BRO',
+            body: `${err.response.data.msg}`,
+            type: 'warning',
+            duration: 3000
+          })
+        })
     }
   },
   created () {
