@@ -2,6 +2,7 @@
   <div>
     <div class="container">
       <div id="form-register">
+        <h3>Register New Admin</h3>
         <form @submit.prevent="register">
           <label>NAME</label><br>
           <input type="text" required v-model="first_name"><br><br>

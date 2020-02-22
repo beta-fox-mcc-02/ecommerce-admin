@@ -2,35 +2,39 @@
   <div class="center-bar">
     <div class="center-bar-down">
         <table class="product-table">
-          <tr>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Stock</th>
-            <th>Category</th>
-            <th>Image</th>
-            <th>Actions</th>
-          </tr>
-          <tr v-for="product in products" :key="product.id">
-            <td>{{ product.name }}</td>
-            <td>{{ product.price }}</td>
-            <td>{{ product.stock }}</td>
-            <td>
-              <ul v-for="category in product.Categories" :key="category.id">
-                <li>{{category.name}}</li>
-              </ul>
-            </td>
-            <td>
-              <img class="image" :src="product.image_url">
-            </td>
-            <td>
-              <a href=""
-              @click.prevent="formEdit(product.id)"
-              ><i class="fas fa-edit"></i></a> |
-              <a href=""
-              @click.prevent="destroyProduct(product.id)"
-              ><i class="fas fa-trash-alt"></i></a>
-            </td>
-          </tr>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Stock</th>
+              <th>Category</th>
+              <th>Image</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="product in products" :key="product.id">
+              <td>{{ product.name }}</td>
+              <td>{{ product.price }}</td>
+              <td>{{ product.stock }}</td>
+              <td>
+                <ul v-for="category in product.Categories" :key="category.id">
+                  <li>{{category.name}}</li>
+                </ul>
+              </td>
+              <td>
+                <img class="image" :src="product.image_url">
+              </td>
+              <td>
+                <a href=""
+                @click.prevent="formEdit(product.id)"
+                ><i class="fas fa-edit"></i></a> |
+                <a href=""
+                @click.prevent="destroyProduct(product.id)"
+                ><i class="fas fa-trash-alt"></i></a>
+              </td>
+            </tr>
+          </tbody>
         </table>
     </div>
   </div>
@@ -102,19 +106,19 @@ export default {
 
 <style>
 .center-bar {
-  border: 1px solid black;
+  /* border: 1px solid black; */
   padding: 50px;
   width: 150vh;
   display: flex;
   flex-direction: column;
 }
 .center-bar-up {
-  border: 1px solid red;
+  /* border: 1px solid red; */
   padding: 10px
 }
 .center-bar-down {
   margin-top: 10px;
-  border: 1px solid blue
+  /* border: 1px solid blue */
 }
 .product-table {
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;

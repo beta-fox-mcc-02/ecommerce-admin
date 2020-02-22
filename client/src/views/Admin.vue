@@ -10,26 +10,26 @@
         </div>
       </div>
       <router-view/>
+      <div class="center-bar" v-if="checkLink">
+        <img src="https://mbabiolaandco.com.ng/wp-content/uploads/2018/12/Welcome.jpg">
+      </div>
       <div class="end-bar">
-        jiwa
       </div>
     </div>
   </div>
 </template>
 
 <script>
-// import Products from '../components/Products'
-// import AddProducts from '../components/AddProducts'
-
 export default {
   name: 'Admin',
   data () {
     return {
     }
   },
-  components: {
-    // Products,
-    // AddProducts
+  computed: {
+    checkLink () {
+      return this.$route.path === '/admin'
+    }
   },
   created () {
     if (!localStorage.token) {
@@ -50,10 +50,15 @@ export default {
   justify-content: flex-start;
   width: 40vh;
   height: 100vh;
-  background-color: #21243d;
-  color: white
+  background-color: #e1f4f3;
+  color: white;
 }
 .side-content {
   padding: 10px 15px;
+}
+
+.center-bar {
+  height: 100vh;
+  display: flex;
 }
 </style>

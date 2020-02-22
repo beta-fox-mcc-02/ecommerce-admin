@@ -8,7 +8,8 @@
       <label>Stock</label><br>
       <input type="number" required v-model="stock"><br>
       <label>Image URL</label><br>
-      <input type="text" required v-model="image_url"><br>
+      <textarea required v-model="image_url" cols="20" rows="5"></textarea>
+      <br>
       <span>Category</span>
         <br>
         <input type="checkbox" id="Jersey" value="1" v-model="category">
@@ -66,5 +67,9 @@ export default {
 </script>
 
 <style>
-
+.edit-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center
+}
 </style>

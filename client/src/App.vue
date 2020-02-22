@@ -32,9 +32,6 @@ export default {
       this.$store.commit('VERIFY_TOKEN', localStorage.token)
       this.$store.commit('ISLOGIN', true)
     }
-    // else {
-    //   this.$router.push({ path: '/login' })
-    // }
   },
   methods: {
     logout () {
@@ -56,7 +53,7 @@ export default {
 
 #nav {
   padding: 10px;
-  background-color: black;
+  background-color: #8ac6d1;
   display: flex;
   justify-content: space-between;
   align-items: center;

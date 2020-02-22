@@ -2,7 +2,7 @@
   <div>
     <div class="container">
         <div id="form-login">
-          <h1>ADMIN LOG IN</h1>
+          <h3>ADMIN LOG IN</h3>
           <form v-on:submit.prevent="login">
             <label>EMAIL</label><br>
             <input type="email" required v-model="email"><br><br>
