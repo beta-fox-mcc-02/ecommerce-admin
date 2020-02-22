@@ -43,10 +43,10 @@ export default {
   data() {
     return {
       form: {
-        name: 'sala',
-        image_url: 'https://images-na.ssl-images-amazon.com/images/I/41eJMQgmUrL.jpg',
-        price: 25000,
-        stock: 10,
+        name: '',
+        image_url: '',
+        price: '',
+        stock: '',
       },
       modalShow: false,
       error: '',
