@@ -36,10 +36,10 @@ export default new Vuex.Store({
         headers: { access_token: localStorage.getItem('access_token') },
       });
     },
-    deleteProduct() {
+    deleteProduct(context, id) {
       return userAPI({
         method: 'DELETE',
-        url: '/product',
+        url: `/product/${id}`,
         headers: { access_token: localStorage.getItem('access_token') },
       });
     },

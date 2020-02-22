@@ -1,4 +1,6 @@
 <template>
+<div>
+<delete-modal :id="selectedId" @closeModal="closeModal" v-if="showModal" />
 <div class="card shadow">
   <div class="card-header py-3">
     <p class="text-primary m-0 font-weight-bold">Product Info</p>
@@ -30,7 +32,9 @@
             <td>{{item.price}}</td>
             <td>{{item.stock}}</td>
             <td class="d-flex d-lg-flex flex-row justify-content-around align-items-lg-center"><a
-                href="#">Edit</a><span>|</span><a href="#">Delete</a></td>
+                href="#"><i class="far fa-edit"></i> Edit</a><span>|</span>
+                <a href="#" @click="getSelectedId(item.id)">
+                <i class="far fa-trash-alt"></i> Delete</a></td>
           </tr>
           <tr></tr>
           <tr></tr>
@@ -63,16 +67,26 @@
     </div>
   </div>
 </div>
+</div>
 </template>
 
 <script>
+import DeleteModal from '@/components/DeleteModal.vue';
+
 export default {
   name: 'ProductList',
+  components: {
+    DeleteModal,
+  },
   data() {
     return {
       products: {
         type: Array,
       },
+      selectedId: {
+        type: Number,
+      },
+      showModal: false,
     };
   },
   methods: {
@@ -80,13 +94,21 @@ export default {
       this.$store.dispatch('fetchProduct')
         .then((result) => {
           this.products = result.data;
-          console.log(this.products, 'Dari getProduct then di ProductList.vue');
         })
         .catch((err) => {
           console.log(err);
-          console.log(localStorage.getItem('access_token'), 'Dari error get product di component ProductList.vue');
         });
     },
+    getSelectedId(id) {
+      this.selectedId = +id;
+      this.showModal = true;
+    },
+    closeModal() {
+      this.showModal = false;
+    },
+  },
+  mounted() {
+    this.getProduct();
   },
   created() {
     this.getProduct();
