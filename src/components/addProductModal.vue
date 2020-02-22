@@ -77,6 +77,8 @@ export default {
       this.$store.commit('SHOW_ADD_FORM', false)
     },
     addProduct () {
+      this.$store.commit('SET_IS_LOADING', true)
+      this.$store.commit('SHOW_ADD_FORM', false)
       const formData = new FormData()
       formData.append('name', this.name)
       formData.append('description', this.description)
@@ -89,8 +91,12 @@ export default {
         .then(({ data }) => {
           this.$store.commit('SET_NOTIFICATION', data.msg)
           this.$store.dispatch('fetchProducts')
+          this.$store.commit('SET_IS_LOADING', false)
         })
-        .catch(err => this.$store.commit('SET_ERROR', err))
+        .catch(err => {
+          this.$store.commit('SET_ERROR', err)
+          this.$store.commit('SET_IS_LOADING', false)
+        })
     },
     processFile (event) {
       this.imageUrl = event.target.files[0]

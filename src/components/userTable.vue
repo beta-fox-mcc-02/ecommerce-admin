@@ -85,40 +85,51 @@ export default {
     }
   },
   methods: {
-    editUser () {
-      this.$router.push({ path: 'editProduct', query: { id: this.product.id } })
-    },
-
     deleteUser () {
+      this.$store.commit('SET_IS_LOADING', true)
       this.$store.dispatch('deleteUser', this.user.id)
         .then(({ data }) => {
           this.$store.commit('SET_NOTIFICATION', data.msg)
           this.$store.dispatch('fetchAllUsers')
+          this.$store.commit('SET_IS_LOADING', false)
         })
-        .catch(err => this.$store.commit('SET_ERROR', err))
+        .catch(err => {
+          this.$store.commit('SET_ERROR', err)
+          this.$store.commit('SET_IS_LOADING', false)
+        })
     },
 
     deleteAdmin () {
+      this.$store.commit('SET_IS_LOADING', true)
       this.$store.dispatch('deleteAdmin', this.user.id)
         .then(({ data }) => {
           this.$store.dispatch('fetchAllUsers')
           this.$emit('refresh')
           this.$store.commit('SET_NOTIFICATION', data.msg)
+          this.$store.commit('SET_IS_LOADING', false)
         })
-        .catch(err => this.$store.commit('SET_ERROR', err))
+        .catch(err => {
+          this.$store.commit('SET_ERROR', err)
+          this.$store.commit('SET_IS_LOADING', false)
+        })
     },
 
     activateAdmin () {
+      this.$store.commit('SET_IS_LOADING', true)
       this.$store.dispatch('activateAdmin', this.user.id)
         .then(({ data }) => {
           this.$store.dispatch('fetchAllUsers')
           this.$emit('refresh')
           this.$store.commit('SET_NOTIFICATION', data.msg)
+          this.$store.commit('SET_IS_LOADING', false)
         })
-        .catch(err => this.$store.commit('SET_ERROR', err))
+        .catch(err => {
+          this.$store.commit('SET_ERROR', err)
+          this.$store.commit('SET_IS_LOADING', false)
+        })
     },
 
-    confirm (type, id) {
+    confirm (type) {
       let title, msg, ifOk
       let ifCancel = function () {}
 
@@ -147,6 +158,7 @@ export default {
     },
 
     changeUserPassword () {
+      this.$store.commit('SET_IS_LOADING', true)
       this.$store.dispatch('changeUserPassword', {
         id: this.user.id,
         password: this.newPassword
@@ -155,8 +167,12 @@ export default {
           this.$store.commit('SET_NOTIFICATION', data.msg)
           this.$store.dispatch('fetchAllUsers')
           this.newPassword = ''
+          this.$store.commit('SET_IS_LOADING', false)
         })
-        .catch(err => this.$store.commit('SET_ERROR', err))
+        .catch(err => {
+          this.$store.commit('SET_ERROR', err)
+          this.$store.commit('SET_IS_LOADING', false)
+        })
     }
   }
 }

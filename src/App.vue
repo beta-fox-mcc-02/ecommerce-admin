@@ -3,7 +3,8 @@
     <CustomAddProdModal v-if="addProduct"/>
     <LoginModal v-if="!isLogin"/>
     <Notifications />
-    <router-view />
+    <router-view v-if="isLogin && !isLoading"/>
+    <Loading v-if="isLoading"/>
   </div>
 </template>
 
@@ -11,20 +12,23 @@
 import CustomAddProdModal from '@/components/addProductModal'
 import LoginModal from '@/components/login'
 import Notifications from '@/components/notification'
+import Loading from '@/components/loading'
 import { mapState } from 'vuex'
 
 export default {
   components: {
     CustomAddProdModal,
     LoginModal,
-    Notifications
+    Notifications,
+    Loading
   },
   computed: {
     addProduct () {
       return this.$store.state.addProduct
     },
     ...mapState([
-      'isLogin'
+      'isLogin',
+      'isLoading'
     ])
   },
   methods: {
