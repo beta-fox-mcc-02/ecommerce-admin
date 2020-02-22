@@ -9,8 +9,8 @@ function guard (to, from, next) {
   if (store.state.isLogin) {
     next()
   } else {
-    this.toastify('error', 'Login First')
     next('/login')
+    this.toastify('error', 'Login First')
   }
 }
 
