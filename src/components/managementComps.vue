@@ -76,7 +76,7 @@ export default {
             this.close()
           } else this.unfilledField = true
         })
-        .catch((err) => console.log(err))
+        .catch(() => this.close())
     },
     close () {
       this.$store.commit('unsetAll')

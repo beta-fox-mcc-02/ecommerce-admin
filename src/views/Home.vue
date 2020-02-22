@@ -4,7 +4,9 @@
     <div id="home-navbar" v-else>
       <Upperbar />
       <Sidebar />
-      <section id="main-content">asdasdas</section>
+      <section id="main-content">
+        <SalesChart />
+      </section>
     </div>
   </div>
 </template>
@@ -13,11 +15,12 @@
 import Sidebar from '../components/sidebar.vue'
 import Upperbar from '../components/upperbar.vue'
 import Loading from '../components/loading.vue'
+import SalesChart from '../components/Saleschart.vue'
 
 export default {
   data () { return { isLoading: false } },
   name: 'Home',
-  components: { Sidebar, Upperbar, Loading },
+  components: { Sidebar, Upperbar, Loading, SalesChart },
   methods: {
     stillLoading () {
       this.isLoading = true
@@ -39,6 +42,11 @@ div#homePage {
 
 div#home-navbar {
     position: relative;
+}
+
+section#main-content {
+    margin-left: 23vw;
+    margin-top: 3vh;
 }
 
 img {
