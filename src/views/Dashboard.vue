@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1>Products</h1>
     <ModalProduct></ModalProduct>
     <TableProduct></TableProduct>
   </div>

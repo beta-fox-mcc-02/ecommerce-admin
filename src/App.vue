@@ -30,6 +30,7 @@ export default {
         this.$store.dispatch('fetchProduct')
       }
     } else {
+
       this.$store.commit('logout')
     }
   }

@@ -4,9 +4,6 @@
       <router-link to="/" class="nav-link">
         <img src="../../public/logo.png" width="100" height="30" alt />
       </router-link>
-      <!-- <a class="navbar-brand" href="/">
-        <img src="../../public/logo.png" width="100" height="30" alt />
-      </a>-->
       <button
         class="navbar-toggler border-0"
         type="button"
@@ -22,13 +19,13 @@
         <ul class="nav navbar-nav flex-row justify-content-between ml-auto">
           <li class="dropdown order-1">
             <button type="button" class="btn b-nav" v-if="!isLogin">
-              <router-link to="/login" class="nav-link buten">
+              <router-link to="/auth/login" class="nav-link buten">
                 <i class="fa fa-sign-in"></i>
                 Login
               </router-link>
             </button>
             <button type="button" class="btn b-nav" v-if="!isLogin">
-              <router-link to="/register" class="nav-link buten">
+              <router-link to="/auth/register" class="nav-link buten">
                 <i class="fa fa-user"></i>
                 Register
               </router-link>
@@ -54,7 +51,7 @@ export default {
   methods: {
     clickLogout() {
       this.$store.commit('logout')
-      this.$router.push('/login')
+      this.$router.push('/auth/login')
     }
   }
   ,

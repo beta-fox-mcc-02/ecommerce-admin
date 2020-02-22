@@ -1,7 +1,7 @@
 <template>
-  <div class="jumbotron">
-    <b-jumbotron header="G-watch CMS" lead="Welcome Admin">
-      <b-button variant="primary" href="/dashboard">
+  <div>
+    <b-jumbotron header="G-watch CMS" lead="Welcome Admin" class="jmbt">
+      <b-button class="btn-dash" to="/dashboard">
         <router-link to="/dashboard" class="nav-link">Dashboard</router-link>
       </b-button>
     </b-jumbotron>
@@ -17,3 +17,15 @@ export default {
   }
 }
 </script>
+
+<style>
+.btn-dash {
+  background-color: #7f7f7f;
+}
+
+.jmbt {
+  position: fixed;
+  height: 700px;
+  width: 100vw;
+}
+</style>

@@ -36,23 +36,22 @@
           </form>
         </div>
         <div class="card-footer">
-          <div class="d-flex justify-content-center links">Don't have an account?</div>
-          <div class="d-flex justify-content-center">
-            <router-link
-              @click.prevent="hideError"
-              to="/register"
-              class="nav-link buten"
-              v-if="action=='Login'"
-            >
+          <div
+            class="d-flex justify-content-center links"
+            v-if="action=='Login'"
+          >Don't have an account?</div>
+          <div class="d-flex justify-content-center" v-if="action=='Login'">
+            <router-link @click.prevent="hideError" to="/auth/register" class="nav-link buten">
               <i class="fa fa-user"></i>
               Register
             </router-link>
-            <router-link
-              @click.prevent="hideError"
-              to="/login"
-              class="nav-link buten"
-              v-if="action=='Register'"
-            >
+          </div>
+          <div
+            class="d-flex justify-content-center links"
+            v-if="action=='Register'"
+          >Already have an account?</div>
+          <div class="d-flex justify-content-center" v-if="action=='Register'">
+            <router-link @click.prevent="hideError" to="/auth/login" class="nav-link buten">
               <i class="fa fa-sign-in"></i>
               Login
             </router-link>
@@ -89,7 +88,7 @@ export default {
           .then(({ data }) => {
             localStorage.setItem('token', data.access_token)
             this.$store.commit('afterAuth')
-            this.$router.push('/dashboard')
+            this.$router.push('/')
             this.loading = false
           })
           .catch(err => {
@@ -105,7 +104,7 @@ export default {
           .then(({ data }) => {
             localStorage.setItem('token', data.access_token)
             this.$store.commit('afterAuth')
-            this.$router.push('/dashboard')
+            this.$router.push('/')
             this.loading = false
           })
           .catch(err => {

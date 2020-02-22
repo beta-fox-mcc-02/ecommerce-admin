@@ -87,7 +87,7 @@ export default {
 
 <style>
 .btn-add {
-  margin: 20px auto 20px 100px;
+  margin: 0px auto 20px 100px;
   color: #ffc312;
   font: bold;
 }
