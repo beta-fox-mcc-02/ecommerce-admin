@@ -5,6 +5,10 @@ const actions = {
     commit('AUTHENTICATED_LOADING', true)
     return resource.login(authData)
   },
+  register: ({ commit }, payload) => {
+    commit('AUTHENTICATED_LOADING', true)
+    return resource.register(payload)
+  },
   checkAuthentication: ({ commit }) => {
     return resource.getAdmin()
   },

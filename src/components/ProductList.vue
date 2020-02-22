@@ -32,6 +32,9 @@
                 </v-icon>
               </td>
             </tr>
+            <tr v-if="!products.length">
+              <td colspan="6">Data is not found</td>
+            </tr>
           </tbody>
         </template>
       </v-simple-table>

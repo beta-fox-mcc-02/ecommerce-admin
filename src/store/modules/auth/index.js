@@ -5,6 +5,7 @@ import getters from './gettters'
 const state = {
   isAuthenticated: false,
   errors: [],
+  success: [],
   isLoading: false
 }
 

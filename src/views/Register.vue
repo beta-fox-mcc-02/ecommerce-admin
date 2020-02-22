@@ -1,29 +1,9 @@
 <template>
-  <v-app v-if="!isAuthenticated" id="login-form">
+  <v-app v-if="!isAuthenticated" id="register-form">
     <v-content>
       <v-container class="fill-height" fluid>
         <v-row align="center" justify="center">
           <v-col cols="12" sm="8" md="4">
-            <v-alert
-              text
-              dense
-              color="teal"
-              icon="mdi-check"
-              border="left"
-              v-if="isAuthenticated"
-            >
-              Login Success
-            </v-alert>
-            <v-alert
-              text
-              dense
-              color="teal"
-              icon="mdi-check"
-              border="left"
-              v-if="success"
-            >
-              {{ success.join('\n') }}
-            </v-alert>
             <v-alert
               v-if="errors.length"
               text
@@ -33,11 +13,35 @@
             >{{ errors.join('\n') }}</v-alert>
             <v-card class="elevation-12">
               <v-toolbar color="primary" dark flat>
-                <v-toolbar-title>LOGIN</v-toolbar-title>
+                <v-toolbar-title>Register</v-toolbar-title>
                 <v-spacer />
               </v-toolbar>
               <v-card-text>
-                <v-form @submit.prevent="login">
+                <v-form @submit.prevent="register">
+                  <v-text-field
+                    label="firstname"
+                    required
+                    prepend-icon="person_add"
+                    v-model="firstname"
+                    :error-messages="firstnameErrors"
+                    type="text"
+                    @blur="$v.firstname.$touch()"
+                  />
+                   <v-text-field
+                    label="lastname"
+                    prepend-icon="person_add"
+                    v-model="lastname"
+                    type="text"
+                  />
+                  <v-text-field
+                    label="username"
+                    required
+                    prepend-icon="person_outline"
+                    v-model="username"
+                    :error-messages="usernameErrors"
+                    type="text"
+                    @blur="$v.username.$touch()"
+                  />
                   <v-text-field
                     label="email"
                     name="email"
@@ -59,28 +63,28 @@
                     @blur="$v.password.$touch()"
                     required
                   />
-              <v-card-actions class="justify-center align-center">
-                <v-btn
-                  v-if="!isLoadingProcess"
-                  :disabled="$v.$invalid"
-                  class="btn-login"
-                  width="100"
-                  type="submit"
-                  color="primary"
-                >Login</v-btn>
-                <v-progress-circular
-                  v-if="isLoadingProcess"
-                  :size="50"
-                  color="primary"
-                  indeterminate
-                ></v-progress-circular>
-              </v-card-actions>
-              <div class="dont-have-account">
-                <v-subheader light>Don't have an account ?</v-subheader>
-                <v-subheader light>
-                  <router-link class="register-link" to="/register">Please register here</router-link>
-                </v-subheader>
-              </div>
+                  <v-card-actions class="justify-center align-center">
+                    <v-btn
+                      v-if="!isLoadingProcess"
+                      type="submit"
+                      :disabled="$v.$invalid"
+                      class="btn-login"
+                      width="100"
+                      color="primary"
+                    >Register</v-btn>
+                    <v-progress-circular
+                      v-if="isLoadingProcess"
+                      :size="50"
+                      color="primary"
+                      indeterminate
+                    ></v-progress-circular>
+                  </v-card-actions>
+                  <div class="have-account">
+                    <v-subheader light>Already have an account ?</v-subheader>
+                    <v-subheader light>
+                      <router-link class="login-link" to="/login">Please login here</router-link>
+                    </v-subheader>
+                  </div>
                 </v-form>
               </v-card-text>
             </v-card>
@@ -92,39 +96,49 @@
 </template>
 
 <script>
-import { required, email } from 'vuelidate/lib/validators'
+import { required, email, minLength } from 'vuelidate/lib/validators'
 export default {
-  name: 'Login',
+  name: 'Register',
   data: () => ({
+    firstname: '',
+    username: '',
+    lastname: '',
     email: '',
     password: ''
   }),
   validations: {
+    username: {
+      required,
+      minLength: minLength(6)
+    },
+    firstname: {
+      required
+    },
     email: {
       required,
       email
     },
     password: {
-      required
+      required,
+      minLength: minLength(8)
     }
   },
   methods: {
-    login () {
-      const authData = {
+    register () {
+      const input = {
+        first_name: this.firstname,
+        username: this.username,
         email: this.email,
         password: this.password
       }
-      this.$store.dispatch('login', authData)
+      this.$store.dispatch('register', input)
         .then(response => {
-          localStorage.token = response.body.token
-          this.$store.commit('AUTHENTICATED_SUCCESS')
+          this.$store.commit('SET_AUTH_SUCCESS', 'Register success')
           this.$store.commit('AUTHENTICATED_LOADING', false)
-          setTimeout(() => {
-            this.$router.push('/')
-          }, 500)
+          this.$router.push('/login')
         })
         .catch(err => {
-          this.$store.commit('AUTHENTICATED_FAILED', err.body)
+          this.$store.commit('SET_AUTH_ERRORS', err.body.errors)
           this.$store.commit('AUTHENTICATED_LOADING', false)
         })
     }
@@ -132,9 +146,6 @@ export default {
   computed: {
     errors () {
       return this.$store.getters.errors
-    },
-    success () {
-      return this.$store.state.auth.success
     },
     isLoadingProcess () {
       return this.$store.getters.isLoading
@@ -153,6 +164,20 @@ export default {
       const errors = []
       if (!this.$v.password.$dirty) return errors
       !this.$v.password.required && errors.push('Password is required.')
+      !this.$v.password.minLength && errors.push('Password minimal 8 characters')
+      return errors
+    },
+    firstnameErrors () {
+      const errors = []
+      if (!this.$v.firstname.$dirty) return errors
+      !this.$v.firstname.required && errors.push('Firstname is required.')
+      return errors
+    },
+    usernameErrors () {
+      const errors = []
+      if (!this.$v.username.$dirty) return errors
+      !this.$v.username.required && errors.push('Username is required.')
+      !this.$v.username.minLength && errors.push('Username minimal 6 characters')
       return errors
     }
   },
@@ -187,12 +212,12 @@ export default {
     align-items: center
   }
 
-  .dont-have-account {
+  .have-account {
     width: 100%;
     display: flex;
     justify-content: space-between;
 
-    .register-link {
+    .login-link {
       text-decoration: none;
       &:hover {
         font-weight: bolder;

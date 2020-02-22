@@ -21,6 +21,7 @@ Vue.http.interceptors.push((request) => {
 const customActions = {
   login: { method: 'POST', url: 'admin/login' },
   getAdmin: { method: 'GET', url: 'admin' },
+  register: { method: 'POST', url: 'admin' },
   getCategories: { method: 'GET', url: 'categories' },
   createCategory: { method: 'POST', url: 'categories' },
   deleteCategory: { method: 'DELETE', url: 'categories{/id}' },
