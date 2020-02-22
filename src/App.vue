@@ -1,7 +1,5 @@
 <template>
   <div id="app">
-<<<<<<< HEAD
-<<<<<<< HEAD
     <Navbar></Navbar>
     <router-view />
     <b-spinner label="Spinning" v-if="loading"></b-spinner>
@@ -38,21 +36,6 @@ export default {
 }
 </script>
 
-=======
-=======
->>>>>>> ef6443aa167e1870c8b7f6f665dd7f8f1a75dc42
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
-</template>
-
-<<<<<<< HEAD
->>>>>>> ef6443aa167e1870c8b7f6f665dd7f8f1a75dc42
-=======
->>>>>>> ef6443aa167e1870c8b7f6f665dd7f8f1a75dc42
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -61,26 +44,4 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> ef6443aa167e1870c8b7f6f665dd7f8f1a75dc42
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-<<<<<<< HEAD
->>>>>>> ef6443aa167e1870c8b7f6f665dd7f8f1a75dc42
-=======
->>>>>>> ef6443aa167e1870c8b7f6f665dd7f8f1a75dc42
 </style>

@@ -19,9 +19,6 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
 .prettierrc
 .editorconfig
