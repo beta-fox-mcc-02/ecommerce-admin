@@ -27,8 +27,8 @@
                                         IDR {{ product.price }}
                                     </div>
                                 </div><hr>
-                                <i class="fas fa-edit is-clickable" @click.prevent="editProduct(product)" v-if="isLogin"></i>
-                                <i class="fas fa-trash-alt is-clickable" @click.prevent="deleteProduct(product.id)" v-if="isLogin"></i>                        
+                                <i class="fas fa-edit is-clickable" @click.prevent="editProduct(product)"></i>
+                                <i class="fas fa-trash-alt is-clickable" @click.prevent="deleteProduct(product.id)"></i>                        
                             </div>
                         </div>                
                     </div>
