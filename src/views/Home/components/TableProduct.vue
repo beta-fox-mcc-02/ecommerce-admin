@@ -163,7 +163,9 @@ export default {
 </script>
 
 <style >
-.image-product:hover {
+.image-product:hover,
+.fa-edit:hover,
+.fa-trash-alt:hover {
   cursor: pointer;
 }
 
