@@ -1,0 +1,36 @@
+<template>
+  <v-row justify="center">
+    <v-dialog v-model="dialog" persistent max-width="290">
+      <template v-slot:activator="{ on }">
+        <v-btn color="primary" dark v-on="on">Open Dialog</v-btn>
+      </template>
+      <v-card>
+        <v-card-title class="headline">error</v-card-title>
+        <v-card-text>{{ err }}</v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="green darken-1" text @click="dialog = false">Agree</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </v-row>
+</template>
+
+<script>
+export default {
+  data () {
+    return {
+      dialog: false
+    }
+  },
+  computed: {
+    err () {
+      return this.$store.err.err
+    }
+  }
+}
+</script>
+
+<style>
+
+</style>
