@@ -1,0 +1,48 @@
+<template>
+  <div>
+    <h1>ini page banner</h1>
+    <addbanner/>
+    <div class="container row">
+      <bannerCard
+      v-for="banner in getBanners"
+      :key="banner.id"
+      :banner="banner"
+      />
+    </div>
+  </div>
+</template>
+
+<script>
+import addbanner from '../components/addBanner'
+import bannerCard from '../components/bannerCard'
+name: 'bannerPage'
+export default {
+  data(){
+    return{
+      banners:[]
+    }
+  },
+  components:{
+    addbanner,
+    bannerCard
+  },
+   computed:{
+    getBanners(){
+      return this.banners = this.$store.state.banners
+    }
+  },
+    created: function(){
+    if(localStorage.token){
+      console.log('dari created banner');
+      
+      this.$store.dispatch('fetchBanners')
+      // console.log(this.$store.state.products, 'dari home');
+      
+    }
+  }
+}
+</script>
+
+<style>
+
+</style>
