@@ -263,6 +263,12 @@ export default {
           this.product = product
           this.product.category = product.Category
           this.productImages = [...product.ProductImages]
+          if (!this.productImages.length) {
+            this.productImages.push({
+              id: 0,
+              file: {}
+            })
+          }
           this.$store.commit('SET_LOAD_PRODUCT', false)
         })
         .catch(err => {
