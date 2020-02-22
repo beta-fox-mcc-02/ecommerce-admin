@@ -1,25 +1,105 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     products: [],
-    currentNav: 'register'
+    item: {
+      id: '',
+      name: '',
+      image_url: '',
+      price: 0,
+      stock: 0
+    },
+    errorMessage: ''
   },
   mutations: {
-    SET_CURRENT_NAV (state, payload) {
-      state.currentNav = payload
-      console.log(state.currentNav, 'di Mutation')
+    SET_REGISTER (state, payload) {
+      state.register = payload
+    },
+    SET_PRODUCTS (state, payload) {
+      state.products = payload
+    },
+    SET_ITEM (state, payload) {
+      state.item = payload
+    },
+    SET_ERROR_MESSAGE (state, payload) {
+      state.errorMessage = payload
     }
   },
   actions: {
     fetchProducts ({ commit }) {
+      axios({
+        method: 'GET',
+        url: 'http://localhost:3000/products',
+        headers: {
+          token: localStorage.token
+        }
+      })
+        .then(({ data }) => {
+          commit('SET_PRODUCTS', data.dataItems)
+        })
     },
-    changeNav (context, nav) {
-      console.log(nav, 'di store')
-      context.commit('SET_CURRENT_NAV', nav)
+    findProductById (context, payload) {
+      axios({
+        method: 'GET',
+        url: 'http://localhost:3000/products/' + payload,
+        headers: {
+          token: localStorage.token
+        }
+      })
+        .then(({ data }) => {
+          const payload = {
+            id: data.dataItem.id,
+            name: data.dataItem.name,
+            image_url: data.dataItem.image_url,
+            price: data.dataItem.price,
+            stock: data.dataItem.stock
+          }
+          context.commit('SET_ITEM', payload)
+        })
+        .catch(({ response }) => {
+          context.commit('SET_ERROR_MESSAGE', response)
+        })
+    },
+    updateProduct (context, payload) {
+      axios({
+        method: 'PUT',
+        url: 'http://localhost:3000/products/' + payload.id,
+        data: {
+          name: payload.name,
+          image_url: payload.image_url,
+          price: payload.price,
+          stock: payload.stock
+        },
+        headers: {
+          token: localStorage.token
+        }
+      })
+        .then(({ data }) => {
+          context.dispatch('fetchProducts')
+        })
+        .catch(({ response }) => {
+          context.commit('SET_ERROR_MESSAGE', response)
+        })
+    },
+    deleteProduct (context, payload) {
+      axios({
+        method: 'DELETE',
+        url: 'http://localhost:3000/products/' + payload,
+        headers: {
+          token: localStorage.token
+        }
+      })
+        .then(({ data }) => {
+          context.dispatch('fetchProducts')
+        })
+        .catch(({ response }) => {
+          context.commit('SET_ERROR_MESSAGE', response)
+        })
     }
   },
   modules: {

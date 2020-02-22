@@ -4,10 +4,9 @@
       <h2>TITLE</h2>
     </div>
     <div class="right-bar">
-      <div class="login">
+      <div class="logout">
         <ul>
-          <li><router-link to="/register" class="linker">Register</router-link></li>
-          <li><router-link to="/login" class="linker">Login</router-link></li>
+          <li><a @click="logoutProcess" style="cursor:pointer;">Logout</a></li>
         </ul>
       </div>
     </div>
@@ -15,26 +14,18 @@
 </template>
 
 <script>
-
 export default {
-  name: 'LandingPage',
-  data () {
-    return {
-      admin: {
-        email: '',
-        password: ''
-      }
-    }
-  },
+  name: 'NavbarAdmin',
   methods: {
+    logoutProcess () {
+      localStorage.clear()
+      this.$router.push('/login')
+    }
   }
 }
 </script>
 
 <style>
-* {
-  margin : 0;
-}
 
 #navbar {
   display: flex;

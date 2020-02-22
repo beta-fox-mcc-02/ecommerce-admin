@@ -7,7 +7,7 @@
       </ol>
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <img src="https://lh3.googleusercontent.com/proxy/smMzw9gaMtvxF0GMkgNaM28WZJNJvIaiQfocxwL9BPPS1hiwTJRE5IIUbYuAWYorKHBQu_0kywyGXH5Sf3Zxwmx71G5XVSo4cScCUw496K49rZEA9EyC0NetCSB9GuCATQ" class="d-block w-100" alt="...">
+          <img src="https://i.pinimg.com/originals/f0/73/00/f07300d9d0c87e41f2f05081d75979d7.jpg" class="d-block w-100" alt="...">
         </div>
         <div class="carousel-item">
           <img src="https://www.discoverwalks.com/blog/wp-content/uploads/2017/03/maje.jpg" class="d-block w-100" alt="...">

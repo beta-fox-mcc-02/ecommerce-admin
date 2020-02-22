@@ -9,7 +9,7 @@
                     <div id="register-box">
                       <p class="form-title">
                           Register</p>
-                      <form class="register" >
+                      <form class="register" @submit.prevent="registerProcess">
                         <input type="text" placeholder="Name" v-model="register.name"/>
                         <input type="email" placeholder="Email" v-model="register.email"/>
                         <input type="password" placeholder="Password" v-model="register.password"/>
@@ -28,6 +28,7 @@
 <script>
 import Nav from '../components/Navbar.vue'
 import Carousel from '../components/Carousel.vue'
+import axios from 'axios'
 
 export default {
   name: 'Register',
@@ -45,6 +46,24 @@ export default {
     }
   },
   methods: {
+    registerProcess () {
+      const payload = {
+        name: this.register.name,
+        email: this.register.email,
+        password: this.register.password
+      }
+      axios({
+        method: 'POST',
+        url: 'http://localhost:3000/admins/register',
+        data: payload
+      })
+        .then(({ data }) => {
+          this.$router.push('/login')
+        })
+        .catch(({ response }) => {
+          this.$store.commit('SET_ERROR_MESSAGE', response)
+        })
+    }
   }
 }
 </script>
@@ -52,8 +71,6 @@ export default {
 <style>
 body
 {
-    /* background: url('http://farm3.staticflickr.com/2832/12303719364_c25cecdc28_b.jpg') fixed; */
-    /* background-color: navy; */
     background-size: cover;
     padding: 0;
     margin: 0;
@@ -63,7 +80,6 @@ body
 {
     width: 100%;
     height: 80vh;
-    /* min-height: 100%; */
     position: absolute;
     top: 0;
     left: 0;

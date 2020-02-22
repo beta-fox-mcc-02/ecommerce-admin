@@ -19,6 +19,13 @@ export default {
     currentNav () {
       return this.$store.state.curentNav
     }
+  },
+  beforeRouteEnter (to, from, next) {
+    if (localStorage.token) {
+      next('/dashboard')
+    } else {
+      next()
+    }
   }
 }
 </script>

@@ -4,6 +4,8 @@ import LandingPage from '../views/LandingPage.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import Dashboard from '../views/Dashboard.vue'
+import Edit from '../components/Edit.vue'
+import Detail from '../components/Detail.vue'
 
 Vue.use(VueRouter)
 
@@ -26,7 +28,19 @@ const routes = [
   {
     path: '/dashboard',
     name: 'Dashboard',
-    component: Dashboard
+    component: Dashboard,
+    children: [
+      {
+        path: 'edit/:id',
+        name: 'Edit',
+        component: Edit
+      },
+      {
+        path: 'detail/:id',
+        name: 'Detail',
+        component: Detail
+      }
+    ]
   }
 ]
 

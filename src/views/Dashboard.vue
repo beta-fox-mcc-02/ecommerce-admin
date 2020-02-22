@@ -1,12 +1,27 @@
 <template>
   <div>
-    <h1>SELAMAT DATANG</h1>
+    <NavbarAdmin></NavbarAdmin>
+    <Product></Product>
   </div>
 </template>
 
 <script>
-export default {
+import NavbarAdmin from '@/components/NavbarAdmin.vue'
+import Product from '@/components/Product.vue'
 
+export default {
+  name: 'Dasboard',
+  components: {
+    NavbarAdmin,
+    Product
+  },
+  beforeRouteEnter (to, from, next) {
+    if (!localStorage.token) {
+      next('/')
+    } else {
+      next()
+    }
+  }
 }
 </script>
 

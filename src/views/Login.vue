@@ -9,9 +9,9 @@
                     <div id="login-box">
                       <p class="form-title">
                           Login</p>
-                      <form class="login">
-                        <input type="email" placeholder="Email" />
-                        <input type="password" placeholder="Password" />
+                      <form class="login" @submit.prevent="loginProcess">
+                        <input type="email" placeholder="Email" v-model="login.email"/>
+                        <input type="password" placeholder="Password" v-model="login.password"/>
                         <input type="submit" value="Submit" class="btn btn-success btn-sm" />
                       </form>
                     </div>
@@ -27,12 +27,41 @@
 <script>
 import Nav from '../components/Navbar.vue'
 import Carousel from '../components/Carousel.vue'
+import axios from 'axios'
 
 export default {
   name: 'Name',
   components: {
     Nav,
     Carousel
+  },
+  data () {
+    return {
+      login: {
+        email: '',
+        password: ''
+      }
+    }
+  },
+  methods: {
+    loginProcess () {
+      const payload = {
+        email: this.login.email,
+        password: this.login.password
+      }
+      axios({
+        method: 'POST',
+        url: 'http://localhost:3000/admins/login',
+        data: payload
+      })
+        .then(({ data }) => {
+          localStorage.token = data.access_token
+          this.$router.push('/dashboard')
+        })
+        .catch(({ response }) => {
+          this.$store.commit('SET_ERROR_MESSAGE', response)
+        })
+    }
   }
 }
 </script>
@@ -40,8 +69,6 @@ export default {
 <style>
 body
 {
-    /* background: url('http://farm3.staticflickr.com/2832/12303719364_c25cecdc28_b.jpg') fixed; */
-    /* background-color: navy; */
     background-size: cover;
     padding: 0;
     margin: 0;
@@ -51,7 +78,6 @@ body
 {
     width: 100%;
     height: 80vh;
-    /* min-height: 100%; */
     position: absolute;
     top: 0;
     left: 0;

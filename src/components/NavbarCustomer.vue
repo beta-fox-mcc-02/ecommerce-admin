@@ -2,19 +2,33 @@
   <div id="navbar">
     <div class="left-bar">
       <h2>TITLE</h2>
+      <ul>
+        <li>Home</li>
+        <li>Product</li>
+      </ul>
     </div>
     <div class="right-bar">
-      <div class="login">
+      <div class="chart">
         <ul>
-          <li><router-link to="/register" class="linker">Register</router-link></li>
-          <li><router-link to="/login" class="linker">Login</router-link></li>
+          <li>Chart</li>
+        </ul>
+      </div>
+      <div class="logout">
+        <ul>
+          <li>Logout</li>
         </ul>
       </div>
     </div>
+      <!-- <b-button id="cancel-login-admin" class="mt-3" block @click="$bvModal.hide(`add-task`)" style="background-color:red">Cancel</b-button> -->
+      <br>
+      <p>register as admin</p>
+    </b-modal>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+import router from '../router'
 
 export default {
   name: 'LandingPage',
@@ -27,6 +41,7 @@ export default {
     }
   },
   methods: {
+    }
   }
 }
 </script>
