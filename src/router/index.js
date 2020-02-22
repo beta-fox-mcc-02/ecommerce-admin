@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Admin from '../views/Admin'
+import LandingPage from '../views/LandingPage'
+import LoginAdmin from '../views/LoginAdmin'
 import AdminPage from '../views/AdminPage'
 import AdminHome from '../components/AdminHome'
 import AdminDashboard from '../components/AdminDashboard'
@@ -10,6 +11,16 @@ import AdminCategories from '../components/AdminCategories'
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/',
+    name: 'Landing Page',
+    component: LandingPage
+  },
+  {
+    path: '/log',
+    name: 'Admin Login',
+    component: LoginAdmin
+  },
   {
     path: '/admin',
     name: 'Admin',
@@ -36,11 +47,6 @@ const routes = [
         component: AdminCategories
       }
     ]
-  },
-  {
-    path: '/admin1',
-    name: 'Admin1',
-    component: Admin
   }
 ]
 

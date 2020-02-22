@@ -1,8 +1,38 @@
 <template>
-  <div class="admin-home-container" justify="center" align="center">
+  <div class="admin-category-container" justify="center" align="center">
       <h1>
-        This is Categories Page
+        Categories
       </h1>
-      <p>If you are in this page, then you are authorized to create, edit, and delete products in this app. Check menu on the left side to see the products available and choose the actions.</p>
+      <v-row>
+        <v-col
+          v-for="{id, name} in categories"
+          :key="id"
+          cols="12"
+          sm="12"
+          md="6"
+          lg="3"
+        >
+          <v-card>
+            <v-card-title
+              v-text="name"
+              class="ma-3 pa-6"
+            ></v-card-title>
+            <v-card-action></v-card-action>
+          </v-card>
+        </v-col>
+      </v-row>
   </div>
 </template>
+
+<script>
+export default {
+  computed: {
+    categories () {
+      return this.$store.state.categories
+    }
+  },
+  created () {
+    this.$store.dispatch('getAllCategories')
+  }
+}
+</script>

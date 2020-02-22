@@ -8,8 +8,8 @@
       <v-list>
         <v-list-item>
           <v-list-item-content>
-            <v-list-item-title class="title">John Leider</v-list-item-title>
-            <v-list-item-subtitle>john@vuetifyjs.com</v-list-item-subtitle>
+            <v-list-item-title class="title">{{adminName}}</v-list-item-title>
+            <v-list-item-subtitle>{{adminEmail}}</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -23,7 +23,6 @@
           :key="item.title"
           link
           :to="item.route"
-          v-model="group"
         >
             <v-list-item-icon>
                 <v-icon>{{ item.icon }}</v-icon>
@@ -34,12 +33,6 @@
             </v-list-item-content>
         </v-list-item>
       </v-list>
-
-      <template v-slot:append>
-        <div class="pa-2 deep-purple">
-          <v-btn block>Logout</v-btn>
-        </div>
-      </template>
     </v-navigation-drawer>
 
     <v-app-bar
@@ -50,7 +43,22 @@
     >
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-      <v-toolbar-title>e-Commerce Config</v-toolbar-title>
+      <v-toolbar-title>Foot-Style Admin</v-toolbar-title>
+
+      <v-spacer />
+      <v-btn
+        icon
+        large
+        @click="toAdminHome"
+      >
+        <v-icon>person</v-icon>
+      </v-btn>
+      <v-btn icon>
+        <v-icon>mdi-bell</v-icon>
+      </v-btn>
+      <v-btn @click="adminLogout" icon>
+        <v-icon>fas fa-sign-out-alt</v-icon>
+      </v-btn>
 
     </v-app-bar>
     <v-content>
@@ -74,7 +82,28 @@ export default {
   computed: {
     items () {
       return this.$store.state.adminMenu
+    },
+    adminName () {
+      return this.$store.state.adminName
+    },
+    adminEmail () {
+      return this.$store.state.adminEmail
     }
+  },
+  methods: {
+    toAdminHome () {
+      this.$router.push('/admin')
+    },
+    adminLogout () {
+      localStorage.clear()
+      this.$store.commit('setAdminName', null)
+      this.$store.commit('setAdminEmail', null)
+      this.$router.push('/')
+    }
+  },
+  created () {
+    document.title = 'Foot-Style Admin'
+    this.$store.dispatch('getAllCategories')
   }
 }
 </script>
