@@ -30,7 +30,7 @@ const routes = [
     component: Login,
     children: [
       {
-        path: '',
+        path: 'login',
         name: 'loginUser',
         component: UserLogin
       },

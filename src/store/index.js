@@ -20,7 +20,7 @@ const store = new Vuex.Store({
     ISLOGIN (state, status) {
       state.token = status
       state.isLogin = status
-      console.log(state.isLogin)
+      // console.log(state.isLogin)
     },
     LOGOUT (state, status) {
       state.token = status
@@ -28,14 +28,14 @@ const store = new Vuex.Store({
   },
   actions: {
     loginAdmin (context, payload) {
-      axios.post('http://localhost:3000/admin/login', payload)
+      axios.post('https://stark-hamlet-59602.herokuapp.com/login', payload)
         .then(({ data }) => {
           localStorage.token = data.token
           context.commit('ISLOGIN', true)
           router.push('/admin')
         })
         .catch(({ response }) => {
-          console.log(response.data.err)
+          // console.log(response.data.err)
           Toastify({
             text: response.data.err,
             backgroundColor: 'linear-gradient(to right, #00b09b, #96c93d)',
@@ -44,14 +44,14 @@ const store = new Vuex.Store({
         })
     },
     registerAdmin (context, payload) {
-      axios.post('http://localhost:3000/admin/register', payload)
+      axios.post('https://stark-hamlet-59602.herokuapp.com/admin/register', payload)
         .then(({ data }) => {
           localStorage.token = data.token
           context.commit('ISLOGIN', true)
           router.push('/admin')
         })
         .catch(({ response }) => {
-          console.log(response.data.err)
+          // console.log(response.data.err)
           Toastify({
             text: response.data.err,
             backgroundColor: 'linear-gradient(to right, #00b09b, #96c93d)',
@@ -60,7 +60,7 @@ const store = new Vuex.Store({
         })
     },
     addProduct (context, payload) {
-      return axios.post('http://localhost:3000/products/list', payload,
+      return axios.post('https://stark-hamlet-59602.herokuapp.com/products/list', payload,
         {
           headers: {
             token: localStorage.token
@@ -68,13 +68,13 @@ const store = new Vuex.Store({
         })
     },
     fetchProducts (context) {
-      axios.get('http://localhost:3000/products/list')
+      axios.get('https://stark-hamlet-59602.herokuapp.com/products/list')
         .then(({ data }) => {
-        //   console.log(data)
+          console.log(data)
           context.commit('FETCH_PRODUCTS', data)
         })
         .catch(({ response }) => {
-          console.log(response.data.err)
+          // console.log(response.data.err)
           Toastify({
             text: response.data.err,
             backgroundColor: 'linear-gradient(to right, #00b09b, #96c93d)',
@@ -83,7 +83,7 @@ const store = new Vuex.Store({
         })
     },
     editProduct (context, payload) {
-      return axios.put(`http://localhost:3000/products/${payload.id}/item`, payload,
+      return axios.put(`https://stark-hamlet-59602.herokuapp.com/products/${payload.id}/item`, payload,
         {
           headers: {
             token: localStorage.token
@@ -91,7 +91,7 @@ const store = new Vuex.Store({
         })
     },
     deleteProduct (context, payload) {
-      return axios.delete(`http://localhost:3000/products/${payload}/item`, {
+      return axios.delete(`https://stark-hamlet-59602.herokuapp.com/products/${payload}/item`, {
         headers: {
           token: localStorage.token
         }
