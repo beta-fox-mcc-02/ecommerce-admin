@@ -9,6 +9,7 @@
   },
   "dependencies": {
 <<<<<<< HEAD
+<<<<<<< HEAD
     "axios": "^0.19.2",
     "bootstrap-vue": "^2.1.0",
     "core-js": "^3.6.4",
@@ -19,16 +20,22 @@
   "devDependencies": {
     "@babel/polyfill": "^7.7.0",
 =======
+=======
+>>>>>>> ef6443aa167e1870c8b7f6f665dd7f8f1a75dc42
     "core-js": "^3.6.4",
     "vue": "^2.6.11",
     "vue-router": "^3.1.5"
   },
   "devDependencies": {
+<<<<<<< HEAD
+>>>>>>> ef6443aa167e1870c8b7f6f665dd7f8f1a75dc42
+=======
 >>>>>>> ef6443aa167e1870c8b7f6f665dd7f8f1a75dc42
     "@vue/cli-plugin-babel": "~4.2.0",
     "@vue/cli-plugin-eslint": "~4.2.0",
     "@vue/cli-plugin-router": "~4.2.0",
     "@vue/cli-service": "~4.2.0",
+<<<<<<< HEAD
 <<<<<<< HEAD
     "babel-eslint": "^10.0.3",
     "bootstrap": "^4.3.1",
@@ -41,6 +48,8 @@
     "sass-loader": "^8.0.0",
     "vue-cli-plugin-bootstrap-vue": "~0.6.0",
 =======
+=======
+>>>>>>> ef6443aa167e1870c8b7f6f665dd7f8f1a75dc42
     "@vue/eslint-config-standard": "^5.1.0",
     "babel-eslint": "^10.0.3",
     "eslint": "^6.7.2",
@@ -49,6 +58,9 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^6.1.2",
+<<<<<<< HEAD
+>>>>>>> ef6443aa167e1870c8b7f6f665dd7f8f1a75dc42
+=======
 >>>>>>> ef6443aa167e1870c8b7f6f665dd7f8f1a75dc42
     "vue-template-compiler": "^2.6.11"
   },
@@ -60,7 +72,11 @@
     "extends": [
       "plugin:vue/essential",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "eslint:recommended"
+=======
+      "@vue/standard"
+>>>>>>> ef6443aa167e1870c8b7f6f665dd7f8f1a75dc42
 =======
       "@vue/standard"
 >>>>>>> ef6443aa167e1870c8b7f6f665dd7f8f1a75dc42
