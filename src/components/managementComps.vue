@@ -26,8 +26,8 @@
         </form>
       </div>
     </div>
-    <div id="administrator-list" v-for="admin of admins" v-bind:key="admin.id">
-      <div class="admincards-container">
+    <div id="administrator-list">
+      <div class="admincards-container" v-for="admin of admins" v-bind:key="admin.id">
         <input type="checkbox">
         <div class="adminbox-id">{{ admin.id }}</div>
         <div class="adminbox-email">{{ admin.email }}</div>
@@ -61,6 +61,7 @@ export default {
     getAdmins () {
       this.$store.dispatch('fetchAdmins')
         .then((result) => {
+          console.log(result.data.admins)
           this.$store.commit('getAdmins', result.data.admins)
         })
         .catch((err) => console.log(err))

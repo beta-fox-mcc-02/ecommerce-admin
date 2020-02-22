@@ -2,7 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 
-const serverUrl = 'https://mysterious-beach-02436.herokuapp.com'
+// const serverUrl = 'https://mysterious-beach-02436.herokuapp.com'
+const serverUrl = 'http://localhost:3000'
 
 Vue.use(Vuex)
 
@@ -26,6 +27,7 @@ const store = new Vuex.Store({
     },
     getAdmins (state, params) {
       state.admins = params
+      console.log(params)
     },
     setEmail (state, params) {
       state.email = params
@@ -76,9 +78,11 @@ const store = new Vuex.Store({
   },
   actions: {
     fetchProducts (context) {
+      const token = localStorage.getItem('access_token')
       axios({
         method: 'GET',
-        url: `${serverUrl}/products`
+        url: `${serverUrl}/products`,
+        headers: { token }
       })
         .then((result) => {
           this.commit('fetchProducts', { data: result.data.products })
@@ -102,6 +106,7 @@ const store = new Vuex.Store({
       })
     },
     createProductAsync (context) {
+      const token = localStorage.getItem('access_token')
       const input = context.state
       if (input.name && input.price && input.stock && input.category) {
         const data = {
@@ -114,16 +119,19 @@ const store = new Vuex.Store({
         return axios({
           method: 'POST',
           url: `${serverUrl}/product`,
+          headers: { token },
           data
         })
       } else return null
     },
     updateProductAsync (context) {
+      const token = localStorage.getItem('access_token')
       const input = context.state
       if (input.name && input.price && input.stock && input.category) {
         return axios({
           method: 'PUT',
           url: `${serverUrl}/product/${context.state.id}`,
+          headers: { token },
           data: {
             name: input.name,
             price: input.price,
@@ -135,15 +143,19 @@ const store = new Vuex.Store({
       } else return null
     },
     deleteAsync (context, id) {
+      const token = localStorage.getItem('access_token')
       return axios({
         method: 'DELETE',
-        url: `${serverUrl}/product/${id}`
+        url: `${serverUrl}/product/${id}`,
+        headers: { token }
       })
     },
     fetchAdmins (context) {
+      const token = localStorage.getItem('access_token')
       return axios({
         method: 'GET',
-        url: `${serverUrl}/admins`
+        url: `${serverUrl}/admins`,
+        headers: token
       })
     },
     createAdminAsync (context) {
