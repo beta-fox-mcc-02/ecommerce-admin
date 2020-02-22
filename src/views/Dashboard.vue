@@ -12,7 +12,9 @@
           <thead class="table-borderless">
             <tr>
               <td>
-                <i class="fas fa-plus-square btn-add-product btn"></i>
+                <router-link to="/addProduct">
+                  <i class="fas fa-plus-square btn-add-product btn"></i>
+                </router-link>
               </td>
             </tr>
           </thead>
@@ -42,7 +44,7 @@
         </table>
       </div>
     </div>
-
+    <router-view />
   </div>
 </template>
 
