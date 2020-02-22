@@ -85,7 +85,7 @@ export default {
   },
   computed: {
     isLoading () {
-      return this.$store.state.category.isLoading
+      return this.$store.state.category.isLoadingAction
     },
     nameErrors () {
       const errors = []
@@ -118,7 +118,7 @@ export default {
       this.$store.dispatch('createCategory', category)
         .then(response => {
           this.$store.dispatch('fetchCategories')
-          this.$store.commit('SET_LOADING', false)
+          this.$store.commit('SET_LOADING_ACTIONS', false)
           this.$store.commit('SET_ERRORS', [])
           this.name = ''
           this.path = ''
@@ -126,7 +126,7 @@ export default {
           this.$emit('closeModalCategory', false)
         })
         .catch(err => {
-          this.$store.commit('SET_LOADING', false)
+          this.$store.commit('SET_LOADING_ACTIONS', false)
           this.$store.commit('SET_ERRORS', err.body.errors)
         })
     }

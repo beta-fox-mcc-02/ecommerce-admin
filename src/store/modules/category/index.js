@@ -4,6 +4,7 @@ import mutations from './mutations'
 const state = {
   categories: [],
   isLoading: null,
+  isLoadingAction: null,
   errors: []
 }
 

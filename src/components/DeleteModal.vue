@@ -1,10 +1,12 @@
 <template>
   <v-row justify="center">
-    <v-dialog v-model="isOpen" max-width="400">
-      <Alert :errors="errors" />
+    <v-dialog v-model="isOpen" persistent max-width="600">
       <v-card>
         <v-card-title class="headline">Delete confirmation</v-card-title>
-        <v-card-text>Are you sure want to delete this data ?</v-card-text>
+        <v-card-text>
+          <Alert :errors="errors" />
+          Are you sure want to delete this data ?
+        </v-card-text>
         <CircularLoading v-if="isLoading" />
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -35,6 +37,8 @@ export default {
   }),
   methods: {
     closeModal () {
+      this.$store.commit('SET_ERRORS', [])
+      this.$store.commit('SET_PRODUCT_ERRORS', [])
       this.$emit('closeModalDelete', false)
     },
     deleteData () {
@@ -42,13 +46,13 @@ export default {
         case 'categories':
           this.$store.dispatch('deleteCategory', { id: this.id, type: this.type })
             .then(response => {
-              this.$store.commit('SET_LOADING', false)
+              this.$store.commit('SET_LOADING_ACTIONS', false)
               this.$store.dispatch('fetchCategories')
               this.$store.commit('SET_ERRORS', [])
               this.$emit('closeModalDelete', false)
             })
             .catch(err => {
-              this.$store.commit('SET_LOADING', false)
+              this.$store.commit('SET_LOADING_ACTIONS', false)
               this.$store.commit('SET_ERRORS', err.body.errors)
             })
           break
@@ -75,10 +79,16 @@ export default {
   },
   computed: {
     isLoading () {
-      return this.$store.state.category.isLoading || this.$store.state.product.isLoading
+      if (this.type === 'products') {
+        return this.$store.state.product.isLoading
+      }
+      return this.$store.state.category.isLoadingAction
     },
     errors () {
-      return this.$store.state.category.errors || this.$store.state.product.errors
+      if (this.type === 'products') {
+        return this.$store.state.product.errors
+      }
+      return this.$store.state.category.errors
     }
   }
 }

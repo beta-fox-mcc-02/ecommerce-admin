@@ -14,25 +14,12 @@ const actions = {
         commit('SET_ERRORS', err.body.errors)
       })
   },
-  openModalCategory: ({ state }, id) => {
-    state.isOpenModal = !state.isOpenModal
-    if (id) {
-      state.modalType = 'edit'
-    } else {
-      state.modalType = 'add'
-    }
-  },
-  closeModalCategory: ({ commit, state }) => {
-    state.isOpenModal = !state.isOpenModal
-    commit('SET_LOADING', false)
-    commit('SET_ERRORS', [])
-  },
   createCategory: ({ commit }, payload) => {
-    commit('SET_LOADING', true)
+    commit('SET_LOADING_ACTIONS', true)
     return resource.createCategory(payload)
   },
   deleteCategory: ({ commit }, payload) => {
-    commit('SET_LOADING', true)
+    commit('SET_LOADING_ACTIONS', true)
     return resource.deleteCategory({ id: payload.id })
   }
 }
