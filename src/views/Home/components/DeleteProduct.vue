@@ -35,12 +35,12 @@ export default {
         .catch(({ response }) => {
           this.$store.commit('SET_LOADING', false);
           this.$store.commit('SET_ERROR_MESSAGE', response.data.message);
+          this.$emit('closeModal');
           if (response.status === 401) {
             this.$router.push('/');
             this.$store.commit('LOGOUT');
             localStorage.removeItem("access_token");
           }
-          // console.log(response);
         });
     },
     onReset() {

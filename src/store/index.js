@@ -95,7 +95,7 @@ const store = new Vuex.Store({
         },
         data: {
           name: payload.name,
-          image_url: 'www.facebook.com',
+          image_url: payload.image_url,
           price: payload.price,
           stock: payload.stock
         }

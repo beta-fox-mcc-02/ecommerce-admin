@@ -11,7 +11,15 @@
         ></b-form-input>
       </b-form-group>
 
-      <b-form-file v-model="file" class="my-3" plain required></b-form-file>
+      <b-form-group id="input-group-2" label="Image URL:" label-for="input-2">
+        <b-form-input
+          id="input-2"
+          v-model="image_url"
+          type="text"
+          required
+          placeholder="Enter image url"
+        ></b-form-input>
+      </b-form-group>
 
       <b-form-group id="input-group-3" label="Price:" label-for="input-3">
         <b-form-input
@@ -45,10 +53,10 @@ export default {
   name: 'CreateProduct',
   data() {
     return {
-      name: 'asda',
-      file: null,
-      price: '20',
-      stock: '20'
+      name: '',
+      image_url: '',
+      price: '',
+      stock: ''
 
     };
   },
@@ -56,7 +64,7 @@ export default {
     onSubmit() {
       const payload = {
         name: this.name,
-        image_url: 'http://google.com',
+        image_url: this.image_url,
         price: this.price,
         stock: this.stock
       };
@@ -74,15 +82,14 @@ export default {
         .catch(({ response }) => {
           this.$store.commit('SET_LOADING', false);
           this.$store.commit('SET_ERROR_MESSAGE', response.data.message);
+          this.$emit('closeModal');
           if (response.status === 401) {
             this.$router.push('/');
             this.$store.commit('LOGOUT');
             localStorage.removeItem("access_token");
           }
-          // console.log(response);
         });
-    },
-
+    }
   }
 }
 </script>

@@ -20,6 +20,17 @@
       </b-modal>
     </div>
 
+    <!-- show image -->
+    <div>
+      <b-modal id="modal-4" ref="modal-4-ref" :title="currentClickImageName">
+        <ShowImage :imageLink="imageLink" @closeModal="closeModal" />
+        <template v-slot:modal-footer>
+          <div class="w-100 h-auto"></div>
+        </template>
+      </b-modal>
+    </div>
+
+    <!-- table -->
     <b-table
       :items="items"
       :fields="fields"
@@ -30,18 +41,15 @@
       <template v-slot:cell(Stock)="data">{{printStock(data.value)}}</template>
       <template v-slot:cell(Price)="data">{{printPrice(data.value)}}</template>
 
-      <template v-slot:cell(Image)>
-        <a href>
+      <template v-slot:cell(Image)="data">
+        <a @click="showImage(data.value, items[data.index].Name)" class="image-product">
           <i class="fas fa-images"></i>
-          <small>Show</small>
-        </a> |
-        <a href>
-          <small @click.prevent="changeImage(data.value)">Edit</small>
+          <small class="text-image">Show</small>
         </a>
       </template>
 
       <template v-slot:cell(id)="data">
-        <a href>
+        <a>
           <i class="fas fa-edit" @click.prevent="updateProduct(data.value)"></i>
         </a> |
         <a href>
@@ -61,6 +69,7 @@
 <script>
 import UpdateProduct from './UpdateProduct.vue';
 import DeleteProduct from './DeleteProduct.vue';
+import ShowImage from './ShowImage.vue';
 
 export default {
   data() {
@@ -74,12 +83,15 @@ export default {
         { key: 'Stock', sortable: true },
         { key: 'id', label: 'Options' },
       ],
-      idProduct: ''
+      idProduct: '',
+      imageLink: '',
+      currentClickImageName: ''
     };
   },
   components: {
     UpdateProduct,
-    DeleteProduct
+    DeleteProduct,
+    ShowImage
   }
   ,
   methods: {
@@ -98,7 +110,6 @@ export default {
             this.$store.commit('LOGOUT');
             localStorage.removeItem("access_token");
           }
-          console.log(response);
         });
     },
     deleteProduct(id) {
@@ -106,13 +117,13 @@ export default {
       this.idProduct = id;
     },
     updateProduct(id) {
-      console.log(id);
       this.idProduct = id;
       this.$refs['modal-2-ref'].show();
     },
     closeModal() {
       this.$refs['modal-2-ref'].hide();
       this.$refs['modal-3-ref'].hide();
+      this.$refs['modal-4-ref'].hide();
     },
     printStock(value) {
       if (Number(value) === 1)
@@ -123,15 +134,17 @@ export default {
     printPrice(value) {
       return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(value);
     },
-    changeImage(id) {
-      console.log(id);
+    showImage(link, name) {
+      this.imageLink = link;
+      this.currentClickImageName = name;
+      this.$refs['modal-4-ref'].show();
+
     }
   },
   computed: {
     items() {
       const products = [];
       this.$store.state.items.forEach(el => {
-        console.log(el);
         products.push({
           Name: el.name,
           Image: el.image_url,
@@ -148,3 +161,19 @@ export default {
   }
 }
 </script>
+
+<style >
+.image-product:hover {
+  cursor: pointer;
+}
+
+.fa-images,
+.text-image,
+.fa-edit {
+  color: rgb(61, 61, 223);
+}
+
+.fa-trash-alt {
+  color: red;
+}
+</style>

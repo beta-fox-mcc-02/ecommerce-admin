@@ -11,6 +11,16 @@
         ></b-form-input>
       </b-form-group>
 
+      <b-form-group id="input-group-2" label="Image URL:" label-for="input-2">
+        <b-form-input
+          id="input-2"
+          v-model="image_url"
+          type="text"
+          required
+          placeholder="Enter image url"
+        ></b-form-input>
+      </b-form-group>
+
       <b-form-group id="input-group-3" label="Price:" label-for="input-3">
         <b-form-input
           id="input-3"
@@ -47,7 +57,7 @@ export default {
   data() {
     return {
       name: '',
-      file: '',
+      image_url: '',
       price: '',
       stock: ''
 
@@ -57,7 +67,7 @@ export default {
     onSubmit() {
       const payload = {
         name: this.name,
-        image_url: this.file,
+        image_url: this.image_url,
         price: this.price,
         stock: this.stock,
         id: this.idProduct
@@ -76,12 +86,12 @@ export default {
         .catch(({ response }) => {
           this.$store.commit('SET_LOADING', false);
           this.$store.commit('SET_ERROR_MESSAGE', response.data.message);
+          this.$emit('closeModal');
           if (response.status === 401) {
             this.$router.push('/');
             this.$store.commit('LOGOUT');
             localStorage.removeItem("access_token");
           }
-          // console.log(response);
         });
     },
   },
@@ -89,7 +99,7 @@ export default {
     this.$store.state.items.forEach(el => {
       if (el.id === this.idProduct) {
         this.name = el.name;
-        this.file = el.image_url;
+        this.image_url = el.image_url;
         this.price = el.price;
         this.stock = el.stock;
       }
