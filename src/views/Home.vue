@@ -15,7 +15,6 @@
               src="../assets/1.jpg"
               alt="First slide"
               style="cursor: pointer"
-              @click="pindah"
             />
           </div>
           <div class="carousel-item">
@@ -24,7 +23,6 @@
               src="../assets/4.jpg"
               alt="Second slide"
               style="cursor: pointer"
-              @click="pindah"
             />
           </div>
         </div>
