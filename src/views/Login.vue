@@ -1,27 +1,38 @@
 <template>
-    <div class="container login-container">
-                <div class="col-md login-form-1">
-                    <h3>Login</h3>
-                    <form @submit.prevent="login">
-                        <div class="form-group">
-                            <input v-model="email" type="text" class="form-control" placeholder="Your Email" value="" />
-                        </div>
-                        <div class="form-group">
-                            <input v-model="password" type="password" class="form-control" placeholder="Your Password" value="" />
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" class="btnSubmit" value="Login" />
-                        </div>
-                        <div class="form-group">
-                            <a href="#" class="ForgetPwd">Forget Password?</a>
-                        </div>
-                    </form>
+<div class="container-fluid">
+  <div class="row no-gutter">
+    <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
+    <div class="col-md-8 col-lg-6">
+      <div class="login d-flex align-items-center py-5">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-9 col-lg-8 mx-auto">
+              <h3 class="login-heading mb-4">Welcome To HeadWare Store!</h3>
+              <form @submit.prevent="login">
+                <div class="form-label-group">
+                  <input v-model="email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                  <label for="inputEmail"></label>
                 </div>
+
+                <div class="form-label-group">
+                  <input v-model="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                  <label for="inputPassword"></label>
+                </div>
+
+                <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Sign in</button>
+                <div class="text-center">
+                  <a class="small" href="#" @click.prevent="switchToRegister">Forgot password?</a></div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+</div>
 </template>
 
 <script>
-import axios from 'axios'
 
 export default {
   name: 'Login',
@@ -33,80 +44,131 @@ export default {
   },
   methods: {
     login () {
-      axios({
-        method: 'POST',
-        url: 'http://localhost:3000/admins/login',
-        data: {
-          email: this.email,
-          password: this.password
-        }
-      })
-        .then(response => {
-          console.log(response)
-          localStorage.setItem('access_token', response.data.access_token)
-          this.$store.commit('SET_LOGIN', true)
-          this.$router.push('Home')
-        })
-        .catch(err => {
-          console.log(err)
-        })
+      const userData = {
+        email: this.email,
+        password: this.password
+      }
+      console.log(userData)
+      this.$store.dispatch('login', userData)
+    },
+    switchToRegister () {
+      this.$router.push('/register')
     }
   }
 }
 </script>
 
-<style>
-.login-container{
-    margin-top: 5%;
-    margin-bottom: 5%;
+<style scoped>
+:root {
+  --input-padding-x: 1.5rem;
+  --input-padding-y: 0.75rem;
 }
-.login-form-1{
-    padding: 5%;
-    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+
+.login,
+.image {
+  min-height: 100vh;
 }
-.login-form-1 h3{
-    text-align: center;
-    color: #333;
-    font-size: 30pt
+
+.bg-image {
+  background-image: url('https://source.unsplash.com/WEQbe2jBg40/600x1200');
+  background-size: cover;
+  background-position: center;
 }
-.login-form-2{
-    padding: 5%;
-    background: #0062cc;
-    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+
+.login-heading {
+  font-weight: 300;
 }
-.login-form-2 h3{
-    text-align: center;
-    color: #fff;
+
+.btn-login {
+  font-size: 0.9rem;
+  letter-spacing: 0.05rem;
+  padding: 0.75rem 1rem;
+  border-radius: 2rem;
 }
-.login-container form{
-    padding: 10%;
+
+.form-label-group {
+  position: relative;
+  margin-bottom: 1rem;
 }
-.btnSubmit
-{
-    width: 50%;
-    border-radius: 1rem;
-    padding: 1.5%;
-    border: none;
-    cursor: pointer;
+
+.form-label-group>input,
+.form-label-group>label {
+  padding: var(--input-padding-y) var(--input-padding-x);
+  height: auto;
+  border-radius: 2rem;
 }
-.login-form-1 .btnSubmit{
-    font-weight: 600;
-    color: #fff;
-    background-color: #0062cc;
+
+.form-label-group>label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  margin-bottom: 0;
+  /* Override default `<label>` margin */
+  line-height: 1.5;
+  color: #495057;
+  cursor: text;
+  /* Match the input under the label */
+  border: 1px solid transparent;
+  border-radius: .25rem;
+  transition: all .1s ease-in-out;
 }
-.login-form-2 .btnSubmit{
-    font-weight: 600;
-    color: #0062cc;
-    background-color: #fff;
+
+.form-label-group input::-webkit-input-placeholder {
+  color: transparent;
 }
-.login-form-2 .ForgetPwd{
-    color: #fff;
-    font-weight: 600;
-    text-decoration: none;
+
+.form-label-group input:-ms-input-placeholder {
+  color: transparent;
 }
-.login-form-1 .ForgetPwd{
-    color: #0062cc;
-    font-weight: 600;
-    text-decoration: none;
+
+.form-label-group input::-ms-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input::-moz-placeholder {
+  color: transparent;
+}
+
+.form-label-group input::placeholder {
+  color: transparent;
+}
+
+.form-label-group input:not(:placeholder-shown) {
+  padding-top: calc(var(--input-padding-y) + var(--input-padding-y) * (2 / 3));
+  padding-bottom: calc(var(--input-padding-y) / 3);
+}
+
+.form-label-group input:not(:placeholder-shown)~label {
+  padding-top: calc(var(--input-padding-y) / 3);
+  padding-bottom: calc(var(--input-padding-y) / 3);
+  font-size: 12px;
+  color: #777;
+}
+
+/* Fallback for Edge
+-------------------------------------------------- */
+
+@supports (-ms-ime-align: auto) {
+  .form-label-group>label {
+    display: none;
+  }
+  .form-label-group input::-ms-input-placeholder {
+    color: #777;
+  }
+}
+
+/* Fallback for IE
+-------------------------------------------------- */
+
+@media all and (-ms-high-contrast: none),
+(-ms-high-contrast: active) {
+  .form-label-group>label {
+    display: none;
+  }
+  .form-label-group input:-ms-input-placeholder {
+    color: #777;
+  }
 }
 </style>

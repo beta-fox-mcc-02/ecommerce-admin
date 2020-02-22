@@ -29,8 +29,8 @@ export default {
 </script>
 
 <style scoped>
-div {
+/* div {
   background-image: url('https://i.pinimg.com/originals/eb/09/85/eb098576a0c618c99ee86406a8815c64.png');
   background-size: cover
-}
+} */
 </style>

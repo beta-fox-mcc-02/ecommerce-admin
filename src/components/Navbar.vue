@@ -13,7 +13,10 @@
                 <router-link to="/">Home</router-link>
             </b-navbar-item>
             <b-navbar-item href="#">
-                <router-link to="/about">About</router-link>
+                <router-link to="/addProduct">Add Product</router-link>
+            </b-navbar-item>
+            <b-navbar-item href="#">
+                <router-link to="/editProduct">Edit Product</router-link>
             </b-navbar-item>
         </template>
 

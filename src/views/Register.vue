@@ -24,8 +24,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-import router from '../router'
 
 export default {
   name: 'Register',
@@ -38,22 +36,12 @@ export default {
   },
   methods: {
     register () {
-      axios({
-        method: 'POST',
-        url: 'http://localhost:3000/admins/register',
-        data: {
-          username: this.username,
-          email: this.email,
-          password: this.password
-        }
-      })
-        .then(response => {
-          router.push('Login')
-          console.log(response)
-        })
-        .catch(err => {
-          console.log(err)
-        })
+      const userData = {
+        username: this.username,
+        email: this.email,
+        password: this.password
+      }
+      this.$store.dispatch('register', userData)
     }
   }
 }
