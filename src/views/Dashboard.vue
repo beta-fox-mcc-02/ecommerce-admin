@@ -36,8 +36,8 @@
               <td align="center">{{product.price}}</td>
               <td align="center">{{product.stock}}</td>
               <td align="center" class="action-area">
-                <i class="fas fa-pen btn"></i>
-                <i class="fas fa-trash btn"></i>
+                <i class="fas fa-pen btn" @click="editProductForm(product.id)"></i>
+                <i class="fas fa-trash btn" @click="deleteProduct(product.id)"></i>
               </td>
             </tr>
           </tbody>
@@ -49,6 +49,7 @@
 </template>
 
 <script>
+import axios from '../config/axios'
 import Nav from '../components/Nav'
 import SideBar from '../components/SideBar'
 
@@ -66,6 +67,43 @@ export default {
   methods: {
     fetchAllProducts () {
       this.$store.dispatch('fetchAllProducts')
+        .then(({ data }) => {
+          this.$store.commit('SET_PRODUCTS', data.data)
+          if (data.data.length) {
+            this.product = true
+          }
+        })
+        .catch(err => {
+          console.log(err.response.data)
+        })
+    },
+
+    editProductForm (id) {
+      console.log(id)
+      this.$store.commit('SET_ID_TO_EDIT', id)
+      this.$store.dispatch('getProductById')
+        .then(({ data }) => {
+          console.log(data)
+          this.$store.commit('SET_PRODUCT_TO_EDIT', data.data)
+          this.$router.push({ name: 'EditProduct' })
+        })
+        .catch(({ response }) => {
+          console.log(response.data)
+        })
+    },
+
+    deleteProduct (id) {
+      axios({
+        method: 'DELETE',
+        url: `/products/${id}`,
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+        .then(({ data }) => {
+          console.log(data)
+          return this.$store.dispatch('fetchAllProducts')
+        })
         .then(({ data }) => {
           this.$store.commit('SET_PRODUCTS', data.data)
           if (data.data.length) {
@@ -121,6 +159,11 @@ export default {
 
 .product-table tbody tr td{
   overflow: hidden;
+}
+
+.btn {
+  padding: 0;
+  margin: 5px;
 }
 
 .btn:hover {

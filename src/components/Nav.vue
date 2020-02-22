@@ -1,9 +1,9 @@
 <template>
     <div class="col-12 d-flex align-items-center">
       <div class="col-6 p-0">
-        <router-link to="/">
-          Logo
-        </router-link>
+        <div class="btn logo" @click="redirectTo(getIsLogin)">
+          e-toko
+        </div>
       </div>
       <div class="col-6 p-0 d-flex justify-content-end" v-if="getIsLogin">
         <div @click="signOut" class="logout-space btn">
@@ -22,6 +22,14 @@ export default {
       localStorage.removeItem('token')
       this.$router.push({ name: 'Home' })
       this.$store.commit('SETISLOGIN', false)
+    },
+
+    redirectTo (isLogin) {
+      if (isLogin) {
+        this.$router.push({ name: 'Dashboard' })
+      } else {
+        this.$router.push({ name: 'Home' })
+      }
     }
   },
   computed: {
@@ -36,9 +44,15 @@ export default {
 .logout-space {
   display: flex;
   align-items: center;
+  font-size: 1.2rem;
 }
 
 .btn:hover {
   cursor: pointer;
+}
+
+.logo {
+  font-family: 'Passion One';
+  font-size: 3rem;
 }
 </style>

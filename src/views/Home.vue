@@ -5,9 +5,11 @@
     </div>
 
     <div class="content">
-      <div class="col-6 home-image"></div>
-      <div class="col-6 home-text">
-        <h1>welcome</h1>
+      <div class="col-6 home-image">
+        <img class="home-image" src="../assets/undraw_data_trends_b0wg.svg" alt="welcome-img">
+      </div>
+      <div class="col-5 home-text">
+        <h1>Welcome Admin!</h1>
         <SignIn />
       </div>
     </div>
@@ -34,10 +36,13 @@ export default {
 
 <style scoped>
 .home-text {
-    border-left: 1px solid grey;
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+.home-text h1{
+  font-weight: bold;
 }
 
 .home-text a{
@@ -47,6 +52,11 @@ export default {
 
 .content {
     display: flex;
+    justify-content: center;
     height: 90%;
+}
+
+.home-image {
+  width: 90%;
 }
 </style>

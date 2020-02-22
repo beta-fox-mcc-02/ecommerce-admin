@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="mt-3 d-flex justify-content-center add-form-container">
-      <div class="add-form-area">
-        <h2 align="center">Add Product</h2>
-        <form @submit.prevent="addProduct">
+    <div class="mt-3 d-flex justify-content-center edit-form-container">
+      <div class="edit-form-area">
+        <h2 align="center">Edit Product</h2>
+        <form @submit.prevent="editProduct">
           <div class="form-group">
             <label for="name">Name:</label>
             <input v-model="name" id="name" type="text" class="form-control" placeholder="product name" required>
@@ -36,20 +36,26 @@
 import axios from '../config/axios'
 
 export default {
-  name: 'AddProduct',
+  name: 'EditProduct',
   data () {
     return {
+      id: null,
       name: '',
       image_url: '',
-      price: '',
-      stock: ''
+      price: null,
+      stock: null
+    }
+  },
+  computed: {
+    getIdToEdit () {
+      return this.$store.state.idToEdit
     }
   },
   methods: {
-    addProduct () {
+    editProduct () {
       axios({
-        method: 'POST',
-        url: '/products',
+        method: 'PUT',
+        url: `/products/${this.id}`,
         data: {
           name: this.name,
           image_url: this.image_url,
@@ -61,6 +67,7 @@ export default {
         }
       })
         .then(({ data }) => {
+          console.log(data)
           this.$router.push({ name: 'Dashboard' })
           return this.$store.dispatch('fetchAllProducts')
         })
@@ -70,26 +77,33 @@ export default {
             this.product = true
           }
         })
-        .catch(err => {
-          console.log(err.response.data)
+        .catch(({ response }) => {
+          console.log(response.data)
         })
     }
+  },
+  created () {
+    this.id = this.$store.state.productToEdit.id
+    this.name = this.$store.state.productToEdit.name
+    this.image_url = this.$store.state.productToEdit.image_url
+    this.price = this.$store.state.productToEdit.price
+    this.stock = this.$store.state.productToEdit.stock
   }
 }
-</script>add-form-area
+</script>
 
-<style scoped>
-.add-form-container {
+<style>
+.edit-form-container {
   background-color: #c2c2c2;
   width: max-content;
   padding: 10px;
   border-radius: 10px;
   position: absolute;
   top: 10%;
-  left: 21%;
+  left: 61%;
 }
 
-.add-form-area form {
+.edit-form-area form {
   width: 400px;
 }
 </style>

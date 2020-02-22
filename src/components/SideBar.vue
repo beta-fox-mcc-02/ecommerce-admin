@@ -8,12 +8,12 @@
           </td>
           <td>manage product</td>
         </tr>
-        <tr class="menu-group">
+        <!-- <tr class="menu-group">
           <td class="icon-menu">
             <i class="fa fa-user" aria-hidden="true"></i>
           </td>
           <td>manage user</td>
-        </tr>
+        </tr> -->
       </table>
     </div>
   </div>
