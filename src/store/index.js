@@ -6,9 +6,16 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    // isLogin
+    idToken: '',
+    isLogin: false,
   },
   mutations: {
+    SET_IDTOKEN(state, payload) {
+      state.idToken = payload;
+    },
+    SET_ISLOGIN(state, status) {
+      state.isLogin = status;
+    },
   },
   actions: {
     login(context, payload) {
@@ -20,6 +27,20 @@ export default new Vuex.Store({
         email: newUser.email,
         password: newUser.password,
         roles: newUser.roles,
+      });
+    },
+    fetchProduct() {
+      return userAPI({
+        method: 'GET',
+        url: '/product',
+        headers: { access_token: localStorage.getItem('access_token') },
+      });
+    },
+    deleteProduct() {
+      return userAPI({
+        method: 'DELETE',
+        url: '/product',
+        headers: { access_token: localStorage.getItem('access_token') },
       });
     },
   },

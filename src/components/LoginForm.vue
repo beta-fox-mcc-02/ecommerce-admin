@@ -65,9 +65,11 @@ export default {
       this.$store.dispatch('login', payload)
         .then((response) => {
           if (response.data.access_token) {
-            console.log(response.data);
+            console.log(this.$store.state.idToken);
             localStorage.setItem('access_token', response.data.access_token);
-            this.$router.push('/');
+            this.$store.commit('SET_IDTOKEN', response.data.access_token);
+            this.$store.commit('SET_ISLOGIN', true);
+            this.$router.push('/dashboard');
           }
         })
         .catch((err) => {

@@ -12,9 +12,12 @@
             </li>
             <li class="nav-item" role="presentation"></li>
           </ul><span class="navbar-text actions">
-            <router-link to="/login" class="login">Log In</router-link>
-            <router-link to="/register" class="btn btn-light action-button" role="button"
-              style="background-color: #4b70dd;">Sign Up</router-link>
+            <router-link to="/login" class="btn btn-light action-button" role="button"
+            style="background-color: #4b70dd;"
+            v-if="currentPage === 'register'">Log In</router-link>
+          <router-link to="/register" class="btn btn-light action-button" role="button"
+            style="background-color: #4b70dd;"
+            v-if="currentPage === 'login'">Sign Up</router-link>
           </span>
         </div>
       </div>
@@ -25,5 +28,36 @@
 
 export default {
   name: 'Navbar',
+  data() {
+    return {
+      currentPage: '',
+      route: this.$route.path,
+    };
+  },
+  methods: {
+    logRoute() {
+      console.log(this.$route.path);
+      console.log(this.route);
+      if (this.route === '/login') {
+        this.currentPage = 'login';
+      } else if (this.route === '/register') {
+        this.currentPage = 'register';
+      }
+      console.log(this.currentPage);
+    },
+  },
+  watch: {
+    // route: () => {
+    //   console.log(this.$route.path);
+    //   if (this.route === '/login') {
+    //     this.currentPage = 'login';
+    //   } else if (this.route === '/register') {
+    //     this.currentPage = 'register';
+    //   }
+    // },
+  },
+  mounted() {
+    this.logRoute();
+  },
 };
 </script>

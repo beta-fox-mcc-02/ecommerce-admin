@@ -28,6 +28,11 @@ const routes = [
     name: 'Register',
     component: () => import('../views/Register.vue'),
   },
+  {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: () => import('../views/Dashboard.vue'),
+  },
 ];
 
 const router = new VueRouter({
