@@ -2,7 +2,6 @@
   <v-app>
     <navbar />
     <v-content>
-      <router-link to="register"></router-link>
       <router-view />
     </v-content>
   </v-app>

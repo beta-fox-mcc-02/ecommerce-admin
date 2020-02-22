@@ -39,6 +39,11 @@ export default {
     register () {
       this.$router.push('/register')
     }
+  },
+  created () {
+    if (!localStorage.token) {
+      this.$router.push('/login')
+    }
   }
 
 }
