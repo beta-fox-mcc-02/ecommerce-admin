@@ -1,14 +1,28 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/login">Login</router-link> |
-      <router-link to="/register">Register</router-link> |
-      <router-link to="/admin">Admin</router-link>
-    </div>
-    <router-view/>
+    <NavbarAdmin></NavbarAdmin>
+    <router-view />
   </div>
 </template>
+
+<script>
+
+import NavbarAdmin from './components/NavbarAdmin'
+
+export default {
+  name: 'NavbarLogin',
+  components: {
+    NavbarAdmin
+  },
+  created () {
+    if (localStorage.access_token) {
+      this.$router.push('/')
+    } else {
+      this.$router.push('/login')
+    }
+  }
+}
+</script>
 
 <style>
 #app {
