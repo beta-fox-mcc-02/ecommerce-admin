@@ -9,7 +9,7 @@
     <td>
       <ul>
         <li style="color: green;" @click="editProduct"><i class="material-icons editButton">edit</i></li>
-        <li style="color: red;" @click="delProduct"><i class="material-icons deleteButton">delete</i></li>
+        <li style="color: red;" @click="confirm"><i class="material-icons deleteButton">delete</i></li>
       </ul>
     </td>
   </tr>
@@ -49,12 +49,24 @@ export default {
       this.$router.push({ path: 'editProduct', query: { id: this.product.id } })
     },
     delProduct () {
+      this.$store.commit('SET_IS_LOADING', true)
       this.$store.dispatch('deleteProduct', this.product.id)
         .then(({ data }) => {
           this.$store.commit('SET_NOTIFICATION', data.msg)
           this.$store.dispatch('fetchProducts')
+          this.$store.commit('SET_IS_LOADING', false)
         })
-        .catch(err => this.$store.commit('SET_ERROR', err))
+        .catch(err => {
+          this.$store.commit('SET_ERROR', err)
+          this.$store.commit('SET_IS_LOADING', false)
+        })
+    },
+    confirm () {
+      this.$alertify.confirmWithTitle(
+        'Delete Product',
+        'Are you sure want to delete this product?',
+        () => this.delProduct()
+      )
     }
   }
 }

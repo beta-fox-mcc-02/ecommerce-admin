@@ -6,31 +6,6 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    // products: [{
-    //   id: 1,
-    //   name: 'Smartphone 1',
-    //   description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda itaque sequi magnam atque. Iste odio repellendus autem? Et, aut itaque.',
-    //   category: 'Smartphone',
-    //   price: '100000',
-    //   stock: 10,
-    //   imageUrl: 'https://radscanmedical.com/wp-content/uploads/2018/11/coming-soon.png'
-    // }, {
-    //   id: 2,
-    //   name: 'Komputer 1',
-    //   description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda itaque sequi magnam atque. Iste odio repellendus autem? Et, aut itaque.',
-    //   category: 'Computer',
-    //   price: '200000',
-    //   stock: 10,
-    //   imageUrl: 'https://radscanmedical.com/wp-content/uploads/2018/11/coming-soon.png'
-    // }, {
-    //   id: 3,
-    //   name: 'Komputer 2',
-    //   description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda itaque sequi magnam atque. Iste odio repellendus autem? Et, aut itaque.',
-    //   category: 'Computer',
-    //   price: '300000',
-    //   stock: 10,
-    //   imageUrl: 'https://radscanmedical.com/wp-content/uploads/2018/11/coming-soon.png'
-    // }],
     products: [],
     filteredProducts: [],
     addProduct: false,
@@ -43,7 +18,8 @@ export default new Vuex.Store({
     admin: [],
     inactiveAdmin: [],
     allUsers: [],
-    superAdmin: false
+    superAdmin: false,
+    isLoading: false
   },
   mutations: {
     FETCH_PRODUCTS (state, data) {
@@ -71,21 +47,19 @@ export default new Vuex.Store({
     SET_LOGIN (state, data) {
       state.isLogin = data
     },
-    // FETCH_ADMIN (state, data) {
-    //   state.admin = data.filter(admin => admin.isActivated)
-    // },
-    // FETCH_INACTIVE_ADMIN (state, data) {
-    //   state.inactiveAdmin = data.filter(admin => !admin.isActivated)
-    // },
     FETCH_ALL_USERS (state, data) {
       state.allUsers = data
     },
     SET_SUPER_ADMIN (state, data) {
       state.superAdmin = data
+    },
+    SET_IS_LOADING (state, data) {
+      state.isLoading = data
     }
   },
   actions: {
     fetchProducts (context) {
+      context.commit('SET_IS_LOADING', true)
       axios({
         method: 'get',
         url: process.env.VUE_APP_BASEURL + 'product'
@@ -94,9 +68,11 @@ export default new Vuex.Store({
           context.commit('FETCH_PRODUCTS', data.products)
           context.commit('SET_FILTERED_PRODUCTS', data.products)
           context.commit('SHOW_ADD_FORM', false)
+          context.commit('SET_IS_LOADING', false)
         })
         .catch(err => {
           context.commit('SET_ERROR', err)
+          context.commit('SET_IS_LOADING', false)
         })
     },
 
@@ -162,42 +138,19 @@ export default new Vuex.Store({
       })
     },
 
-    // fetchAdmin (context) {
-    //   axios({
-    //     method: 'get',
-    //     url: process.env.VUE_APP_BASEURL + 'showAdmin'
-    //   })
-    //     .then(({ data }) => {
-    //       context.commit('FETCH_ADMIN', data)
-    //     })
-    //     .catch(err => {
-    //       context.commit('SET_ERROR', err)
-    //     })
-    // },
-
-    // fetchInactiveAdmin (context) {
-    //   axios({
-    //     method: 'get',
-    //     url: process.env.VUE_APP_BASEURL + 'showAdmin'
-    //   })
-    //     .then(({ data }) => {
-    //       context.commit('FETCH_INACTIVE_ADMIN', data)
-    //     })
-    //     .catch(err => {
-    //       context.commit('SET_ERROR', err)
-    //     })
-    // },
-
     fetchAllUsers (context) {
+      context.commit('SET_IS_LOADING', true)
       axios({
         method: 'get',
         url: process.env.VUE_APP_BASEURL + 'showUsers'
       })
         .then(({ data }) => {
           context.commit('FETCH_ALL_USERS', data)
+          context.commit('SET_IS_LOADING', false)
         })
         .catch(err => {
           context.commit('SET_ERROR', err)
+          context.commit('SET_IS_LOADING', false)
         })
     },
 

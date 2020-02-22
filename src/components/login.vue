@@ -167,6 +167,7 @@ export default {
           this.$store.commit('SET_NOTIFICATION', `Welcome, ${this.username}`)
           this.$store.commit('SET_USER_CREDENTIALS', data)
           this.$store.commit('SET_LOGIN', true)
+          this.$store.dispatch('fetchAllUsers')
         })
         .catch(err => this.$store.commit('SET_ERROR', err))
     }
