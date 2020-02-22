@@ -78,6 +78,7 @@ export default {
           } else if (err.response.data.errors) {
             this.error = err.response.data.errors[0]
           }
+          this.loading = false
         })
     }
   }
