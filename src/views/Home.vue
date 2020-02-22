@@ -10,6 +10,9 @@
       </div>
       <div class="col-5 home-text">
         <h1>Welcome Admin!</h1>
+        <div v-if="getSignUpMessage" class="error-message">
+          {{ getSignUpMessage }}
+        </div>
         <SignIn />
       </div>
     </div>
@@ -29,6 +32,10 @@ export default {
   computed: {
     getIsLogin () {
       return this.$store.state.isLogin
+    },
+
+    getSignUpMessage () {
+      return this.$store.state.successSignUpMessage
     }
   }
 }

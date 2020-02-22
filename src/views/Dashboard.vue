@@ -44,6 +44,10 @@
         </table>
       </div>
     </div>
+
+    <div class="loading-info" v-if="getIsLoading">
+      <h1>loading...</h1>
+    </div>
     <router-view />
   </div>
 </template>
@@ -57,7 +61,8 @@ export default {
   name: 'Dashboard',
   data () {
     return {
-      product: false
+      product: false,
+      errorMessage: ''
     }
   },
   components: {
@@ -68,27 +73,27 @@ export default {
     fetchAllProducts () {
       this.$store.dispatch('fetchAllProducts')
         .then(({ data }) => {
+          this.$store.commit('SET_IS_LOADING', false)
           this.$store.commit('SET_PRODUCTS', data.data)
           if (data.data.length) {
             this.product = true
           }
         })
         .catch(err => {
-          console.log(err.response.data)
+          this.$store.commit('SET_IS_LOADING', false)
+          this.errorMessage = err.response.data
         })
     },
 
     editProductForm (id) {
-      console.log(id)
       this.$store.commit('SET_ID_TO_EDIT', id)
       this.$store.dispatch('getProductById')
         .then(({ data }) => {
-          console.log(data)
           this.$store.commit('SET_PRODUCT_TO_EDIT', data.data)
           this.$router.push({ name: 'EditProduct' })
         })
         .catch(({ response }) => {
-          console.log(response.data)
+          this.errorMessage = response.data
         })
     },
 
@@ -101,17 +106,18 @@ export default {
         }
       })
         .then(({ data }) => {
-          console.log(data)
           return this.$store.dispatch('fetchAllProducts')
         })
         .then(({ data }) => {
+          this.$store.commit('SET_IS_LOADING', false)
           this.$store.commit('SET_PRODUCTS', data.data)
           if (data.data.length) {
             this.product = true
           }
         })
         .catch(err => {
-          console.log(err.response.data)
+          this.$store.commit('SET_IS_LOADING', false)
+          this.errorMessage = err.response.data
         })
     }
   },
@@ -122,6 +128,10 @@ export default {
 
     getProducts () {
       return this.$store.state.products
+    },
+
+    getIsLoading () {
+      return this.$store.state.isLoading
     }
   },
   created () {
@@ -177,5 +187,11 @@ export default {
 .action-area {
   display: flex;
   flex-wrap: nowrap;
+}
+
+.loading-info {
+  position: absolute;
+  top: 50%;
+  left: 50%;
 }
 </style>

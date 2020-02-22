@@ -42,7 +42,8 @@ export default {
       name: '',
       image_url: '',
       price: '',
-      stock: ''
+      stock: '',
+      errorMessage: ''
     }
   },
   methods: {
@@ -65,13 +66,15 @@ export default {
           return this.$store.dispatch('fetchAllProducts')
         })
         .then(({ data }) => {
+          this.$store.commit('SET_IS_LOADING', false)
           this.$store.commit('SET_PRODUCTS', data.data)
           if (data.data.length) {
             this.product = true
           }
         })
         .catch(err => {
-          console.log(err.response.data)
+          this.$store.commit('SET_IS_LOADING', false)
+          this.errorMessage = err.response.data
         })
     }
   }

@@ -1,5 +1,8 @@
 <template>
     <div class="col-6 m-3 py-5 px-auto signIn-area">
+        <div v-if="errorMessage" class="error-message">
+          {{ errorMessage }}
+        </div>
         <form @submit.prevent="signIn">
             <div class="form-group">
               <label for="email">Email:</label>
@@ -25,7 +28,8 @@ export default {
   data () {
     return {
       email: '',
-      password: ''
+      password: '',
+      errorMessage: ''
     }
   },
   methods: {
@@ -42,10 +46,16 @@ export default {
           localStorage.setItem('token', data.token)
           this.$router.push({ name: 'Dashboard' })
           this.$store.commit('SETISLOGIN', true)
+          this.$store.commit('SET_SUCCESS_SIGNUP_MESSAGE', '')
         })
         .catch(err => {
-          console.log(err.response.data)
+          this.errorMessage = err.response.data.msg
         })
+    }
+  },
+  computed: {
+    isError () {
+      return this.$store.state.isError
     }
   }
 }
@@ -66,5 +76,10 @@ export default {
     width: 100%;
     display: flex;
     flex-direction: column;
+}
+
+.error-message {
+  color: red;
+  margin-bottom: 10px
 }
 </style>

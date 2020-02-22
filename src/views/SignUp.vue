@@ -7,6 +7,9 @@
     <div class="mt-3 d-flex justify-content-center content">
         <div class="signUp-area">
             <h2 align="center">Sign Up</h2>
+            <div v-if="errorMessage" class="error-message">
+              {{ errorMessage }}
+            </div>
             <form @submit.prevent="signUp">
                 <div class="form-group">
                     <label for="email">Email:</label>
@@ -37,7 +40,8 @@ export default {
   data () {
     return {
       email: '',
-      password: ''
+      password: '',
+      errorMessage: ''
     }
   },
   components: {
@@ -55,11 +59,16 @@ export default {
       })
         .then(({ data }) => {
           this.$router.push({ name: 'Home' })
-          console.log(data.msg)
+          this.$store.commit('SET_SUCCESS_SIGNUP_MESSAGE', data.msg)
         })
         .catch(err => {
-          console.log(err)
+          this.errorMessage = err.response.data.msg
         })
+    }
+  },
+  computed: {
+    isError () {
+      return this.$store.state.isError
     }
   }
 }
@@ -78,5 +87,10 @@ export default {
 
 .to-signIn {
     font-size: 1rem;
+}
+
+.error-message {
+  color: red;
+  margin-bottom: 10px
 }
 </style>

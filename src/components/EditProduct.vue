@@ -43,7 +43,8 @@ export default {
       name: '',
       image_url: '',
       price: null,
-      stock: null
+      stock: null,
+      errorMessage: ''
     }
   },
   computed: {
@@ -67,18 +68,19 @@ export default {
         }
       })
         .then(({ data }) => {
-          console.log(data)
           this.$router.push({ name: 'Dashboard' })
           return this.$store.dispatch('fetchAllProducts')
         })
         .then(({ data }) => {
+          this.$store.commit('SET_IS_LOADING', false)
           this.$store.commit('SET_PRODUCTS', data.data)
           if (data.data.length) {
             this.product = true
           }
         })
         .catch(({ response }) => {
-          console.log(response.data)
+          this.$store.commit('SET_IS_LOADING', false)
+          this.errorMessage = response.data
         })
     }
   },
