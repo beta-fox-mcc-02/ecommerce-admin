@@ -37,7 +37,10 @@ export default {
     remove(id){
       axios({
         method:'delete',
-        url:`/product/${id}`
+        url:`/product/${id}`,
+        headers:{
+          token: localStorage.token
+        }
       })
       .then(data =>{
         this.$store.dispatch('fetchProducts')
