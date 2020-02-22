@@ -27,7 +27,16 @@ export default {
         password: this.dataLogin.password
       }
       this.$store.dispatch('login', payload)
-      console.log('sudah login')
+        .then(({ data }) => {
+          console.log('SUKES MASOOOOOOK')
+          localStorage.setItem('access_token', data.access_token)
+          this.$store.commit('LOGIN', true)
+          this.$router.push('/')
+        })
+        .catch(err => {
+          this.$store.dispatch('error', err.msg)
+        })
+      // console.log('sudah login')
     }
   },
   created () {

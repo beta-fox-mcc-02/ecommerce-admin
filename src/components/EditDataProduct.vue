@@ -43,6 +43,14 @@ export default {
   methods: {
     edit () {
       this.$store.dispatch('editData', this.editProduct)
+        .then(editData => {
+          console.log('berhasil edit iyey')
+          console.log(editData)
+        })
+        .catch(err => {
+          this.$store.dispatch('error', err.msg)
+          console.log(err)
+        })
     }
   },
   computed: {

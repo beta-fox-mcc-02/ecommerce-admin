@@ -81,41 +81,41 @@ export default new Vuex.Store({
       // })
     },
     fetchData (context) {
-      axios({
+      return axios({
         method: 'get',
         url: 'http://localhost:3000/products',
         headers: {
           access_token: localStorage.access_token
         }
       })
-        .then(items => {
-          context.commit('FETCH_DATA', items.data.data)
-        })
-        .catch(err => {
-          console.log(err)
-        })
+      // .then(items => {
+      //   context.commit('FETCH_DATA', items.data.data)
+      // })
+      // .catch(err => {
+      //   console.log(err)
+      // })
     },
     fetchEditData (context, id) {
       console.log(id, 'ini idnyaaaaaaaaa')
-      axios({
+      return axios({
         method: 'get',
         url: `http://localhost:3000/products/${id}`,
         headers: {
           access_token: localStorage.access_token
         }
       })
-        .then(({ data }) => {
-          console.log(data, 'ini datanyaaaaaaa====================')
-          context.commit('EDIT_DATA', data)
-        })
-        .catch(err => {
-          console.log('masuknya ke errorrrrr')
-          console.log(err)
-        })
+      // .then(({ data }) => {
+      //   console.log(data, 'ini datanyaaaaaaa====================')
+      //   context.commit('EDIT_DATA', data)
+      // })
+      // .catch(err => {
+      //   console.log('masuknya ke errorrrrr')
+      //   console.log(err)
+      // })
     },
     editData (context, dataEditProduct) {
       console.log(dataEditProduct)
-      axios({
+      return axios({
         method: 'put',
         url: `http://localhost:3000/products/${dataEditProduct.id}`,
         data: dataEditProduct,
@@ -123,13 +123,13 @@ export default new Vuex.Store({
           access_token: localStorage.access_token
         }
       })
-        .then(editData => {
-          console.log('berhasil edit iyey')
-          console.log(editData)
-        })
-        .catch(err => {
-          console.log(err)
-        })
+      // .then(editData => {
+      //   console.log('berhasil edit iyey')
+      //   console.log(editData)
+      // })
+      // .catch(err => {
+      //   console.log(err)
+      // })
     },
     deleteData (context, id) {
       console.log('masuk niiiih idnyooo', id)
@@ -141,7 +141,7 @@ export default new Vuex.Store({
         }
       })
     },
-    error (message) {
+    error (context, message) {
       Toastify({
         text: message,
         duration: 3000,

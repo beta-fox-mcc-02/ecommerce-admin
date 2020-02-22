@@ -43,7 +43,7 @@ export default {
       this.$store.dispatch('addProduct', this.newProduct)
         .then(product => {
           console.log('datanya berhasil di add loh0-----', product)
-          context.commit('ADD_PRODUCT', true)
+          this.$store.commit('ADD_PRODUCT', true)
           this.$router.push('/')
         })
         .catch(err => {

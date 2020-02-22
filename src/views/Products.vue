@@ -24,11 +24,27 @@ export default {
   methods: {
     fetchData () {
       this.$store.dispatch('fetchData')
+        .then(items => {
+          this.$store.commit('FETCH_DATA', items.data.data)
+        })
+        .catch(err => {
+          this.$store.dispatch('error', err.msg)
+          console.log(err)
+        })
     },
     edit (id) {
       console.log(id)
       this.$store.dispatch('fetchEditData', id)
-      this.$router.push('/edit')
+        .then(({ data }) => {
+          console.log(data, 'ini datanyaaaaaaa====================')
+          this.$store.commit('EDIT_DATA', data)
+          this.$router.push('/edit')
+        })
+        .catch(err => {
+          this.$store.dispatch('error', err.msg)
+          console.log('masuknya ke errorrrrr')
+          console.log(err)
+        })
     },
     remove (id) {
       console.log('masuk id neyyyy', id)
