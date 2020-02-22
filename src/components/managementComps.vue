@@ -61,7 +61,6 @@ export default {
     getAdmins () {
       this.$store.dispatch('fetchAdmins')
         .then((result) => {
-          console.log(result.data.admins)
           this.$store.commit('getAdmins', result.data.admins)
         })
         .catch((err) => console.log(err))

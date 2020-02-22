@@ -152,10 +152,11 @@ const store = new Vuex.Store({
     },
     fetchAdmins (context) {
       const token = localStorage.getItem('access_token')
+      console.log('index client')
       return axios({
         method: 'GET',
         url: `${serverUrl}/admins`,
-        headers: token
+        headers: { token }
       })
     },
     createAdminAsync (context) {
