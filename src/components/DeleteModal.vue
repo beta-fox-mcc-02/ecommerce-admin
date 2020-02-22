@@ -49,6 +49,18 @@ export default {
               this.$store.commit('SET_ERRORS', err.body.errors)
             })
           break
+        case 'products':
+          this.$store.dispatch('deleteProduct', { id: this.id })
+            .then(response => {
+              this.$store.commit('SET_PRODUCT_LOADING', false)
+              this.$stored.dispatch('getProducts')
+              this.$store.commit('SET_PRODUCT_ERRORS', [])
+            })
+            .catch(err => {
+              this.$store.commit('SET_PRODUCT_LOADING', false)
+              this.$store.commit('SET_PRODUCT_ERRORS', err.body)
+            })
+          break
       }
     }
   },
@@ -59,10 +71,10 @@ export default {
   },
   computed: {
     isLoading () {
-      return this.$store.state.category.isLoading
+      return (this.$store.state.category.isLoading || this.$store.state.product.isLoading)
     },
     errors () {
-      return this.$store.state.category.errors
+      return (this.$store.state.category.errors || this.$store.state.product.errors)
     }
   }
 }
