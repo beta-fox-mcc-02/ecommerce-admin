@@ -32,7 +32,7 @@
         <th v-if="currentFilter !== 'users'">Menu</th>
       </tr>
       <!-- PRODUCT DETAIL HERE -->
-      <UserTable :currentFilter="currentFilter" v-for="user in filter" :key="user.id" :user="user" @refresh="onload"/>
+      <UserTable :currentFilter="currentFilter" v-for="user in filter" :key="user.id" :user="user" @refresh="onload" :superAdmin="isSuperAdmin"/>
       <!--  -->
     </table>
   </div>
@@ -46,7 +46,8 @@ export default {
   data () {
     return {
       currentFilter: '',
-      filter: []
+      filter: [],
+      isSuperAdmin: false
     }
   },
   computed: {
@@ -74,6 +75,7 @@ export default {
   },
   created () {
     this.onload()
+    this.isSuperAdmin = this.superAdmin
   }
 }
 </script>

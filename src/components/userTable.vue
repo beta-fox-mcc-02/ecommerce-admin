@@ -5,14 +5,11 @@
     <td v-if="currentFilter !== 'users'">{{user.isActivated ? "Yes" : "No"}}</td>
     <td v-if="currentFilter === 'active'">
       <ul>
-        <!-- <li style="color: green;" @click="editProduct"><i class="material-icons editButton">edit</i></li> -->
-        <li style="color: red;" @click="confirm('deleteAdmin')" :class="{ disabled: superAdmin }"><i class="material-icons deleteButton">delete</i></li>
+        <li style="color: red;" @click="confirm('deleteAdmin')" :class="{ disabled: !superAdmin }"><i class="material-icons deleteButton">delete</i></li>
       </ul>
     </td>
-    <td v-if="currentFilter === 'inactive'" style="width: 10vw;">
+    <td v-if="currentFilter === 'inactive'" style="width: 10vw;" :class="{ disabled: !superAdmin }">
       <ul>
-        <!-- <li style="color: green;" @click="editProduct"><i class="material-icons editButton">edit</i></li> -->
-        <!-- <li style="color: red;" @click="delProduct"><i class="material-icons deleteButton">delete</i></li> -->
         <form>
           <p>
             <label>
@@ -60,7 +57,8 @@ export default {
   },
   props: {
     user: Object,
-    currentFilter: String
+    currentFilter: String,
+    superAdmin: Boolean
   },
   computed: {
     hundredCharString () {
@@ -79,9 +77,6 @@ export default {
     getPrice () {
       const { price } = this.product
       return `Rp ${Number(price).toLocaleString('id-ID')}`
-    },
-    superAdmin () {
-      return this.$store.state.superAdmin
     }
   },
   methods: {
@@ -202,6 +197,6 @@ td {
 }
 .disabled {
   pointer-events: none;
-  color: grey;
+  color: grey !important;
 }
 </style>

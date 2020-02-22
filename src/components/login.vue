@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="loginContainer"
-    style=" "
-  >
+  <div class="loginContainer">
     <div style="max-width: 600px;" class="mainLogin">
       <div class="col s12 m12">
         <div class="card horizontal">
@@ -146,6 +143,7 @@ export default {
         .then(({ data }) => {
           localStorage.access_token = data.token
           localStorage.username = data.username
+          localStorage.isSuperAdmin = data.isSuperAdmin
           this.$store.commit('SET_NOTIFICATION', `Welcome back, ${this.identification}`)
           this.$store.commit('SET_USER_CREDENTIALS', data)
           this.$store.commit('SET_LOGIN', true)
