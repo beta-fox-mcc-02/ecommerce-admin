@@ -13,6 +13,9 @@
         <b-navbar-item tag="router-link" v-if="$store.state.token" to="/">
           Home
         </b-navbar-item>
+        <b-navbar-item tag="router-link" v-if="$store.state.token" to="/dashboard">
+          Dashboard
+        </b-navbar-item>
       </template>
 
       <template slot="end">

@@ -50,32 +50,17 @@
             </a>
           </div>
         </form>
-
-        <div class="buttons">
-          <GoogleLogin
-            class="button is-danger is-fullwidth"
-            :params="params"
-            :onSuccess="onSuccess"
-            :onFailure="onFailure"
-            ><i class="mdi mdi-google"></i> &nbsp; Login with
-            Google</GoogleLogin
-          >
-        </div>
       </div>
     </div>
   </section>
 </template>
 
 <script>
-import GoogleLogin from 'vue-google-login'
 export default {
   data: () => {
     return {
       email: null,
-      password: null,
-      params: {
-        client_id: 'xxxxxx'
-      }
+      password: null
     }
   },
   methods: {
@@ -87,34 +72,19 @@ export default {
       this.$store
         .dispatch('login', data)
         .then(path => {
-          this.$router.push({ path })
+          this.$router.push(path)
+          this.$buefy.toast.open({
+            message: 'Logged in.',
+            type: 'is-success'
+          })
         })
-        .catch(e => {
-          console.log(e)
+        .catch(() => {
+          this.$buefy.toast.open({
+            message: `Email / password incorrect.`,
+            type: 'is-danger'
+          })
         })
-    },
-    onSuccess(googleUser) {
-      // console.log(googleUser)
-
-      // This only gets the user information: id, name, imageUrl and email
-      // console.log(googleUser.getBasicProfile())
-      var id_token = googleUser.getAuthResponse().id_token
-
-      this.$store
-        .dispatch('loginWithGoogle', id_token)
-        .then(path => {
-          this.$router.push({ path })
-        })
-        .catch(e => {
-          console.log(e)
-        })
-    },
-    onFailure(err) {
-      console.log(err)
     }
-  },
-  components: {
-    GoogleLogin
   }
 }
 </script>

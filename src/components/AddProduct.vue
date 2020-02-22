@@ -83,8 +83,6 @@ export default {
             type: 'is-danger'
           })
         })
-
-      // dispatch ke action
     }
   }
 }

@@ -103,10 +103,13 @@ export default {
       this.$store
         .dispatch('register', data)
         .then(path => {
-          this.$router.push({ path })
+          this.$router.push(path)
         })
-        .catch(e => {
-          console.log(e)
+        .catch(() => {
+          this.$buefy.toast.open({
+            message: `Registration failed.`,
+            type: 'is-danger'
+          })
         })
     }
   }

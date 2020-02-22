@@ -1,5 +1,7 @@
 # client
 
+URL : https://ecommerce-admin-heri.firebaseapp.com
+
 ## Project setup
 ```
 npm install

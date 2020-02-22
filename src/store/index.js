@@ -59,7 +59,7 @@ export default new Vuex.Store({
           .post('/users/register', data)
           .then(response => {
             commit('auth', response.data)
-            resolve('/')
+            resolve('/dashboard')
           })
           .catch(e => {
             reject(e)
@@ -140,12 +140,46 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         client
           .get(`/products/${id}`)
-          .then(product => {
-            commit('SET_PRODUCT', product)
-            resolve()
+          .then(({ data }) => {
+            commit('SET_PRODUCT', data.product)
+            resolve(data.product)
           })
           .catch(e => {
             reject(e)
+          })
+      })
+    },
+
+    updateProduct({ commit }, data, id) {
+      console.log(id)
+      return new Promise((resolve, reject) => {
+        client
+          .put(`/products/${data.id}`, data)
+          .then(({ data }) => {
+            commit('SET_PRODUCT', data.product)
+            resolve('/dashboard/')
+          })
+          .catch(e => {
+            reject(e)
+          })
+      })
+    },
+
+    updateProductImage({ commit }, data) {
+      return new Promise((resolve, reject) => {
+        client
+          .patch(`/products/${data.id}`, data.formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          })
+          .then(({ data }) => {
+            commit('SET_PRODUCT', data.product)
+            resolve('Success updating product.')
+          })
+          .catch(e => {
+            console.log(e)
+            reject('Error updating product.')
           })
       })
     }
