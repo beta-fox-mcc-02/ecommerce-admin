@@ -31,3 +31,22 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.home-text {
+    border-left: 1px solid grey;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.home-text a{
+    width: max-content;
+    height: max-content;
+}
+
+.content {
+    display: flex;
+    height: 90%;
+}
+</style>

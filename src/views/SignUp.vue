@@ -64,3 +64,19 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.signUp-area {
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+}
+
+.signUp-area form{
+    font-size: 1.5rem;
+}
+
+.to-signIn {
+    font-size: 1rem;
+}
+</style>

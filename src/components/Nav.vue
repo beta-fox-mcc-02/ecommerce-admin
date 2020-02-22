@@ -1,13 +1,16 @@
 <template>
     <div class="col-12 d-flex align-items-center">
-        <div class="col-6 p-0">
-            <router-link to="/">
-                Logo
-            </router-link>
+      <div class="col-6 p-0">
+        <router-link to="/">
+          Logo
+        </router-link>
+      </div>
+      <div class="col-6 p-0 d-flex justify-content-end" v-if="getIsLogin">
+        <div @click="signOut" class="logout-space btn">
+          Sign out
+          <i class="fas fa-sign-out-alt mx-2"></i>
         </div>
-        <div class="col-6 p-0" v-if="getIsLogin">
-            <p @click="signOut">logout</p>
-        </div>
+      </div>
     </div>
 </template>
 
@@ -28,3 +31,14 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.logout-space {
+  display: flex;
+  align-items: center;
+}
+
+.btn:hover {
+  cursor: pointer;
+}
+</style>

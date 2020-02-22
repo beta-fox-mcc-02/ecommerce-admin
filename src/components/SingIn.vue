@@ -44,9 +44,27 @@ export default {
           this.$store.commit('SETISLOGIN', true)
         })
         .catch(err => {
-          console.log(err)
+          console.log(err.response.data)
         })
     }
   }
 }
 </script>
+
+<style scoped>
+.signIn-area {
+    background-color: rgb(47, 47, 47);
+    border-radius: 10px;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.2rem;
+}
+
+.signIn-area form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+</style>
