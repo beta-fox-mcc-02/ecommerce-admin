@@ -9,7 +9,7 @@
             v-model="form.name"
             type="text"
             required
-            placeholder="Enter email"
+            placeholder="Enter name product"
           ></b-form-input>
         </b-form-group>
 
@@ -75,6 +75,7 @@ export default {
           } else if (err.response.data.errors) {
             this.error = err.response.data.errors[0]
           }
+          this.loading = false
         })
     }
   },

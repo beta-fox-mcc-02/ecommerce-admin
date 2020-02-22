@@ -11,7 +11,7 @@
               v-model="form.name"
               type="text"
               required
-              placeholder="Enter email"
+              placeholder="Enter name product"
             ></b-form-input>
           </b-form-group>
           <b-form-group id="input-group-2" label="Url Image:" label-for="input-2">
