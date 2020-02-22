@@ -1,21 +1,22 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand">Dashboard</a>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <a class="nav-link right" href="">Sign Out</a>
-    </ul>
-  </div>
-</nav>
+    <a class="navbar-brand">Dashboard</a>
+    <Logout />
+  </nav>
 </template>
 
 <script>
-export default {
+import Logout from './Logout.vue';
 
+export default {
+  components: {
+    Logout,
+  },
 };
 </script>
 
-<style>
-
-</style>
+<style scoped>
+  .navbar-brand {
+    font-weight: 700;
+  }
+</style>>

@@ -6,7 +6,7 @@
         <form @submit.prevent="registerUser()">
           <h1>Create Account</h1>
           <div v-if="error" class="alert alert-danger">{{ error }}</div>
-          <input :autofocus="isActive" v-model="email" type="email" placeholder="Email" />
+          <input v-model="email" type="email" placeholder="Email" />
           <input v-model="password" type="password" placeholder="Password" />
           <button type="submit">Sign Up</button>
         </form>
@@ -15,7 +15,7 @@
         <form @submit.prevent="login()">
           <h1>Sign in</h1>
           <div v-if="error" class="alert alert-danger">{{ error }}</div>
-          <input :autofocus="!isActive" v-model="email" type="email" placeholder="Email" />
+          <input autofocus v-model="email" type="email" placeholder="Email" />
           <input v-model="password" type="password" placeholder="Password" />
           <button type="submit">Sign In</button>
         </form>
@@ -82,6 +82,11 @@ export default {
       };
       this.$store.dispatch('login', data)
         .then((response) => {
+          // show success alert
+          this.$store.commit('showAlert', {
+            successMessage: 'Successfully Login',
+            interval: 2000,
+          });
           const payload = {
             id: response.data.id,
             email: response.data.email,
@@ -90,7 +95,7 @@ export default {
           this.$store.commit('setLogin', payload);
           localStorage.token = response.data.token;
           localStorage.person_id = response.data.id;
-          this.$router.push('/');
+          this.$router.push('/admin');
         })
         .catch((err) => {
           this.$store.commit('setError', err.response.data.error);

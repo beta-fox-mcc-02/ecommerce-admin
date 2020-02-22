@@ -8,13 +8,15 @@
         <a @click.prevent="clickLogin()" class="nav-link" href>Sign In</a>
       </li>
       <li v-if="isLogin" class="nav-item">
-        <a @click.prevent="clickLogout()" class="nav-link" href>Sign Out</a>
+        <Logout></Logout>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
+import Logout from './Logout.vue';
+
 export default {
   name: 'Navigation',
   computed: {
@@ -22,17 +24,15 @@ export default {
       return this.$store.state.isLogin;
     },
   },
+  components: {
+    Logout,
+  },
   methods: {
     clickLogin() {
       this.$router.push('/login');
     },
     clickHome() {
       this.$router.push('/');
-    },
-    clickLogout() {
-      localStorage.clear();
-      this.$router.push('/');
-      this.$store.dispatch('logout');
     },
   },
 };

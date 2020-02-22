@@ -1,13 +1,15 @@
 <template>
   <div id="app">
+    <Alert />
     <router-view />
     <quick-menu
-      v-if="isLogin"
+      v-if="isAdminOrMaster"
       :menu-count="count"
       :icon-class="icons"
       :menu-url-list="list"
       backgroundColor="#000000"
       :position="position"
+      style="z-index: 9999"
     ></quick-menu>
     <div v-if="isLoading" class="loading">
       <button class="btn btn-primary" type="button" disabled>
@@ -21,10 +23,12 @@
 <script>
 import quickMenu from 'vue-quick-menu';
 import userAPI from './API/userAPI';
+import Alert from './components/Alert.vue';
 
 export default {
   components: {
     quickMenu,
+    Alert,
   },
   data() {
     return {
@@ -35,11 +39,17 @@ export default {
     };
   },
   computed: {
-    isLogin() {
-      return this.$store.state.isLogin;
+    isAdminOrMaster() {
+      if (this.$store.state.personData.user_role === 'admin' || this.$store.state.personData.user_role === 'master') {
+        return true;
+      }
+      return false;
     },
     isLoading() {
       return this.$store.state.isLoading;
+    },
+    listOfProducts() {
+      return this.$store.state.listOfProducts;
     },
   },
   created() {
@@ -52,6 +62,7 @@ export default {
           console.log(err.response);
         });
     }
+    this.$store.dispatch('fetchListOfProducts');
   },
 };
 </script>
