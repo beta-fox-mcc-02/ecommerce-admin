@@ -19,10 +19,6 @@
         </ul>
       </div>
     </div>
-      <!-- <b-button id="cancel-login-admin" class="mt-3" block @click="$bvModal.hide(`add-task`)" style="background-color:red">Cancel</b-button> -->
-      <br>
-      <p>register as admin</p>
-    </b-modal>
   </div>
 </template>
 
@@ -41,7 +37,6 @@ export default {
     }
   },
   methods: {
-    }
   }
 }
 </script>
