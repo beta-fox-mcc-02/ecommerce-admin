@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import AdminLogin from '../views/AdminLogin.vue'
 import Login from '../views/Login.vue'
+import UserLogin from '../views/UserLogin.vue'
 import Admin from '../views/Admin.vue'
 // import store from '../store/index.js'
 
@@ -26,13 +27,25 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: Login
+    component: Login,
+    children: [
+      {
+        path: '',
+        name: 'loginUser',
+        component: UserLogin
+      },
+      {
+        path: 'admin',
+        name: 'adminLogin',
+        component: AdminLogin
+      }
+    ]
   },
-  {
-    path: '/admin/login',
-    name: 'adminLogin',
-    component: AdminLogin
-  },
+  // {
+  //   path: '/admin/login',
+  //   name: 'adminLogin',
+  //   component: AdminLogin
+  // },
   {
     path: '/admin',
     name: 'admin',

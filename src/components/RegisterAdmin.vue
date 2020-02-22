@@ -48,8 +48,8 @@ export default {
   methods: {
     register () {
       const admin = {
-        email: this.loginEmail,
-        password: this.loginPass
+        email: this.adminEmail,
+        password: this.adminPass
       }
       console.log(admin)
       this.$store.dispatch('registerAdmin', admin)

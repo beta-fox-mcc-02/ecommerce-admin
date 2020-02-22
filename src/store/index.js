@@ -10,15 +10,20 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     isLogin: false,
-    products: []
+    products: [],
+    token: false
   },
   mutations: {
     FETCH_PRODUCTS (state, products) {
       state.products = products
     },
     ISLOGIN (state, status) {
+      state.token = status
       state.isLogin = status
       console.log(state.isLogin)
+    },
+    LOGOUT (state, status) {
+      state.token = status
     }
   },
   actions: {
