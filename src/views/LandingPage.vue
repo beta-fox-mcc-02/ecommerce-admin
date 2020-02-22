@@ -16,7 +16,7 @@
           <h3>Last Product Added</h3>
           <button @click="products" type="button" class="btn btn-link">See more products</button>
         <div class="row justify-content-center">
-          <LastItemAdded></LastItemAdded>
+          <!-- <LastItemAdded></LastItemAdded> -->
         </div>
       </div>
     </div>
@@ -27,14 +27,14 @@
 <script>
 
 import ChartSelling from '../components/ChartSelling.vue'
-import LastItemAdded from '../components/LastItemAdded.vue'
+// import LastItemAdded from '../components/LastItemAdded.vue'
 import AddProduct from '../components/AddProduct.vue'
 
 export default {
   name: 'LandingPage',
   components: {
     ChartSelling,
-    LastItemAdded,
+    // LastItemAdded,
     AddProduct
   },
   methods: {

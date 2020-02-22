@@ -16,7 +16,7 @@
     <div class="form-group">
         <label>Stock</label>
         <input type="number" class="form-control" id="" aria-describedby v-model="newProduct.stock">
-      {{newProduct.name}}
+      <!-- {{newProduct.name}} -->
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
@@ -31,8 +31,8 @@ export default {
       newProduct: {
         name: '',
         image_url: '',
-        price: 0,
-        stock: 0,
+        price: '',
+        stock: '',
         RoleId: 1
       }
     }
@@ -41,7 +41,15 @@ export default {
     addedProduct () {
       console.log('yey ke add guys.............................', this.newProduct)
       this.$store.dispatch('addProduct', this.newProduct)
-      this.$router.push('/')
+        .then(product => {
+          console.log('datanya berhasil di add loh0-----', product)
+          context.commit('ADD_PRODUCT', true)
+          this.$router.push('/')
+        })
+        .catch(err => {
+          this.$store.dispatch('error', err.msg)
+          console.log(err)
+        })
     }
   }
 }

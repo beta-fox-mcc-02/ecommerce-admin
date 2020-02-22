@@ -45,8 +45,8 @@ export default {
   },
   computed: {
     items () {
-      var itemsDisplay = this.$store.state.items.data.data
-      return itemsDisplay.slice(itemsDisplay.length - 3, itemsDisplay.length)
+      console.log('fetch data dari store')
+      return this.$store.state.items.data
     }
   }
 }

@@ -34,7 +34,14 @@ export default {
   methods: {
     register () {
       this.$store.dispatch('register', this.dataRegistration)
-      this.$router.push('/login')
+        .then(userRegistered => {
+          console.log(userRegistered)
+          this.$router.push('/login')
+        })
+        .catch(err => {
+          this.$store.dispatch('error', err.msg)
+          console.log(err)
+        })
     }
   }
 }

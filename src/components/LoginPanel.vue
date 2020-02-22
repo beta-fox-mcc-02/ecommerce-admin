@@ -35,7 +35,15 @@ export default {
   methods: {
     login () {
       this.$store.dispatch('login', this.dataLogin)
-      this.$router.push('/')
+        .then(({ data }) => {
+          console.log('SUKES MASOOOOOOK')
+          localStorage.setItem('access_token', data.access_token)
+          this.$store.commit('LOGIN', true)
+          this.$router.push('/')
+        })
+        .catch(err => {
+          this.$store.dispatch('error', err.msg)
+        })
     },
     register () {
       this.$router.push('/register')

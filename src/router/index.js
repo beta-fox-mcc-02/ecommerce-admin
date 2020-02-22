@@ -12,18 +12,23 @@ const routes = [
   },
   {
     path: '/login',
-    name: 'Login',
+    name: 'LoginPanel',
     component: () => import('../components/LoginPanel.vue')
   },
   {
     path: '/register',
-    name: 'Register',
+    name: 'RegisterPanel',
     component: () => import('../components/RegisterPanel.vue')
   },
   {
     path: '/products',
     name: 'Products',
     component: () => import('../views/Products.vue')
+  },
+  {
+    path: '/edit',
+    name: 'EditDataProduct',
+    component: () => import('../components/EditDataProduct.vue')
   }
 ]
 const router = new VueRouter({
