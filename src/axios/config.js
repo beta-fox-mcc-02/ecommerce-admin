@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const localhost = 'http://localhost:3000';
-
+// const localhost = 'http://localhost:3000';
+const heroku = "https://protected-taiga-69173.herokuapp.com";
 const instance = axios.create({
-  baseURL: localhost
+  baseURL: heroku
 });
 
 export default instance;
