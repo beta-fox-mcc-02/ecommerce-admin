@@ -36,7 +36,8 @@ export default {
       if (localStorage.access_token) {
         const payload = {
           token: localStorage.access_token,
-          username: localStorage.username
+          username: localStorage.username,
+          isSuperAdmin: localStorage.isSuperAdmin
         }
         this.$store.commit('SET_USER_CREDENTIALS', payload)
         this.$store.commit('SET_LOGIN', true)

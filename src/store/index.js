@@ -43,15 +43,13 @@ export default new Vuex.Store({
     SET_USER_CREDENTIALS (state, data) {
       state.access_token = data.token
       state.username = data.username
+      state.superAdmin = data.isSuperAdmin
     },
     SET_LOGIN (state, data) {
       state.isLogin = data
     },
     FETCH_ALL_USERS (state, data) {
       state.allUsers = data
-    },
-    SET_SUPER_ADMIN (state, data) {
-      state.superAdmin = data
     },
     SET_IS_LOADING (state, data) {
       state.isLoading = data
@@ -209,13 +207,13 @@ export default new Vuex.Store({
       return state.products.filter(product => product.name.match(regex))
     },
     getAdmins (state, words) {
-      return state.allUsers.filter(users => users.isActivated)
+      return state.allUsers.filter(user => user.isActivated && !user.isSuperAdmin)
     },
     getInactiveAdmins (state, words) {
-      return state.allUsers.filter(users => !users.isActivated && users.isAdmin)
+      return state.allUsers.filter(user => !user.isActivated && user.isAdmin)
     },
     getUsers (state, words) {
-      return state.allUsers.filter(users => !users.isAdmin)
+      return state.allUsers.filter(user => !user.isAdmin)
     }
   }
 })
