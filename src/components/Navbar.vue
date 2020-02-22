@@ -1,9 +1,12 @@
 <template>
   <nav class="navbar navbar-expand-lg sticky-top" role="navigation">
     <div class="container">
-      <a class="navbar-brand" href="#">
+      <router-link to="/" class="nav-link">
         <img src="../../public/logo.png" width="100" height="30" alt />
-      </a>
+      </router-link>
+      <!-- <a class="navbar-brand" href="/">
+        <img src="../../public/logo.png" width="100" height="30" alt />
+      </a>-->
       <button
         class="navbar-toggler border-0"
         type="button"
