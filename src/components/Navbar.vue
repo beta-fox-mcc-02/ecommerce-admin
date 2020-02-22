@@ -6,15 +6,15 @@
             </b-navbar-item>
         </template>
         <template slot="start">
-            <b-navbar-item href="#">
-                Products
+            <b-navbar-item>
+                <router-link to="/products">Products</router-link>
             </b-navbar-item>
             <b-navbar-dropdown label="User" v-if="isLogin">
-                <b-navbar-item href="#">
+                <b-navbar-item @click="addProduct">
                     Add More Product
                 </b-navbar-item>
-                <b-navbar-item href="#">
-                    Transaction History
+                <b-navbar-item>
+                    Transaction Database
                 </b-navbar-item>
             </b-navbar-dropdown>
         </template>
@@ -54,6 +54,11 @@ export default {
             this.$store.commit('SET_SESSION', false)
             this.$router.push('/')
             this.toastify('success', {message: 'See You!'})
+        },
+        addProduct() {
+            this.$router.push({
+                name: 'addProduct'
+            })
         }
     }
 }

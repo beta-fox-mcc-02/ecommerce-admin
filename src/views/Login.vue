@@ -29,7 +29,7 @@
                                 </b-field>
                             </section>
                             <footer class="modal-card-foot">
-                                <button type="submit" class="button is-primary">Login</button>
+                                <button type="submit" class="button is-primary" @click="openLoading">Login</button>
                             </footer>
                         </div>
                     </form> 
@@ -71,12 +71,13 @@
                                 </b-field>
                             </section>
                             <footer class="modal-card-foot">
-                                <button type="submit" class="button is-success">Register</button>
+                                <button type="submit" class="button is-success" @click="openLoading">Register</button>
                             </footer>
                         </div>
                     </form> 
                 </div>                
             </div>
+            <b-loading :is-full-page="isFullPage" :active.sync="isLoading" :can-cancel="true"></b-loading>            
         </div>
 
 
@@ -92,7 +93,9 @@ export default {
             registerEmail: '',
             registerPassword: '',
             loginEmail: '',
-            loginPassword: ''
+            loginPassword: '',
+            isLoading: false,
+            isFullPage: true
         }
     },
     methods: {
@@ -106,7 +109,7 @@ export default {
             .dispatch('userRegister', data) 
             .then(result => {
                 if (result) {
-                    this.toastify('success', result.message)
+                    this.toastify('success', {message: 'Register Success, Welcome to Bricktiv8'})
                     this.registerUsername = ''
                     this.registerEmail = ''
                     this.registerPassword = ''
@@ -131,13 +134,20 @@ export default {
                     this.loginEmail = ''
                     this.loginPassword = ''
                     localStorage.setItem('access_token', result.access_token)
+                    this.$router.push(`/products`)
                 } 
             })
             .catch(err => {
                 this.toastify('error', 'Login Failed')
                 console.log(err)
             })
-        }
+        },
+        openLoading() {
+            this.isLoading = true
+            setTimeout(() => {
+                this.isLoading = false
+            }, 10 * 1000)
+        }        
     }
 }
 </script>
