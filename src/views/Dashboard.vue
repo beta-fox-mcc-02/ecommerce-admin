@@ -1,20 +1,32 @@
 <template>
-  <div class="row my-3" id="card-comic">
-    <Card></Card>
-    <Card></Card>
-    <Card></Card>
-    <Card></Card>
+  <div>
+    <ModalProduct></ModalProduct>
+    <TableProduct></TableProduct>
   </div>
 </template>
 
 <script>
-// import Card from '../components/Card'
+import TableProduct from '../components/TableProduct'
+import ModalProduct from '../components/ModalProduct'
 
 export default {
   name: 'Dashboard',
   components: {
-    // Card
+    TableProduct,
+    ModalProduct
+  },
+  data() {
+    return {
+      form: {
+        email: '',
+        name: '',
+        food: null,
+        checked: []
+      },
+      modalShow: false
+    }
   }
+
 }
 </script>
 

@@ -3,12 +3,8 @@
     <div class="d-flex justify-content-center h-100">
       <div class="card">
         <div class="card-header">
+          <b-spinner label="Spinning" v-if="loading"></b-spinner>
           <h3>{{ action }}</h3>
-          <div class="d-flex justify-content-end social_icon">
-            <span>
-              <i class="fab fa-google-plus-square"></i>
-            </span>
-          </div>
         </div>
         <div class="card-body">
           <form @submit.prevent="submitForm">
@@ -35,18 +31,31 @@
               />
             </div>
             <div class="form-group">
-              <input type="submit" value="Login" class="btn float-right login_btn" />
+              <input type="submit" :value="action" class="btn float-right login_btn" />
             </div>
           </form>
         </div>
         <div class="card-footer">
           <div class="d-flex justify-content-center links">Don't have an account?</div>
           <div class="d-flex justify-content-center">
-            <router-link to="/register" class="nav-link buten">
-              <i class="fa fa-sign-in"></i>
+            <router-link
+              @click.prevent="hideError"
+              to="/register"
+              class="nav-link buten"
+              v-if="action=='Login'"
+            >
+              <i class="fa fa-user"></i>
               Register
             </router-link>
-            <!-- <a href="#">Sign Up</a> -->
+            <router-link
+              @click.prevent="hideError"
+              to="/login"
+              class="nav-link buten"
+              v-if="action=='Register'"
+            >
+              <i class="fa fa-sign-in"></i>
+              Login
+            </router-link>
           </div>
         </div>
       </div>
@@ -60,7 +69,8 @@ export default {
   data() {
     return {
       email: '',
-      password: ''
+      password: '',
+      loading: false
     }
   },
   props: {
@@ -68,6 +78,7 @@ export default {
   },
   methods: {
     submitForm() {
+      this.loading = true
       let data = {
         email: this.email,
         password: this.password
@@ -76,23 +87,39 @@ export default {
         data.role = 'admin'
         this.$store.dispatch('register', data)
           .then(({ data }) => {
-            this.$store.commit('afterAuth', data.access_token)
+            localStorage.setItem('token', data.access_token)
+            this.$store.commit('afterAuth')
+            this.$router.push('/dashboard')
+            this.loading = false
           })
           .catch(err => {
-            console.log(err.response.data)
+            if (err.response.data.error) {
+              this.$store.commit('showError', err.response.data.error)
+            } else if (err.response.data.errors) {
+              this.$store.commit('showError', err.response.data.errors[0])
+            }
+            this.loading = false
           })
       } else if (this.action === 'Login') {
         this.$store.dispatch('login', data)
           .then(({ data }) => {
-            this.$store.commit('afterAuth', data.access_token)
-            this.$router.push('/')
+            localStorage.setItem('token', data.access_token)
+            this.$store.commit('afterAuth')
+            this.$router.push('/dashboard')
+            this.loading = false
           })
           .catch(err => {
-            console.log(err.response.data)
+            if (err.response.data.error) {
+              this.$store.commit('showError', err.response.data.error)
+            } else if (err.response.data.errors) {
+              this.$store.commit('showError', err.response.data.errors[0])
+            }
+            this.loading = false
           })
       }
-
-      console.log(data)
+    },
+    hideError() {
+      this.$store.commit('showError', '')
     }
   }
 }
@@ -100,7 +127,7 @@ export default {
 
 <style>
 .auth {
-  margin-top: 100px;
+  margin-top: 60px;
 }
 
 .container {
@@ -116,25 +143,8 @@ export default {
   background-color: rgba(0, 0, 0, 0.5) !important;
 }
 
-.social_icon span {
-  font-size: 60px;
-  margin-left: 10px;
-  color: #ffc312;
-}
-
-.social_icon span:hover {
-  color: white;
-  cursor: pointer;
-}
-
 .card-header h3 {
   color: white;
-}
-
-.social_icon {
-  position: absolute;
-  right: 20px;
-  top: -45px;
 }
 
 .input-group-prepend span {

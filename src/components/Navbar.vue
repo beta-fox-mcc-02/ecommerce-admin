@@ -1,7 +1,9 @@
 <template>
-  <nav class="navbar navbar-expand-lg" role="navigation">
+  <nav class="navbar navbar-expand-lg sticky-top" role="navigation">
     <div class="container">
-      <a class="navbar-brand" href="#">Brand</a>
+      <a class="navbar-brand" href="#">
+        <img src="../../public/logo.png" width="100" height="30" alt />
+      </a>
       <button
         class="navbar-toggler border-0"
         type="button"
@@ -11,30 +13,24 @@
       <div class="collapse navbar-collapse" id="exCollapsingNavbar">
         <ul class="nav navbar-nav">
           <li class="nav-item">
-            <router-link to="/" class="nav-link">Home</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/about" class="nav-link">About</router-link>
-          </li>
-          <li class="nav-item">
             <router-link to="/dashboard" class="nav-link">Dashboard</router-link>
           </li>
         </ul>
         <ul class="nav navbar-nav flex-row justify-content-between ml-auto">
           <li class="dropdown order-1">
-            <button type="button" class="btn btn-outline-secondary">
+            <button type="button" class="btn b-nav" v-if="!isLogin">
               <router-link to="/login" class="nav-link buten">
                 <i class="fa fa-sign-in"></i>
                 Login
               </router-link>
             </button>
-            <button type="button" class="btn btn-outline-secondary">
+            <button type="button" class="btn b-nav" v-if="!isLogin">
               <router-link to="/register" class="nav-link buten">
                 <i class="fa fa-user"></i>
                 Register
               </router-link>
             </button>
-            <button type="button" class="btn btn-outline-secondary" @click.prevent="clickLogout">
+            <button type="button" class="btn b-log" @click.prevent="clickLogout" v-if="isLogin">
               <i class="fa fa-sign-out"></i>
               Logout
             </button>
@@ -60,14 +56,20 @@ export default {
   }
   ,
   computed: {
-
+    isLogin() {
+      return this.$store.state.isLogin
+    }
   }
 }
 </script>
 
 <style>
+.b-nav {
+  margin-right: 10px;
+}
+
 .navbar {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: #7f7f7f;
 }
 
 .nav-link {
@@ -75,12 +77,17 @@ export default {
   color: #fec442;
 }
 
-.nav-link a.router-link-exact-active {
-  color: #42b983;
+.nav-link:hover {
+  color: #fec442;
+  text-shadow: 1.5px 1px #000000;
 }
 
 .buten {
   padding: 0px;
+}
+
+.b-log {
+  padding: 0px 5px 0px 5px;
 }
 
 li .btn {

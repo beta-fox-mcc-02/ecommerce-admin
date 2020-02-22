@@ -1,6 +1,9 @@
 <template>
-  <div class="home">
-    <h1>Welcome admin, enjoy your day</h1>
+  <div class="jumbotron">
+    <b-jumbotron header="BootstrapVue" lead="Bootstrap v4 Components for Vue.js 2">
+      <p>Welcome Admin</p>
+      <b-button variant="primary" href="#">More Info</b-button>
+    </b-jumbotron>
   </div>
 </template>
 
