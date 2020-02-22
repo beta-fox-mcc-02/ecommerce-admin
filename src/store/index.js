@@ -33,7 +33,12 @@ export default new Vuex.Store({
           commit('SET_ALL_PRODUCT', data.data)
         })
         .catch(err => {
-          console.log(err);
+          let error = err
+           Toastify({
+            text: `${error}`,
+            backgroundColor: "linear-gradient(to right, #DA22FF, #9733EE)",
+            className: "info"
+          }).showToast();
         })
     }
   },

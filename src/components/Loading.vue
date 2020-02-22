@@ -10,7 +10,4 @@ export default {};
 </script>
 
 <style scoped>
-#loading img{
-  
-}
 </style>

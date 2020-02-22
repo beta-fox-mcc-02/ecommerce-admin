@@ -23,7 +23,9 @@
             >Upload product</span>
           </li>
         </ul>
-        <button class="btn btn-outline-info my-2 my-sm-0 shadow" @click="logout"><i class="fas fa-sign-out-alt"></i></button>
+        <button class="btn btn-outline-info my-2 my-sm-0 shadow" @click="logout">
+          <i class="fas fa-sign-out-alt"></i>
+        </button>
       </div>
     </nav>
 
@@ -56,7 +58,13 @@
                 <input class="form-control" placeholder="product stock" v-model="product.stock" />
               </div>
               <div class="form-group">
-                <input class="form-control" placeholder="product image url" v-model="product.image" />
+                <!-- <label for="exampleFormControlFile1">Example file input</label> -->
+                <input
+                  type="file"
+                  class="form-control-file"
+                  id="exampleFormControlFile1"
+                  @change="processFile($event)"
+                />
               </div>
               <div class="form-group">
                 <select
@@ -116,19 +124,20 @@ export default {
         backgroundColor: "linear-gradient(to right, #DA22FF, #9733EE)",
         className: "info"
       }).showToast();
-
     },
     createProduct() {
+      const photoFormData = new FormData()
+      photoFormData.append('name', this.product.name)
+      photoFormData.append('image_url', this.product.image)
+      photoFormData.append('price', this.product.price)
+      photoFormData.append('stock', this.product.stock)
+      photoFormData.append('CategoryId', this.product.CategoryId)
+
+
       axios({
         method: `POST`,
         url: `/products`,
-        data: {
-          name: this.product.name,
-          image_url: this.product.image,
-          price: this.product.price,
-          stock: this.product.stock,
-          CategoryId: this.product.CategoryId
-        },
+        data: photoFormData,
         headers: {
           token: localStorage.token
         }
@@ -140,12 +149,26 @@ export default {
           this.product.stock = "";
           this.product.CategoryId = "";
 
-          console.log(data, `ini createeeeeeeeeeeeeeeeee`);
+          
           this.$store.dispatch("getAllItem");
+
+          Toastify({
+            text: "Product uploaded successfully",
+            backgroundColor: "linear-gradient(to right, #DA22FF, #9733EE)",
+            className: "info"
+          }).showToast();
         })
         .catch(err => {
-          console.log(err);
+          let error = err.response.data.msg
+           Toastify({
+            text: `${error}`,
+            backgroundColor: "linear-gradient(to right, #DA22FF, #9733EE)",
+            className: "info"
+          }).showToast();
         });
+    },
+    processFile(event) {
+      this.product.image = event.target.files[0];
     }
   }
 };

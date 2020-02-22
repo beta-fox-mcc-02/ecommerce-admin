@@ -89,10 +89,12 @@
                 <input class="form-control" placeholder="product stock" v-model="product.stock" />
               </div>
               <div class="form-group">
+                <!-- <label for="exampleFormControlFile1">Example file input</label> -->
                 <input
-                  class="form-control"
-                  placeholder="product image url"
-                  v-model="product.image_url"
+                  type="file"
+                  class="form-control-file"
+                  id="exampleFormControlFile1"
+                  @change="processFile($event)"
                 />
               </div>
               <div class="form-group">
@@ -153,7 +155,12 @@ export default {
           this.product = data.data;
         })
         .catch(err => {
-          console.log(err);
+          let error = err.response.data.msg
+           Toastify({
+            text: `${error}`,
+            backgroundColor: "linear-gradient(to right, #DA22FF, #9733EE)",
+            className: "info"
+          }).showToast();
         });
     },
     deleteProduct() {
@@ -174,26 +181,31 @@ export default {
           this.$router.push("/admin");
         })
         .catch(err => {
-          console.log(err);
+          let error = err.response.data.msg
+           Toastify({
+            text: `${error}`,
+            backgroundColor: "linear-gradient(to right, #DA22FF, #9733EE)",
+            className: "info"
+          }).showToast();
         });
     },
     submitEditProduct() {
+      const photoFormData = new FormData()
+      photoFormData.append('name', this.product.name)
+      photoFormData.append('image_url', this.product.image_url)
+      photoFormData.append('price', this.product.price)
+      photoFormData.append('stock', this.product.stock)
+      photoFormData.append('CategoryId', this.product.CategoryId)
+
       axios({
         method: "PUT",
         url: `/products/${this.$route.params.productId}`,
-        data: {
-          name: this.product.name,
-          image_url: this.product.image_url,
-          price: this.product.price,
-          stock: this.product.stock,
-          CategoryId: this.product.CategoryId
-        },
+        data: photoFormData,
         headers: {
           token: localStorage.getItem("token")
         }
       })
         .then(({ data }) => {
-          console.log(data, `updated dataaaaaaaaaaaaaa`);
           this.getProduct();
           Toastify({
             text: "updated successfully!",
@@ -202,8 +214,18 @@ export default {
           }).showToast();
         })
         .catch(err => {
-          console.log(err);
+          console.log(err.response);
+          
+          let error = err.response.data.msg
+           Toastify({
+            text: `${error}`,
+            backgroundColor: "linear-gradient(to right, #DA22FF, #9733EE)",
+            className: "info"
+          }).showToast();
         });
+    },
+    processFile(event) {
+      this.product.image_url = event.target.files[0];
     }
   },
   created() {
