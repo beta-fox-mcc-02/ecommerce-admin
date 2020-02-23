@@ -119,9 +119,7 @@ export default {
           localStorage.token = response.body.token
           this.$store.commit('AUTHENTICATED_SUCCESS')
           this.$store.commit('AUTHENTICATED_LOADING', false)
-          setTimeout(() => {
-            this.$router.push('/')
-          }, 500)
+          this.$router.push('/')
         })
         .catch(err => {
           this.$store.commit('AUTHENTICATED_FAILED', err.body)

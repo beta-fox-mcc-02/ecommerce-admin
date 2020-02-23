@@ -299,7 +299,8 @@ export default {
           .then((response) => {
             this.$store.commit('SET_PRODUCT_LOADING', false)
             this.$store.commit('SET_PRODUCT_ERRORS', [])
-            this.product = initialProductState
+            this.product = { ...initialProductState }
+            this.productImages = [...initialProductState.files]
             this.$router.push('/products')
           })
           .catch(err => {

@@ -13,10 +13,9 @@ const mutations = {
     state.errors = payload.errors ? payload.errors : [payload.error]
     state.success = []
   },
-  AUTHENTICATED_SUCCESS (state, payload) {
+  AUTHENTICATED_SUCCESS (state) {
     state.isAuthenticated = true
     state.errors = []
-    state.success = payload
   },
   AUTHENTICATED_LOADING (state, payload) {
     state.isLoading = payload
