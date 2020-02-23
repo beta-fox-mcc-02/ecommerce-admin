@@ -5,6 +5,7 @@
       <br>
       <form @submit.prevent="saveProduct" enctype="multipart/form-data">
         <div class="wrapper-form">
+          <Alert :errors="errors"/>
           <v-text-field
             v-model="product.name"
             :error-messages="nameErrors"
@@ -145,6 +146,7 @@
 <script>
 import OverlayLoader from './OverlayLoader'
 import CircularLoading from './CircularLoading'
+import Alert from './Alert'
 import { required, numeric } from 'vuelidate/lib/validators'
 const initialProductState = {
   name: '',
@@ -167,6 +169,7 @@ const initialProductState = {
 export default {
   name: 'ProductForm',
   components: {
+    Alert,
     OverlayLoader,
     CircularLoading
   },
@@ -174,8 +177,8 @@ export default {
     clearable: false,
     formName: '',
     currentPage: '',
-    product: initialProductState,
-    productImages: initialProductState.files
+    product: { ...initialProductState },
+    productImages: [...initialProductState.files]
   }),
   validations: {
     product: {
@@ -296,11 +299,17 @@ export default {
           .then((response) => {
             this.$store.commit('SET_PRODUCT_LOADING', false)
             this.$store.commit('SET_PRODUCT_ERRORS', [])
+            this.product = initialProductState
             this.$router.push('/products')
           })
           .catch(err => {
             this.$store.commit('SET_PRODUCT_LOADING', false)
-            this.$store.commit('SET_PRODUCT_ERRORS', err)
+            this.$store.commit('SET_PRODUCT_ERRORS', err.body.errors)
+            window.scroll({
+              top: 0,
+              left: 0,
+              behavior: 'smooth'
+            })
           })
       } else {
         this.$store.dispatch('editProduct', this.product)
@@ -311,7 +320,12 @@ export default {
           })
           .catch(err => {
             this.$store.commit('SET_PRODUCT_LOADING', false)
-            this.$store.commit('SET_PRODUCT_ERRORS', err)
+            this.$store.commit('SET_PRODUCT_ERRORS', err.body.errors)
+            window.scroll({
+              top: 0,
+              left: 0,
+              behavior: 'smooth'
+            })
           })
       }
     },
@@ -362,6 +376,8 @@ export default {
     if (path === '/products/add') {
       this.formName = 'Add Product'
       this.currentPage = 'add'
+      this.product = { ...initialProductState }
+      this.productImages = [...initialProductState.files]
     } else {
       this.formName = 'Edit Product'
       this.currentPage = 'edit'
@@ -374,8 +390,8 @@ export default {
       to = to.path
       if (to === '/products/add') {
         this.formName = 'Add Product'
-        this.product = initialProductState
-        this.productImages = initialProductState.files
+        this.product = { ...initialProductState }
+        this.productImages = [...initialProductState.files]
         this.currentPage = 'add'
       } else {
         this.formName = 'Edit Product'
@@ -384,6 +400,9 @@ export default {
     }
   },
   computed: {
+    errors () {
+      return this.$store.state.product.errors
+    },
     isLoadProduct () {
       return this.$store.state.product.isLoadProduct
     },
