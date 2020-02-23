@@ -1,11 +1,9 @@
 <template>
   <v-app id="inspire">
-    <Sidebar :drawer="drawer"/>
-    <Navbar @toggleDrawer="toggleDrawer"/>
+    <Sidebar :drawer="drawer" />
+    <Navbar @toggleDrawer="toggleDrawer" />
     <v-content>
-      <v-container
-        fluid
-      >
+      <v-container fluid>
         <div class="wrapper">
           <router-view></router-view>
         </div>
@@ -39,7 +37,8 @@ export default {
   beforeRouteEnter (to, from, next) {
     next(vm => {
       if (localStorage.token) {
-        vm.$store.dispatch('checkAuthentication')
+        vm.$store
+          .dispatch('checkAuthentication')
           .then(response => {
             if (response.body.role.name === 'Admin') {
               next()
@@ -47,8 +46,8 @@ export default {
               next('/login')
             }
           })
-          .catch((err) => {
-            console.log(err)
+          .catch(err => {
+            vm.$store.commit('SET_AUTH_ERRORS', err.body)
             next('/login')
           })
       } else {
@@ -60,10 +59,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
- .v-content {
-   padding: 0 !important;
- }
- .wrapper {
-   width: 100%;
- }
+.v-content {
+  padding: 0 !important;
+}
+.wrapper {
+  width: 100%;
+}
 </style>
