@@ -1,5 +1,7 @@
 # ecommerce-admin
 
+CLIENT_URL: `https://e-commerce-admin-by-nafies1.firebaseapp.com`
+
 ## Project setup
 ```
 npm install

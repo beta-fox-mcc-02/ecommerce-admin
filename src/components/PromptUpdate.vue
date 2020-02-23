@@ -121,15 +121,19 @@ export default {
   methods: {
     updateProduct () {
       this.dialog = false
-      this.$store.dispatch('updateProduct', {
-        data: {
-          name: this.name,
-          price: this.price,
-          stock: this.stock,
-          description: this.description
-        },
-        id: this.product.id
-      })
+      this.$store.dispatch('uploadImage', this.image)
+        .then(({ data }) => {
+          return this.$store.dispatch('updateProduct', {
+            data: {
+              name: this.name,
+              price: this.price,
+              stock: this.stock,
+              description: this.description,
+              image: data.link
+            },
+            id: this.product.id
+          })
+        })
         .then(({ data }) => {
           this.$notify({
             group: 'sign',
