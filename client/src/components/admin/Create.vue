@@ -60,6 +60,28 @@ export default {
         stock: this.stock
       }
       this.$store.dispatch('fetchCreate', payload)
+        .then(({ data }) => {
+          this.$buefy.toast.open({
+            duration: 5000,
+            message: data.message,
+            position: 'is-top',
+            type: 'is-success'
+          })
+          this.$store.dispatch('fetchProduct')
+        })
+        .catch(err => {
+          this.$buefy.toast.open({
+            duration: 10000,
+            message: err.response.data.message,
+            position: 'is-top',
+            type: 'is-danger'
+          })
+        })
+      this.name = ''
+      this.author = ''
+      this.image_url = ''
+      this.price = 0
+      this.stock = 0
     }
   }
 }

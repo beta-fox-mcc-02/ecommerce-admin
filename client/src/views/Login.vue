@@ -29,6 +29,32 @@ export default {
         password: this.password
       }
       this.$store.dispatch('fetchLogin', payload)
+        .then(({ data }) => {
+          localStorage.setItem('token', data.token)
+          this.$store.dispatch('fetchProduct')
+          this.$store.commit('CHANGE_PAGE', 'home')
+          this.$buefy.toast.open({
+            duration: 5000,
+            message: data.message,
+            position: 'is-top',
+            type: 'is-success'
+          })
+          this.$router.push({ path: '/admin' })
+        })
+        .catch(err => {
+          this.$buefy.toast.open({
+            duration: 10000,
+            message: err.response.data.message,
+            position: 'is-top',
+            type: 'is-danger'
+          })
+        })
+    }
+  },
+  created () {
+    if (localStorage.getItem('token')) {
+      this.$store.commit('CHANGE_PAGE', 'home')
+      this.$router.push({ path: '/admin' })
     }
   }
 }

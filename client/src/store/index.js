@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-import router from '../router'
 
 Vue.use(Vuex)
 
@@ -9,7 +8,7 @@ export default new Vuex.Store({
   state: {
     products: [],
     selected: {},
-    page: 'login'
+    page: ''
   },
   mutations: {
     FETCH_PRODUCT (state, list) {
@@ -20,70 +19,43 @@ export default new Vuex.Store({
     },
     CHANGE_PAGE (state, page) {
       state.page = page
-      console.log(page)
     }
   },
   actions: {
     fetchProduct (context) {
-      axios({
+      return axios({
         method: 'GET',
-        url: 'http://localhost:3000/admin/product',
+        url: 'https://secure-reaches-76484.herokuapp.com/admin/product',
         headers: {
           token: localStorage.getItem('token')
         }
       })
-        .then(({ data }) => {
-          context.commit('FETCH_PRODUCT', data)
-        })
-        .catch(err => {
-          console.log(err, 'error fetch product')
-        })
     },
     fetchRegister (context, payload) {
-      axios({
+      return axios({
         method: 'POST',
-        url: 'http://localhost:3000/admin/register',
+        url: 'https://secure-reaches-76484.herokuapp.com/admin/register',
         data: {
           username: payload.username,
           email: payload.email,
           password: payload.password
         }
       })
-        .then(data => {
-          console.log('sukses register')
-          context.commit('CHANGE_PAGE', 'login')
-          router.push({ path: '/admin/login' })
-        })
-        .catch(err => {
-          console.log(err, 'error fetch register')
-        })
     },
     fetchLogin (context, payload) {
-      axios({
+      return axios({
         method: 'POST',
-        url: 'http://localhost:3000/admin/login',
+        url: 'https://secure-reaches-76484.herokuapp.com/admin/login',
         data: {
           email: payload.email,
           password: payload.password
         }
       })
-        .then(({ data }) => {
-          console.log(data)
-          localStorage.setItem('token', data.token)
-          context.dispatch('fetchProduct')
-          context.commit('CHANGE_PAGE', 'home')
-          router.push({ path: '/admin' })
-        })
-        .catch(err => {
-          console.log(err)
-          console.log(err.message, 'error fetch login')
-        })
     },
     fetchCreate (context, payload) {
-      console.log(payload, 'payload gan')
-      axios({
+      return axios({
         method: 'POST',
-        url: 'http://localhost:3000/admin/product',
+        url: 'https://secure-reaches-76484.herokuapp.com/admin/product',
         data: {
           name: payload.name,
           author: payload.author,
@@ -95,19 +67,11 @@ export default new Vuex.Store({
           token: localStorage.getItem('token')
         }
       })
-        .then(data => {
-          console.log(data, 'XXXXXXXXXXXXXXX')
-          context.dispatch('fetchProduct')
-        })
-        .catch(err => {
-          console.log(err, 'error fetchCreate')
-        })
     },
     fetchEdit (context, payload) {
-      console.log(payload, 'payload fetch edit')
-      axios({
+      return axios({
         method: 'PUT',
-        url: `http://localhost:3000/admin/product/${payload.id}`,
+        url: `https://secure-reaches-76484.herokuapp.com/admin/product/${payload.id}`,
         headers: {
           token: localStorage.getItem('token')
         },
@@ -119,28 +83,15 @@ export default new Vuex.Store({
           stock: payload.stock
         }
       })
-        .then(data => {
-          context.dispatch('fetchProduct')
-          router.push({ path: '/admin' })
-        })
-        .catch(err => {
-          console.log(err, 'error catch fetch product')
-        })
     },
     fetchDelete (context, payload) {
-      axios({
+      return axios({
         method: 'delete',
-        url: `http://localhost:3000/admin/product/${payload.id}`,
+        url: `https://secure-reaches-76484.herokuapp.com/admin/product/${payload.id}`,
         headers: {
           token: localStorage.getItem('token')
         }
       })
-        .then(data => {
-          context.dispatch('fetchProduct')
-        })
-        .catch(err => {
-          console.log(err)
-        })
     }
   },
   modules: {

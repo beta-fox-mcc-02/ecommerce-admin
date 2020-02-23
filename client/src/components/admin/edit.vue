@@ -63,6 +63,24 @@ export default {
         stock: this.stock
       }
       this.$store.dispatch('fetchEdit', payload)
+        .then(({ data }) => {
+          this.$store.dispatch('fetchProduct')
+          this.$buefy.toast.open({
+            duration: 5000,
+            message: data.message,
+            position: 'is-top',
+            type: 'is-success'
+          })
+          this.$router.push({ path: '/admin' })
+        })
+        .catch(err => {
+          this.$buefy.toast.open({
+            duration: 10000,
+            message: err.response.data.message,
+            position: 'is-top',
+            type: 'is-danger'
+          })
+        })
       this.id = ''
       this.name = ''
       this.author = ''

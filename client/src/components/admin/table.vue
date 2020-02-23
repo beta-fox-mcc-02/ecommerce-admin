@@ -47,6 +47,10 @@ export default {
           label: 'Name'
         },
         {
+          field: 'author',
+          label: 'Author'
+        },
+        {
           field: 'image_url',
           label: 'Image Url'
         },
@@ -72,8 +76,34 @@ export default {
       const payload = {
         id: this.selected.id
       }
-      this.$store.dispatch('fetchDelete', payload)
-      this.clearSelected()
+      this.$buefy.dialog.confirm({
+        title: 'Deleting Product',
+        message: 'Are you sure you want to <b>delete</b> this product? This action will delete this product permanently',
+        confirmText: 'Delete Product',
+        type: 'is-danger',
+        hasIcon: true,
+        onConfirm: () => {
+          this.$store.dispatch('fetchDelete', payload)
+            .then(({ data }) => {
+              this.$store.dispatch('fetchProduct')
+              this.$buefy.toast.open({
+                duration: 5000,
+                message: data.message,
+                position: 'is-top',
+                type: 'is-success'
+              })
+            })
+            .catch(err => {
+              this.$buefy.toast.open({
+                duration: 10000,
+                message: err.response.data.message,
+                position: 'is-top',
+                type: 'is-danger'
+              })
+            })
+          this.clearSelected()
+        }
+      })
     }
   },
   created () {
