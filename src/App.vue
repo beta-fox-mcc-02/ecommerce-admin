@@ -130,7 +130,7 @@ button:focus {
 }
 
 .loading{
-  z-index: 999;
+  z-index: 99999;
   position: fixed;
   top: 50%;
   left: 50%;
