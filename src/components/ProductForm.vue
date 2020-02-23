@@ -236,7 +236,7 @@ export default {
           .then(response => {
             file.isLoading = false
             file.isReadyToUpload = false
-            this.initializeProduct(this.product.id)
+            this.initializeProduct(this.product.id, false)
           })
           .catch(err => {
             file.isLoading = false
@@ -248,7 +248,7 @@ export default {
           .then(response => {
             file.isLoading = false
             file.isReadyToUpload = false
-            this.initializeProduct(this.product.id)
+            this.initializeProduct(this.product.id, false)
           })
           .catch(err => {
             file.isLoading = false
@@ -315,12 +315,14 @@ export default {
           })
       }
     },
-    initializeProduct (id) {
+    initializeProduct (id, all) {
       this.$store.dispatch('findOneProduct', id)
         .then(response => {
           const product = response.body.product
-          this.product = product
-          this.product.category = product.Category
+          if (all) {
+            this.product = product
+            this.product.category = product.Category
+          }
           this.productImages = [...product.ProductImages]
           if (!this.productImages.length) {
             this.productImages.push({
@@ -344,7 +346,7 @@ export default {
         this.$store.dispatch('deleteProductImage', file.id)
           .then(response => {
             file.isLoading = false
-            this.initializeProduct(this.product.id)
+            this.initializeProduct(this.product.id, false)
           })
           .catch(err => {
             file.isLoading = false
@@ -364,7 +366,7 @@ export default {
       this.formName = 'Edit Product'
       this.currentPage = 'edit'
       const id = this.$route.params.id
-      this.initializeProduct(id)
+      this.initializeProduct(id, true)
     }
   },
   watch: {
