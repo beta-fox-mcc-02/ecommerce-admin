@@ -74,14 +74,25 @@
                   type="text"
                   id="text-name"
                   aria-describedby="name-help-block">
-                  </b-input>
-                  <label for="text-image">Image url</label>
-                  <b-input
-                  v-model="inputProduct.image_url"
-                  type="url"
-                  id="text-image"
-                  aria-describedby="image-help-block">
-                  </b-input>
+                  </b-input><br>
+                  <b-form-group label="Image" label-for="file"
+                  label-cols-sm="2">
+                    <b-form-file
+                    id="file"
+                    v-model="file">
+                    >
+                    </b-form-file>
+                    <b-button
+                    @click="uploadImage"
+                    style="margin-top: 10px"
+                    size="sm"
+                    :variant="inputProduct.image_url ? 'secondary' : 'success'"
+                    :disabled="inputProduct.image_url ? true : false"
+                    >
+                      {{ inputProduct.image_url ? 'Uploaded' : 'Upload' }}
+                      <i v-if="inputProduct.image_url" class="fas fa-check"></i>
+                    </b-button>
+                  </b-form-group>
                   <label for="range-2">Price</label>
                   <b-input
                   required
@@ -107,7 +118,7 @@
                   aria-describedby="number-help-block">
                   </b-input>
                   <br>
-                  <b-button type='submit' variant="secondary">
+                  <b-button type='submit' variant="success">
                     Add
                   </b-button>
                 </b-form>
@@ -262,13 +273,26 @@
                 id="text-name"
                 aria-describedby="name-help-block">
                 </b-input>
-                <label for="text-image">Image url</label>
-                <b-input
-                v-model="inputProduct.image_url"
-                type="url"
-                id="text-image"
-                aria-describedby="image-help-block">
-                </b-input>
+                <label for="edit-image">Image</label>
+                <img class="edit-image"
+                :src="inputProduct.image_url ? inputProduct.image_url : 'https://static.thenounproject.com/png/340719-200.png' ">
+                <b-form-group>
+                  <b-form-file
+                  id="file"
+                  v-model="file">
+                  >
+                  </b-form-file>
+                  <b-button
+                  @click="clickEditImage(editModal.productId)"
+                  style="margin-top: 10px"
+                  size="sm"
+                  :variant="editImage ? 'secondary' : 'success'"
+                  :disabled="editImage ? true : false"
+                  >
+                    {{ editImage ? 'Edited' : 'Edit' }}
+                    <i v-if="editImage" class="fas fa-check"></i>
+                  </b-button>
+                </b-form-group>
                 <label for="range-2">Price</label>
                 <b-input
                 v-model="inputProduct.price"
@@ -306,6 +330,7 @@
 </template>
 
 <script>
+import imgurAPI from '../API/imgurAPI';
 import userAPI from '../API/userAPI';
 import store from '../store/index';
 import Navbar from '../components/AdminNav.vue';
@@ -334,6 +359,8 @@ export default {
   },
   data() {
     return {
+      editImage: null,
+      file: null,
       inputProduct: {
         name: '',
         image_url: '',
@@ -433,6 +460,8 @@ export default {
       this.inputProduct.price = '';
       this.inputProduct.stock = '';
       this.editModal.productId = '';
+      this.file = null;
+      this.editImage = null;
     },
     clickDeleteAdmin(id) {
       this.$bvModal.msgBoxConfirm('Are you sure?')
@@ -540,8 +569,7 @@ export default {
       const payload = this.inputProduct;
       payload.id = id;
       this.$store.dispatch('editProduct', payload)
-        .then((response) => {
-          console.log(response);
+        .then(() => {
           // hide modal
           this.$bvModal.hide(this.editModal.id);
           // show success alert
@@ -552,7 +580,6 @@ export default {
           this.$store.dispatch('fetchListOfProducts');
         })
         .catch((err) => {
-          console.log(err.response);
           const error = Array.isArray(err.response.data.error)
             ? err.response.data.error[0] : err.response.data.error;
           this.$store.commit('setError', error);
@@ -560,6 +587,65 @@ export default {
         .finally(() => {
           this.$store.commit('stopLoading');
         });
+    },
+    uploadImage() {
+      this.resetError();
+      if (this.file) {
+        this.$store.commit('setLoading');
+        imgurAPI.post('/', this.file, {
+          headers: {
+            authorization: 'Client-ID 546c25a59c58ad7',
+          },
+        })
+          .then((response) => {
+            this.inputProduct.image_url = response.data.data.link;
+          })
+          .catch(() => {
+            this.$store.commit('setError', 'Unsupported File Format');
+          })
+          .finally(() => {
+            this.$store.commit('stopLoading');
+          });
+      } else {
+        this.$store.commit('setError', 'No File Inserted');
+      }
+    },
+    clickEditImage(id) {
+      let newUrl;
+      this.resetError();
+      if (this.file) {
+        this.$store.commit('setLoading');
+        imgurAPI.post('/', this.file, {
+          headers: {
+            authorization: 'Client-ID 546c25a59c58ad7',
+          },
+        })
+          .then((response) => {
+            newUrl = response.data.data.link;
+            const payload = {
+              id,
+              image_url: newUrl,
+            };
+            return this.$store.dispatch('editProduct', payload);
+          })
+          .then(() => {
+            this.inputProduct.image_url = newUrl;
+            this.$store.commit('showAlert', {
+              successMessage: 'Image Successfully Edited',
+              interval: 2000,
+            });
+            this.editImage = true;
+            this.$store.dispatch('fetchListOfProducts');
+          })
+          .catch(() => {
+            this.$store.commit('setError', 'Unsupported File Format');
+          })
+          .finally(() => {
+            this.$store.commit('stopLoading');
+          });
+      } else {
+        this.$store.commit('setError', 'No File Inserted');
+      }
     },
   },
   beforeRouteEnter(to, from, next) {
@@ -591,6 +677,11 @@ export default {
 </script>
 
 <style scoped>
+.edit-image{
+  width: 200px;
+  display: block;
+  margin: 20px 0
+}
 .form-register{
   width: 400px !important;
 }
