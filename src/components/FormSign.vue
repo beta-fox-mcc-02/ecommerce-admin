@@ -4,6 +4,7 @@
     v-model="valid"
     lazy-validation
   >
+
     <v-text-field
       v-if="!isLoginPage"
       v-model="name"
@@ -102,22 +103,55 @@ export default {
       this.passwordConfirm = ''
     },
     Register () {
-      console.log(this.name)
-      console.log(this.email)
-      console.log(this.password)
       this.$store.commit('runLoading', true)
-      setTimeout(() => {
-        this.$store.commit('runLoading', false)
-        this.emptyForm()
-      }, 3000)
+      this.$store.dispatch('register', {
+        name: this.name,
+        email: this.email,
+        password: this.password
+      })
+        .then(({ data }) => {
+          console.log(data)
+          this.signSuccess(data)
+        })
+        .catch(({ response }) => {
+          console.log(response)
+          this.$store.commit('runLoading', false)
+          this.$notify({
+            group: 'sign',
+            title: 'Sign Failed',
+            text: response.data.msg,
+            type: 'error'
+          })
+        })
     },
     Login () {
-      console.log('Login guys')
       this.$store.commit('runLoading', true)
-      setTimeout(() => {
-        this.$store.commit('runLoading', false)
-        this.emptyForm()
-      }, 3000)
+      this.$store.dispatch('login', {
+        email: this.email,
+        password: this.password
+      })
+        .then(({ data }) => {
+          console.log(data)
+          this.signSuccess(data)
+        })
+        .catch(({ response }) => {
+          console.log(response)
+          this.$store.commit('runLoading', false)
+          this.$notify({
+            group: 'sign',
+            title: 'Sign Failed',
+            text: response.data.msg,
+            type: 'error'
+          })
+        })
+    },
+    signSuccess (data) {
+      this.$store.commit('runLoading', false)
+      this.emptyForm()
+      localStorage.token = data.token
+      this.$store.commit('addCurrentUser', data)
+      this.$store.commit('setIsLogin', true)
+      this.$router.push('/')
     }
   },
   computed: {
