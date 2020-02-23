@@ -193,7 +193,7 @@ export default {
             }
           })
           .catch((err) => {
-            console.log(err)
+            vm.$store.commit('AUTHENTICATED_FAILED', err.body)
             next()
           })
       } else {

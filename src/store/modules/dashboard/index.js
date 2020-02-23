@@ -3,6 +3,7 @@ import mutations from './mutations'
 
 const state = {
   profile: null,
+  errors: [],
   menus: [
     { icon: 'mdi-view-dashboard', text: 'Dashboard', url: '/' },
     {

@@ -8,7 +8,7 @@ const actions = {
       })
       .catch(err => {
         commit('SET_PROFILE', null)
-        console.log(err)
+        commit('SET_ERRORS', err.body)
       })
   }
 }
