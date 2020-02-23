@@ -1,7 +1,6 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <div class="products">
+    <div v-if="(isLogin)" class="products">
       <Products v-for="product in products" :key="product.id"
       :product='product'/>
     </div>
@@ -20,6 +19,9 @@ export default {
   computed: {
     products () {
       return this.$store.state.products
+    },
+    isLogin () {
+      return this.$store.state.isLogin
     }
   },
   created () {

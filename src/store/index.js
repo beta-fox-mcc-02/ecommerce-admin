@@ -22,6 +22,10 @@ export default new Vuex.Store({
   mutations: {
     SET_LOGIN (state, payload) {
       state.isLogin = payload
+      if (payload === false) {
+        router.push('/')
+      }
+      console.log(payload, 'LOGGED')
     },
     SET_PRODUCTS (state, payload) {
       state.products = payload

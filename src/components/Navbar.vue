@@ -15,21 +15,21 @@
             <b-navbar-item href="#">
                 <router-link to="/addProduct">Add Product</router-link>
             </b-navbar-item>
-            <b-navbar-item href="#">
-                <router-link to="/editProduct">Edit Product</router-link>
-            </b-navbar-item>
         </template>
 
         <template slot="end">
             <b-navbar-item tag="div">
                 <div class="buttons">
-                    <a class="button is-primary">
+                    <a v-if="(!isLogin)" class="button is-primary">
                         <strong>
                             <router-link to="/register">Register</router-link>
                         </strong>
                     </a>
-                    <a class="button is-light">
+                    <a v-if="(!isLogin)" class="button is-light">
                         <router-link to="/login">Login</router-link>
+                    </a>
+                    <a @click.prevent="logout" v-if="(isLogin)" class="button is-danger">
+                        Logout
                     </a>
                 </div>
             </b-navbar-item>
@@ -39,7 +39,18 @@
 
 <script>
 export default {
-  name: 'Navbar'
+  name: 'Navbar',
+  computed: {
+    isLogin () {
+      return this.$store.state.isLogin
+    }
+  },
+  methods: {
+    logout () {
+      localStorage.clear()
+      this.$store.commit('SET_LOGIN', false)
+    }
+  }
 }
 </script>
 
