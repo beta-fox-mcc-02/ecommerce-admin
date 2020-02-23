@@ -166,7 +166,7 @@ export default {
             }
           })
           .catch((err) => {
-            this.$store.commit('SET_ERRORS', err.body)
+            vm.$store.commit('SET_ERRORS', err.body)
             next()
           })
       } else {
