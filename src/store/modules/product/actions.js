@@ -4,11 +4,31 @@ const actions = {
   addProduct: ({ commit }, payload) => {
     return resource.addProduct(payload)
   },
-  editProduct: ({ commit }, payload) => {
-    return resource.editProduct({ id: payload.id }, payload.formData)
+  editProduct: ({ commit }, product) => {
+    return resource.editProduct({ id: product.id },
+      {
+        product: {
+          name: product.name,
+          price: product.price,
+          stock: product.stock,
+          category_id: product.category.id,
+          SKU: product.SKU,
+          description: product.description,
+          weight: product.weight
+        }
+      })
   },
   deleteProduct: ({ commit }, payload) => {
     return resource.deleteProduct({ id: payload.id })
+  },
+  addProductImage: ({ commit }, payload) => {
+    return resource.addProductImage(payload)
+  },
+  deleteProductImage: ({ commit }, id) => {
+    return resource.deleteProductImage({ id })
+  },
+  editProductImage: ({ commit }, payload) => {
+    return resource.editProductImage({ id: payload.id }, payload.formData)
   },
   getProducts: ({ commit }) => {
     commit('SET_PRODUCT_LOADING', true)

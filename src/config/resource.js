@@ -12,8 +12,11 @@ Vue.http.interceptors.push((request) => {
     Vue.http.headers.common.Authorization = 'Bearer ' + localStorage.token
   }
 
-  if (request.url === 'products' &&
-    (request.method === 'POST' || request.method === 'PUT')) {
+  if (request.url === 'products' && request.method === 'POST') {
+    Vue.http.headers.common['Content-Type'] = 'multipart/form-data'
+  }
+
+  if (request.url === 'product-images' && request.method === 'POST') {
     Vue.http.headers.common['Content-Type'] = 'multipart/form-data'
   }
 })
@@ -29,7 +32,10 @@ const customActions = {
   getProducts: { method: 'GET', url: 'products' },
   findOneProduct: { method: 'GET', url: 'products{/id}' },
   editProduct: { method: 'PUT', url: 'products/{id}' },
-  deleteProduct: { method: 'DELETE', url: 'products/{id}' }
+  deleteProduct: { method: 'DELETE', url: 'products/{id}' },
+  addProductImage: { method: 'POST', url: 'product-images' },
+  editProductImage: { method: 'PUT', url: 'product-images/{id}' },
+  deleteProductImage: { method: 'DELETE', url: 'product-images{/id}' }
 }
 const resources = Vue.resource('', {}, customActions)
 export default resources

@@ -92,17 +92,36 @@
                 placeholder="Select your files"
                 prepend-icon="mdi-paperclip"
                 outlined
+                :disabled="file.isLoading"
                 :name="`image-product-${file.id}`"
                 :show-size="1000"
               >
               </v-file-input>
               <div class="product-image-preview">
-                <img :src="file.url ? file.url : ''" class="preview-image" :id="`preview-image-${file.id}`"/>
-                <v-btn v-if="productImages.length > 1" @click="deleteProductImage(file.id)"
-                  class="ma-2 btn-delete-product"
-                  outlined fab small color="red">
-                  <v-icon>mdi-delete</v-icon>
-                </v-btn>
+                 <v-progress-linear
+                  indeterminate
+                  color="teal"
+                  v-if="file.isLoading"
+                  class="mb-5"
+                 ></v-progress-linear>
+                 <div class="img-actions">
+                  <img :src="file.url ? file.url : ''" class="preview-image" :id="`preview-image-${file.id}`"/>
+                  <div class="button-actions">
+                    <v-btn v-if="productImages.length > 1" @click="deleteProductImage(file)"
+                      class="ma-2 btn-delete-product"
+                      :disabled="file.isLoading"
+                      outlined fab small color="red">
+                      <v-icon>mdi-delete</v-icon>
+                    </v-btn>
+                    <v-btn v-if="currentPage === 'edit' && file.isReadyToUpload"
+                      class="ma-2 btn-upload"
+                      :disabled="file.isLoading"
+                      @click="uploadImage(file)"
+                      outlined fab small color="blue-grey">
+                      <v-icon dark>mdi-cloud-upload</v-icon>
+                    </v-btn>
+                  </div>
+                 </div>
               </div>
             </v-col>
             <v-btn @click="addProductImage"
@@ -113,7 +132,9 @@
           </v-row>
         </div>
         <CircularLoading v-if="isLoadingProductActions" />
-        <v-btn v-if="!isLoadingProductActions" :disabled="$v.$invalid"
+        <v-btn v-if="!isLoadingProductActions"
+          :disabled="$v.$invalid ||
+          productImages.filter((image) => image.isLoading).length > 0"
           class="mr-4"
           type="submit"
           color="success">Save</v-btn>
@@ -138,6 +159,7 @@ const initialProductState = {
   files: [
     {
       id: 0,
+      isLoading: false,
       file: {}
     }
   ]
@@ -203,6 +225,38 @@ export default {
     }
   },
   methods: {
+    uploadImage (file) {
+      file.isLoading = true
+      this.productImages = [...this.productImages]
+      const formData = new FormData()
+      formData.append('productImages', file.file)
+      formData.append('product', JSON.stringify([this.product]))
+      if (!file.url) {
+        this.$store.dispatch('addProductImage', formData)
+          .then(response => {
+            file.isLoading = false
+            file.isReadyToUpload = false
+            this.initializeProduct(this.product.id)
+          })
+          .catch(err => {
+            file.isLoading = false
+            file.errors = err.body
+            this.productImages = [...this.productImages]
+          })
+      } else {
+        this.$store.dispatch('editProductImage', { id: file.id, formData })
+          .then(response => {
+            file.isLoading = false
+            file.isReadyToUpload = false
+            this.initializeProduct(this.product.id)
+          })
+          .catch(err => {
+            file.isLoading = false
+            file.errors = err.body
+            this.productImages = [...this.productImages]
+          })
+      }
+    },
     previewImage (event, id) {
       const reader = new FileReader()
       reader.onload = function () {
@@ -212,8 +266,12 @@ export default {
       this.productImages.forEach((f) => {
         if (f.id === id) {
           f.file = event
+          if (this.currentPage === 'edit') {
+            f.isReadyToUpload = true
+          }
         }
       })
+      this.productImages = [...this.productImages]
       reader.readAsDataURL(event)
     },
     addProductImage () {
@@ -221,7 +279,8 @@ export default {
       const last = sorted[sorted.length - 1]
       const input = {
         id: last.id + 1,
-        file: {}
+        file: {},
+        isLoading: false
       }
       this.productImages = [...this.productImages, input]
     },
@@ -244,7 +303,7 @@ export default {
             this.$store.commit('SET_PRODUCT_ERRORS', err)
           })
       } else {
-        this.$store.dispatch('editProduct', { id: this.product.id, formData })
+        this.$store.dispatch('editProduct', this.product)
           .then((response) => {
             this.$store.commit('SET_PRODUCT_LOADING', false)
             this.$store.commit('SET_PRODUCT_ERRORS', [])
@@ -276,8 +335,23 @@ export default {
           this.$store.commit('SET_PRODUCT_ERRORS', err.body.errors)
         })
     },
-    deleteProductImage (id) {
-      this.productImages = this.productImages.filter((f) => f.id !== id)
+    deleteProductImage (file) {
+      if (!file.url) {
+        this.productImages = this.productImages.filter((f) => f.id !== file.id)
+      } else {
+        file.isLoading = true
+        this.productImages = [...this.productImages]
+        this.$store.dispatch('deleteProductImage', file.id)
+          .then(response => {
+            file.isLoading = false
+            this.initializeProduct(this.product.id)
+          })
+          .catch(err => {
+            file.isLoading = false
+            file.errors = err.body
+            this.productImages = [...this.productImages]
+          })
+      }
     }
   },
   created () {
@@ -299,6 +373,7 @@ export default {
       if (to === '/products/add') {
         this.formName = 'Add Product'
         this.product = initialProductState
+        this.productImages = initialProductState.files
         this.currentPage = 'add'
       } else {
         this.formName = 'Edit Product'
@@ -382,13 +457,11 @@ export default {
   }
 
   .product-image-preview {
-    position: relative;
-  }
-
-  .btn-delete-product {
-    position: absolute;
-    top: 0;
-    right: 0;
+    display: flex;
+    flex-direction: column;
+    .img-actions {
+      display: flex
+    }
   }
 
   .preview-image {
