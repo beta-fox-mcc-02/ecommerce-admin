@@ -1,6 +1,7 @@
 <template>
 <div>
-<delete-modal :id="selectedId" @closeModal="closeModal" v-if="showModal" />
+<delete-modal :id="selectedId" @closeModal="closeModal"
+@fetchProduct="getProduct" v-if="showModal"/>
 <div class="card shadow">
   <div class="card-header py-3">
     <p class="text-primary m-0 font-weight-bold">Product Info</p>
@@ -80,9 +81,6 @@ export default {
   },
   data() {
     return {
-      products: {
-        type: Array,
-      },
       selectedId: {
         type: Number,
       },
@@ -93,7 +91,7 @@ export default {
     getProduct() {
       this.$store.dispatch('fetchProduct')
         .then((result) => {
-          this.products = result.data;
+          this.$store.commit('SET_PRODUCTS', result.data);
         })
         .catch((err) => {
           console.log(err);
@@ -107,8 +105,10 @@ export default {
       this.showModal = false;
     },
   },
-  mounted() {
-    this.getProduct();
+  computed: {
+    products() {
+      return this.$store.state.products;
+    },
   },
   created() {
     this.getProduct();

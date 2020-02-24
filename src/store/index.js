@@ -8,6 +8,7 @@ export default new Vuex.Store({
   state: {
     idToken: '',
     isLogin: false,
+    products: [],
   },
   mutations: {
     SET_IDTOKEN(state, payload) {
@@ -15,6 +16,9 @@ export default new Vuex.Store({
     },
     SET_ISLOGIN(state, status) {
       state.isLogin = status;
+    },
+    SET_PRODUCTS(state, payload) {
+      this.state.products = payload;
     },
   },
   actions: {

@@ -25,19 +25,11 @@ export default {
     deleteProduct() {
       this.$store.dispatch('deleteProduct', +this.id)
         .then(() => {
-          console.log(this.id);
           console.log('success deleting product');
-          this.$store.dispatch('fetchProduct')
-            .then(() => {
-              console.log('fetch data, nanti ada loading animation di sini');
-            })
-            .catch((err) => {
-              console.log(err.response);
-            });
           this.$emit('closeModal', false);
+          this.$emit('fetchProduct');
         })
         .catch((err) => {
-          console.log(this.id);
           console.log(err.response);
           this.$emit('closeModal', false);
         });
