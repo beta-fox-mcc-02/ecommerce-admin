@@ -34,7 +34,7 @@ export default new Vuex.Store({
     fetchProducts ({ commit }) {
       axios({
         method: 'GET',
-        url: 'http://localhost:3000/products',
+        url: 'https://blooming-harbor-59866.herokuapp.com/products',
         headers: {
           token: localStorage.token
         }
@@ -46,7 +46,7 @@ export default new Vuex.Store({
     findProductById (context, payload) {
       axios({
         method: 'GET',
-        url: 'http://localhost:3000/products/' + payload,
+        url: 'https://blooming-harbor-59866.herokuapp.com/products/' + payload,
         headers: {
           token: localStorage.token
         }
@@ -68,7 +68,7 @@ export default new Vuex.Store({
     updateProduct (context, payload) {
       axios({
         method: 'PUT',
-        url: 'http://localhost:3000/products/' + payload.id,
+        url: 'https://blooming-harbor-59866.herokuapp.com/products/' + payload.id,
         data: {
           name: payload.name,
           image_url: payload.image_url,
@@ -89,7 +89,7 @@ export default new Vuex.Store({
     deleteProduct (context, payload) {
       axios({
         method: 'DELETE',
-        url: 'http://localhost:3000/products/' + payload,
+        url: 'https://blooming-harbor-59866.herokuapp.com/products/' + payload,
         headers: {
           token: localStorage.token
         }

@@ -54,7 +54,7 @@ export default {
       }
       axios({
         method: 'POST',
-        url: 'http://localhost:3000/admins/register',
+        url: 'https://blooming-harbor-59866.herokuapp.com/admins/register',
         data: payload
       })
         .then(({ data }) => {

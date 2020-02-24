@@ -51,7 +51,7 @@ export default {
       }
       axios({
         method: 'POST',
-        url: 'http://localhost:3000/admins/login',
+        url: 'https://blooming-harbor-59866.herokuapp.com/admins/login',
         data: payload
       })
         .then(({ data }) => {

@@ -96,7 +96,7 @@ export default {
     addProduct () {
       axios({
         method: 'POST',
-        url: 'http://localhost:3000/products',
+        url: 'https://blooming-harbor-59866.herokuapp.com/products',
         data: {
           name: this.product.name,
           image_url: this.product.image_url,
