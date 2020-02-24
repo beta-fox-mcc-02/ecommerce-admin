@@ -1,4 +1,4 @@
-# ecommerce-admin
+# client
 
 ## Project setup
 ```
