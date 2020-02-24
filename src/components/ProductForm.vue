@@ -290,7 +290,9 @@ export default {
     saveProduct () {
       const formData = new FormData()
       this.productImages.forEach((file, index) => {
-        formData.append('productImages', file.file)
+        if (file.file) {
+          formData.append('productImages', file.file)
+        }
       })
       formData.append('product', JSON.stringify([this.product]))
       this.$store.commit('SET_PRODUCT_LOADING', true)
