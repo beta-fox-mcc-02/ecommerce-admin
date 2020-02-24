@@ -12,7 +12,15 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    beforeEnter (to, from, next) {
+      if (localStorage.access_token) {
+        next()
+      }
+      else {
+        next('/login')
+      }
+    }
   },
   {
     path: '/about',

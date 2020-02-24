@@ -11,15 +11,15 @@
               <form @submit.prevent="login">
                 <div class="form-label-group">
                   <input v-model="email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-                  <label for="inputEmail"></label>
+                  <label for="inputEmail">Email</label>
                 </div>
 
                 <div class="form-label-group">
                   <input v-model="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-                  <label for="inputPassword"></label>
+                  <label for="inputPassword">Password</label>
                 </div>
 
-                <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Sign in</button>
+                <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Login</button>
                 <div class="text-center">
                   <a class="small" href="#" @click.prevent="switchToRegister">Forgot password?</a></div>
               </form>
