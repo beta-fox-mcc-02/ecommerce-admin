@@ -2,9 +2,6 @@ const mutations = {
   SET_PRODUCTS (state, payload) {
     state.products = payload
   },
-  SET_PRODUCT (state, payload) {
-    state.product = payload
-  },
   SET_LOAD_PRODUCT (state, payload) {
     state.isLodProduct = payload
   },

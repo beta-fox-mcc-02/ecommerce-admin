@@ -10,7 +10,7 @@ const actions = {
         name: product.name,
         price: product.price,
         stock: product.stock,
-        category: product.category,
+        category_id: product.category.id,
         SKU: product.SKU,
         description: product.description,
         weight: product.weight

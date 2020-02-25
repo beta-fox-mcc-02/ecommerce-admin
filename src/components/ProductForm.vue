@@ -148,24 +148,24 @@ import OverlayLoader from './OverlayLoader'
 import CircularLoading from './CircularLoading'
 import Alert from './Alert'
 import { required, numeric } from 'vuelidate/lib/validators'
-const initialProductState = {
-  name: '',
-  price: '',
-  stock: '',
-  category: {
-    id: ''
-  },
-  SKU: '',
-  description: '',
-  weight: '',
-  files: [
-    {
-      id: 0,
-      isLoading: false,
-      file: {}
-    }
-  ]
-}
+// const initialProduct = {
+//   name: '',
+//   price: '',
+//   stock: '',
+//   category: {
+//     id: ''
+//   },
+//   SKU: '',
+//   description: '',
+//   weight: '',
+//   files: [
+//     {
+//       id: 0,
+//       isLoading: false,
+//       file: {}
+//     }
+//   ]
+// }
 export default {
   name: 'ProductForm',
   components: {
@@ -177,8 +177,8 @@ export default {
     clearable: false,
     formName: '',
     currentPage: '',
-    product: { ...initialProductState },
-    productImages: [...initialProductState.files]
+    product: {},
+    productImages: []
   }),
   validations: {
     product: {
@@ -294,15 +294,21 @@ export default {
           formData.append('productImages', file.file)
         }
       })
-      formData.append('product', JSON.stringify([this.product]))
+      formData.append('name', this.product.name)
+      formData.append('price', this.product.price)
+      formData.append('stock', this.product.stock)
+      formData.append('category_id', this.product.category.id)
+      formData.append('SKU', this.product.SKU)
+      formData.append('description', this.product.description)
+      formData.append('weight', this.product.weight)
       this.$store.commit('SET_PRODUCT_LOADING', true)
       if (this.currentPage === 'add') {
         this.$store.dispatch('addProduct', formData)
           .then((response) => {
             this.$store.commit('SET_PRODUCT_LOADING', false)
             this.$store.commit('SET_PRODUCT_ERRORS', [])
-            this.product = { ...initialProductState }
-            this.productImages = [...initialProductState.files]
+            this.product = { ...this.initialProduct }
+            this.productImages = [...this.initialProduct.files]
             this.$router.push('/products')
           })
           .catch(err => {
@@ -320,8 +326,8 @@ export default {
             this.$store.commit('SET_PRODUCT_LOADING', false)
             this.$store.commit('SET_PRODUCT_ERRORS', [])
             this.$router.push('/products')
-            this.product = { ...initialProductState }
-            this.productImages = [...initialProductState.files]
+            this.product = { ...this.initialProduct }
+            this.productImages = [...this.initialProduct.files]
           })
           .catch(err => {
             this.$store.commit('SET_PRODUCT_LOADING', false)
@@ -381,8 +387,8 @@ export default {
     if (path === '/products/add') {
       this.formName = 'Add Product'
       this.currentPage = 'add'
-      this.product = { ...initialProductState }
-      this.productImages = [...initialProductState.files]
+      this.product = { ...this.initialProduct }
+      this.productImages = [...this.initialProduct.files]
     } else {
       this.formName = 'Edit Product'
       this.currentPage = 'edit'
@@ -395,8 +401,8 @@ export default {
       to = to.path
       if (to === '/products/add') {
         this.formName = 'Add Product'
-        this.product = { ...initialProductState }
-        this.productImages = [...initialProductState.files]
+        this.product = { ...this.initialProduct }
+        this.productImages = [...this.initialProduct.files]
         this.currentPage = 'add'
       } else {
         this.formName = 'Edit Product'
@@ -405,6 +411,9 @@ export default {
     }
   },
   computed: {
+    initialProduct () {
+      return this.$store.state.product.product
+    },
     errors () {
       return this.$store.state.product.errors
     },

@@ -6,7 +6,25 @@ const state = {
   errors: [],
   isLoading: null,
   isLodProduct: null,
-  success: []
+  success: [],
+  product: {
+    name: '',
+    price: '',
+    stock: '',
+    category: {
+      id: ''
+    },
+    SKU: '',
+    description: '',
+    weight: '',
+    files: [
+      {
+        id: 0,
+        isLoading: false,
+        file: {}
+      }
+    ]
+  }
 }
 
 export default {
