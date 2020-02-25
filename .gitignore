@@ -108,4 +108,5 @@ dist
 .vscode-test
 
 # firebase cache
+.firebase
 .firebaserc

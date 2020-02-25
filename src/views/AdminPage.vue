@@ -61,13 +61,11 @@
       </v-btn>
 
     </v-app-bar>
-    <v-content>
-      <v-container
-        fluid
-      >
-        <router-view></router-view>
-      </v-container>
-    </v-content>
+    <v-container
+      fluid
+    >
+      <router-view></router-view>
+    </v-container>
   </v-app>
 </template>
 
@@ -92,13 +90,13 @@ export default {
   },
   methods: {
     toAdminHome () {
-      this.$router.push('/admin')
+      this.$router.push('/')
     },
     adminLogout () {
       localStorage.clear()
       this.$store.commit('setAdminName', null)
       this.$store.commit('setAdminEmail', null)
-      this.$router.push('/')
+      this.$router.push('/login')
     }
   },
   created () {

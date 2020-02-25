@@ -5,7 +5,7 @@
       </h1>
       <v-row>
         <v-col
-          v-for="{id, name} in categories"
+          v-for="{id, name, bg_img} in categories"
           :key="id"
           cols="12"
           sm="12"
@@ -13,10 +13,13 @@
           lg="3"
         >
           <v-card>
-            <v-card-title
-              v-text="name"
-              class="ma-3 pa-6"
-            ></v-card-title>
+            <v-img
+              class="black--text align-end"
+              height="200px"
+              :src="bg_img"
+            >
+              <v-card-title>{{ name }}</v-card-title>
+            </v-img>
             <v-card-action></v-card-action>
           </v-card>
         </v-col>

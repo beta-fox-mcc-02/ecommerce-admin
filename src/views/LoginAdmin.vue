@@ -20,7 +20,7 @@
                 dark
                 flat
               >
-                <v-toolbar-title>Login form</v-toolbar-title>
+                <v-toolbar-title>Login Foot-Style Admin</v-toolbar-title>
 
               </v-toolbar>
               <v-card-text>
@@ -63,6 +63,11 @@ export default {
       password: ''
     }
   },
+  computed: {
+    message () {
+      return this.$store.state.message
+    }
+  },
   methods: {
     loginAdmin () {
       this.$store.dispatch('login', {
@@ -74,16 +79,17 @@ export default {
             localStorage.admin_token = data.data.access_token
             this.$store.commit('setAdminName', data.data.name)
             this.$store.commit('setAdminEmail', data.data.email)
-            this.$router.push('/admin')
+            this.$router.push('/')
           }
         })
         .catch(err => {
-          this.$router.commit('setMessage', err)
+          this.$store.commit('setMessage', err)
+          console.log(this.message)
         })
     }
   },
   created () {
-    document.title = 'Login FootStyle'
+    document.title = 'Login Admin FootStyle'
   }
 }
 </script>

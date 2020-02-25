@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import LandingPage from '../views/LandingPage'
 import LoginAdmin from '../views/LoginAdmin'
 import AdminPage from '../views/AdminPage'
 import AdminHome from '../components/AdminHome'
@@ -12,19 +11,21 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
-    name: 'Landing Page',
-    component: LandingPage
-  },
-  {
-    path: '/log',
+    path: '/login',
     name: 'Admin Login',
     component: LoginAdmin
   },
   {
-    path: '/admin',
+    path: '/',
     name: 'Admin',
     component: AdminPage,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.admin_token) {
+        next()
+      } else {
+        router.push('/login')
+      }
+    },
     children: [
       {
         path: '',

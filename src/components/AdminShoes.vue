@@ -1,103 +1,5 @@
 <template>
   <div class="admin-shoes-container" justify="center" align="center">
-      <h1>
-        This is Shoes Page
-      </h1>
-      <v-row justify="center">
-        <v-dialog v-model="dialog" max-width="600px" persistent>
-          <template v-slot:activator="{ on }">
-            <v-btn color="primary" dark v-on="on" type="button" @click="newShoeForm">
-              <v-icon dark left>mdi-plus</v-icon>
-              <span>Add Shoe</span>
-            </v-btn>
-          </template>
-          <v-card>
-            <v-card-title>
-              <span class="headline">Add New Shoe</span>
-            </v-card-title>
-            <v-form
-              @submit.prevent="addNewShoe"
-              ref="newShoeForm"
-            >
-              <v-container>
-                <v-row>
-                  <v-col cols="12">
-                    <v-text-field
-                      label="Product Name*"
-                      type="text"
-                      v-model="name"
-                      :rules="nameRules"
-                      required
-                      dense
-                    >
-                    </v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-textarea
-                      outlined
-                      auto-grow
-                      no-resize
-                      name="input-7-4"
-                      label="Description"
-                      v-model="description"
-                      dense
-                    ></v-textarea>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field
-                      label="Image Url"
-                      type="text"
-                      v-model="image_url"
-                      required
-                    >
-                    </v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field
-                      label="Price"
-                      type="number"
-                      v-model="price"
-                      :rules="priceRules"
-                      required
-                      dense
-                    >
-                    </v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field
-                      label="Stock"
-                      type="number"
-                      v-model="stock"
-                      :rules="stockRules"
-                      required
-                      dense
-                    >
-                    </v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-autocomplete
-                      :items="categoryItems"
-                      label="Categories"
-                      multiple
-                      chips
-                      dense
-                      v-model="categories"
-                      :rules="categoriesRules"
-                    ></v-autocomplete>
-                  </v-col>
-                </v-row>
-              </v-container>
-              <small>*indicates required field</small>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="blue accent-3" text type="button" @click="clearNewShoeForm">Clear</v-btn>
-                <v-btn color="blue lighten-1" text type="button" @click="closeNewShoeDialog">Close</v-btn>
-                <v-btn color="blue darken-2" text type="submit">Add</v-btn>
-              </v-card-actions>
-            </v-form>
-          </v-card>
-        </v-dialog>
-      </v-row>
       <v-dialog v-model="dialog2" max-width="600px" persistent>
           <v-card>
             <v-card-title>
@@ -185,7 +87,145 @@
             </v-form>
           </v-card>
         </v-dialog>
-      <v-row>
+        <v-snackbar
+          v-model="snackbar"
+          :timeout="timeout"
+          top
+        >
+          {{ message }}
+        </v-snackbar>
+
+        <v-toolbar
+          color="teal"
+          dark
+        >
+          <v-toolbar-title>Shoe List</v-toolbar-title>
+
+          <v-divider
+            class="mx-4"
+            inset
+            vertical
+          ></v-divider>
+
+          <v-toolbar-items>
+            <v-dialog v-model="dialog" max-width="600px" persistent>
+              <template v-slot:activator="{ on }">
+                <v-btn text dark v-on="on" type="button" @click="newShoeForm">
+                  <v-icon dark left>mdi-plus</v-icon>
+                  <span>Add Shoe</span>
+                </v-btn>
+              </template>
+              <v-card>
+                <v-card-title>
+                  <span class="headline">Add New Shoe</span>
+                </v-card-title>
+                <v-form
+                  @submit.prevent="addNewShoe"
+                  ref="newShoeForm"
+                >
+                  <v-container>
+                    <v-row>
+                      <v-col cols="12">
+                        <v-text-field
+                          label="Product Name*"
+                          type="text"
+                          v-model="name"
+                          :rules="nameRules"
+                          required
+                          dense
+                        >
+                        </v-text-field>
+                      </v-col>
+                      <v-col cols="12">
+                        <v-textarea
+                          outlined
+                          auto-grow
+                          no-resize
+                          name="input-7-4"
+                          label="Description"
+                          v-model="description"
+                          dense
+                        ></v-textarea>
+                      </v-col>
+                      <v-col cols="12">
+                        <v-text-field
+                          label="Image Url"
+                          type="text"
+                          v-model="image_url"
+                          required
+                        >
+                        </v-text-field>
+                      </v-col>
+                      <v-col cols="12">
+                        <v-text-field
+                          label="Price"
+                          type="number"
+                          v-model="price"
+                          :rules="priceRules"
+                          required
+                          dense
+                        >
+                        </v-text-field>
+                      </v-col>
+                      <v-col cols="12">
+                        <v-text-field
+                          label="Stock"
+                          type="number"
+                          v-model="stock"
+                          :rules="stockRules"
+                          required
+                          dense
+                        >
+                        </v-text-field>
+                      </v-col>
+                      <v-col cols="12">
+                        <v-autocomplete
+                          :items="categoryItems"
+                          label="Categories"
+                          multiple
+                          chips
+                          dense
+                          v-model="categories"
+                          :rules="categoriesRules"
+                        ></v-autocomplete>
+                      </v-col>
+                    </v-row>
+                  </v-container>
+                  <small>*indicates required field</small>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="blue accent-3" text type="button" @click="clearNewShoeForm">Clear</v-btn>
+                    <v-btn color="blue lighten-1" text type="button" @click="closeNewShoeDialog">Close</v-btn>
+                    <v-btn color="blue darken-2" text type="submit">Add</v-btn>
+                  </v-card-actions>
+                </v-form>
+              </v-card>
+            </v-dialog>
+          </v-toolbar-items>
+
+          <v-divider
+            class="mx-4"
+            inset
+            vertical
+          ></v-divider>
+
+          <v-text-field
+            v-model="search"
+            label="Search Shoe"
+            prepend-inner-icon="search"
+            solo-inverted
+            hide-details
+            cols="3"
+          ></v-text-field>
+        </v-toolbar>
+      <v-row v-if="!shoes.length">
+        <v-col>
+          <h3>
+            No shoe available. Add one by clicking button above.
+          </h3>
+        </v-col>
+      </v-row>
+      <v-row v-else>
         <v-col
           v-for="{id, name, description, image_url, price, stock, Categories} in shoes"
           :key="id"
@@ -197,7 +237,8 @@
           <v-card>
             <v-img
               :src="image_url"
-              width="50%"
+              class="align-end"
+              height="200"
             >
             </v-img>
             <v-card-title
@@ -208,7 +249,7 @@
               class="text--primary"
             >
               <div class="description">
-                {{description}}
+                {{ description }}
               </div>
               <div class="price">
                 Price: Rp. {{price}}
@@ -246,8 +287,10 @@
 export default {
   data () {
     return {
+      search: '',
       dialog: false,
       dialog2: false,
+      snackbar: false,
       id: 0,
       name: '',
       nameRules: [
@@ -273,7 +316,9 @@ export default {
   },
   computed: {
     shoes () {
-      return this.$store.state.products
+      return this.$store.state.products.filter((el) => {
+        return el.name.toLowerCase().indexOf(this.search.toLowerCase()) > -1
+      })
     },
     categoryItems () {
       const options = []
@@ -281,11 +326,15 @@ export default {
         options.push(el.name)
       })
       return options
+    },
+    message () {
+      return this.$store.state.message
     }
   },
   methods: {
-    newShowForm () {
-      this.$refs.newShowForm.reset()
+    newShoeForm () {
+      this.$refs.newShoeForm.reset()
+      this.dialog = true
     },
     closeNewShoeDialog () {
       this.$refs.newShoeForm.reset()
@@ -307,10 +356,13 @@ export default {
         })
           .then(({ data }) => {
             this.$store.dispatch('getAllShoes')
+            this.$store.commit('setMessage', data.msg)
             this.dialog = false
+            this.snackbar = true
           })
           .catch(err => {
-            this.$store.commit('setMessage', err)
+            this.$store.commit('setMessage', err.response.data.msg)
+            this.snackbar = true
           })
       }
     },
@@ -344,11 +396,13 @@ export default {
         }, id)
           .then(({ data }) => {
             this.$store.dispatch('getAllShoes')
+            this.$store.commit('setMessage', data.msg)
             this.dialog2 = false
+            this.snackbar = true
           })
           .catch(err => {
-            console.log(err)
-            this.$store.commit('setMessage', err)
+            this.$store.commit('setMessage', err.response.data.msg)
+            this.snackbar = true
           })
       }
     },
@@ -356,9 +410,12 @@ export default {
       this.$store.dispatch('deleteShoe', id)
         .then(({ data }) => {
           this.$store.dispatch('getAllShoes')
+          this.$store.commit('setMessage', data.msg)
+          this.snackbar = true
         })
         .catch(err => {
-          this.$store.commit('setMessage', err)
+          this.$store.commit('setMessage', err.response.data.msg)
+          this.snackbar = true
         })
     }
   },

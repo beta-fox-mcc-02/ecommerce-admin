@@ -11,9 +11,9 @@ export default new Vuex.Store({
     categories: [],
     products: [],
     adminMenu: [
-      { title: 'Dashboard', icon: 'dashboard', route: '/admin/dashboard' },
-      { title: 'Shoes', icon: 'storage', route: '/admin/shoes' },
-      { title: 'Categories', icon: 'category', route: '/admin/categories' }
+      { title: 'Dashboard', icon: 'dashboard', route: '/dashboard' },
+      { title: 'Shoes', icon: 'storage', route: '/shoes' },
+      { title: 'Categories', icon: 'category', route: '/categories' }
     ],
     message: ''
   },
