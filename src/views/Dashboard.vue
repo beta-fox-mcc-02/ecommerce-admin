@@ -7,17 +7,18 @@
       <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0"
         href="#">
         <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-square-root-alt"></i></div>
-        <div class="sidebar-brand-text mx-3"><span style="font-size: 16px;">my e-commerce</span>
+        <div class="sidebar-brand-text mx-3"><span style="font-size: 16px;">e-commerce</span>
         </div>
       </a>
       <hr class="sidebar-divider my-0">
       <ul class="nav navbar-nav text-light" id="accordionSidebar">
         <li class="nav-item" role="presentation"><a class="nav-link" href="index.html"><i
               class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
-        <li class="nav-item" role="presentation"><a class="nav-link active" href="table.html"><i
-              class="fas fa-table"></i><span>Products</span></a></li>
-        <li class="nav-item" role="presentation"><a class="nav-link" href="blank.html"><i
-              class="fas fa-window-maximize"></i><span>Blank Page</span></a></li>
+        <li class="nav-item" role="presentation">
+          <router-link class="nav-link" to="/dashboard/list"><i
+              class="fas fa-table"></i><span>Products</span></router-link></li>
+        <li class="nav-item" role="presentation"><router-link class="nav-link" to="add"><i
+              class="fas fa-window-maximize"></i><span>Add new product</span></router-link></li>
       </ul>
       <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0"
           id="sidebarToggle" type="button"></button></div>
@@ -60,7 +61,7 @@
             <li class="nav-item dropdown no-arrow" role="presentation">
               <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link"
                   data-toggle="dropdown" aria-expanded="false" href="#"><span
-                    class="d-none d-lg-inline mr-2 text-gray-600 small">Valerie Luna</span><img
+                    class="d-none d-lg-inline mr-2 text-gray-600 small">Menu</span><img
                     class="border rounded-circle img-profile"
                     src="assets/img/avatars/avatar1.jpeg"></a>
                 <div class="dropdown-menu shadow dropdown-menu-right animated--grow-in" role="menu">
@@ -79,9 +80,15 @@
           </ul>
         </div>
       </nav>
-      <!-- TEMPAT CONTENT NESTED ROUTE -->
+      <!-- TEMPAT CONTEN NESTED ROUTE -->
       <div class="container-fluid">
-        <product-list />
+        <div class="row">
+          <div class="col-1"></div>
+          <div class="col-10">
+            <router-view> </router-view>
+          </div>
+          <div class="col-1"></div>
+        </div>
       </div>
     </div>
     <footer class="bg-white sticky-footer">
@@ -95,11 +102,11 @@
 </template>
 
 <script>
-import ProductList from '@/components/ProductList.vue';
+// import ProductList from '@/components/ProductList.vue';
 
 export default {
   components: {
-    ProductList,
+    // ProductList,
   },
 };
 </script>

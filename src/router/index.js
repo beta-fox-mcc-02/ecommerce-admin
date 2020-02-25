@@ -1,6 +1,9 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
+import AddForm from '../components/AddForm.vue';
+import ProductList from '../components/ProductList.vue';
+import EditForm from '../components/EditForm.vue';
 
 Vue.use(VueRouter);
 
@@ -32,6 +35,11 @@ const routes = [
     path: '/dashboard',
     name: 'Dashboard',
     component: () => import('../views/Dashboard.vue'),
+    children: [
+      { path: 'add', component: AddForm },
+      { path: 'list', component: ProductList },
+      { path: ':id/edit', component: EditForm },
+    ],
   },
 ];
 

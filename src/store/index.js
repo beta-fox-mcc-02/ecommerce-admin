@@ -47,6 +47,32 @@ export default new Vuex.Store({
         headers: { access_token: localStorage.getItem('access_token') },
       });
     },
+    addProduct(context, payload) {
+      return userAPI({
+        method: 'POST',
+        url: '/product',
+        headers: { access_token: localStorage.getItem('access_token') },
+        data: {
+          name: payload.name,
+          image_url: payload.image_url,
+          price: payload.price,
+          stock: payload.stock,
+        },
+      });
+    },
+    editProduct(context, payload) {
+      return userAPI({
+        method: 'PATCH',
+        url: `/product/${payload.id}`,
+        headers: { access_token: localStorage.getItem('access_token') },
+        data: {
+          name: payload.name,
+          image_url: payload.image_url,
+          price: payload.price,
+          stock: payload.stock,
+        },
+      });
+    },
   },
   modules: {
   },
