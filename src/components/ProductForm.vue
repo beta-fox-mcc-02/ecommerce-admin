@@ -3,7 +3,7 @@
     <OverlayLoader v-if="isLoading || isLoadProduct" />
       <h2>{{ formName }}</h2>
       <br>
-      <form @submit.prevent="saveProduct" enctype="multipart/form-data">
+      <form @submit.prevent="saveProduct" enctype="application/x-www-form-urlencoded">
         <div class="wrapper-form">
           <Alert :errors="errors"/>
           <v-text-field

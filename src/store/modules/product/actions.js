@@ -7,15 +7,13 @@ const actions = {
   editProduct: ({ commit }, product) => {
     return resource.editProduct({ id: product.id },
       {
-        product: {
-          name: product.name,
-          price: product.price,
-          stock: product.stock,
-          category: product.category,
-          SKU: product.SKU,
-          description: product.description,
-          weight: product.weight
-        }
+        name: product.name,
+        price: product.price,
+        stock: product.stock,
+        category: product.category,
+        SKU: product.SKU,
+        description: product.description,
+        weight: product.weight
       })
   },
   deleteProduct: ({ commit }, payload) => {

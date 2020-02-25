@@ -11,14 +11,6 @@ Vue.http.interceptors.push((request) => {
   ) {
     Vue.http.headers.common.Authorization = 'Bearer ' + localStorage.token
   }
-
-  if (request.url === 'products' && request.method === 'POST') {
-    Vue.http.headers.common['Content-Type'] = 'multipart/form-data'
-  }
-
-  if (request.url === 'product-images' && request.method === 'POST') {
-    Vue.http.headers.common['Content-Type'] = 'multipart/form-data'
-  }
 })
 
 const customActions = {
