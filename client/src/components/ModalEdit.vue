@@ -92,13 +92,10 @@ export default {
         CategoryId: this.CategoryId
       })
         .then(({ data }) => {
-          console.log(data)
           this.$store.dispatch('fetchProducts')
           this.$router.push('/')
         })
-        .catch(err => {
-          console.log(err)
-        })
+        .catch(_ => {})
     }
   },
   created () {
@@ -113,9 +110,7 @@ export default {
         this.stock = data.stock
         this.CategoryId = data.CategoryId
       })
-      .catch(err => {
-        console.log(err)
-      })
+      .catch(_ => {})
   }
 }
 </script>

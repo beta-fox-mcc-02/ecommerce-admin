@@ -57,9 +57,7 @@ export default new Vuex.Store({
         .then(({ data }) => {
           commit('SET_PRODUCTS', data)
         })
-        .catch(err => {
-          console.log(err)
-        })
+        .catch(_ => {})
     },
     fetchCategories ({ commit }) {
       axios({
@@ -69,9 +67,7 @@ export default new Vuex.Store({
         .then(({ data }) => {
           commit('SET_CATEGORIES', data)
         })
-        .catch(err => {
-          console.log(err)
-        })
+        .catch(_ => {})
     },
     addProduct (context, payload) {
       return axios({
@@ -101,9 +97,7 @@ export default new Vuex.Store({
         .then(_ => {
           context.dispatch('fetchProducts')
         })
-        .catch(err => {
-          console.log(err)
-        })
+        .catch(_ => {})
     },
     fetchOneProduct (context, payload) {
       return axios({

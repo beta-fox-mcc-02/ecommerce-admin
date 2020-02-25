@@ -49,7 +49,6 @@ export default {
         password: this.password
       })
         .then(({ data }) => {
-          console.log(data)
           localStorage.token = data.token
           this.$router.push('/')
           this.$vToastify.success({
@@ -57,9 +56,7 @@ export default {
             body: `Welcome ${data.username}`
           })
         })
-        .catch(err => {
-          console.log(err)
-        })
+        .catch(_ => {})
     }
   },
   beforeRouteEnter (to, from, next) {

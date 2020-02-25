@@ -91,9 +91,7 @@ export default {
           this.$store.dispatch('fetchProducts')
           this.$router.push('/')
         })
-        .catch(err => {
-          console.log(err)
-        })
+        .catch(_ => {})
     }
   },
   created () {
