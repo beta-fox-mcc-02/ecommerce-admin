@@ -28,7 +28,6 @@ const store = new Vuex.Store({
     },
     getAdmins (state, params) {
       state.admins = params
-      console.log(params)
     },
     setEmail (state, params) {
       state.email = params
@@ -99,15 +98,17 @@ const store = new Vuex.Store({
         url: `${serverUrl}/category`
       })
     },
-    loginAsync (context) {
-      return axios({
-        method: 'POST',
-        url: `${serverUrl}/admin/login`,
-        data: {
-          email: context.state.email,
-          password: context.state.password
-        }
-      })
+    loginAsync ({ state }) {
+      if (state.email && state.password) {
+        return axios({
+          method: 'POST',
+          url: `${serverUrl}/admin/login`,
+          data: {
+            email: state.email,
+            password: state.password
+          }
+        })
+      } else return false
     },
     createProductAsync (context) {
       const token = localStorage.getItem('access_token')
@@ -156,7 +157,6 @@ const store = new Vuex.Store({
     },
     fetchAdmins (context) {
       const token = localStorage.getItem('access_token')
-      console.log('index client')
       return axios({
         method: 'GET',
         url: `${serverUrl}/admins`,

@@ -172,7 +172,7 @@ input[type="email"], input[type="password"] {
     font-family: monospace;
     align-items: center;
     margin: 0.3rem 0;
-    background-color: #189a18;
+    background-color: #189a94;
     border-radius: 1rem;
 }
 

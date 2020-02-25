@@ -26,14 +26,16 @@
             <tr v-for="product in getProducts" v-bind:key="product.id">
               <td class="id-cols">{{ product.id }}</td>
               <td>{{ product.name }}</td>
-              <td>Rp. {{ product.price }}</td>
-              <td>{{ product.stock }} Units</td>
-              <td>Rp. {{ product.total }}</td>
+              <td>Rp. {{ product.price.toLocaleString() }}</td>
+              <td>{{ product.stock.toLocaleString() }} Units</td>
+              <td>Rp. {{ product.total.toLocaleString() }}</td>
               <td class="action-cols">
-                <button id="trash-btn" v-on:click="deleteEntry(product.id)"><i class="fas fa-trash-alt"></i></button>
+                <button id="trash-btn" v-on:click="deleteEntry(product)"><i class="fas fa-trash-alt"></i></button>
                 <button id="edit-btn" v-on:click="updateEntry(product)"><i class="fas fa-edit"></i></button>
               </td>
             </tr>
+            <small v-if="notification">{{deletedProduct}} will be deleted!</small>
+            <small v-if="notification">{{updatedProduct}} UPDATED!</small>
             <EditProductForm v-if="editMode" v-on:closeForm="closeForm" />
           </tbody>
         </table>
@@ -43,14 +45,16 @@
 </template>
 
 <script>
-import AddProductForm from './2TierComponents/addProductForm.vue'
-import EditProductForm from './2TierComponents/editProductForm.vue'
+import AddProductForm from './AddProduct.vue'
+import EditProductForm from './EditProduct.vue'
 
 export default {
   data () {
     return {
       isShowed: false,
-      editMode: false
+      editMode: false,
+      notification: false,
+      deletedProduct: ''
     }
   },
   components: { AddProductForm, EditProductForm },
@@ -61,6 +65,7 @@ export default {
   },
   methods: {
     showAddForm () {
+      this.closeForm()
       this.$store.dispatch('getCategories')
         .then((result) => {
           this.$store.commit('setCategories', { data: result.data.data })
@@ -71,15 +76,24 @@ export default {
     fetchAll () {
       this.$store.dispatch('fetchProducts')
     },
-    deleteEntry (id) {
+    deleteEntry ({ name, id }) {
       this.$store.dispatch('deleteAsync', id)
-        .then((result) => this.fetchAll())
+        .then((result) => {
+          this.notification = true
+          this.deletedProduct = name
+          setTimeout(() => {
+            this.notification = false
+            this.deletedProduct = ''
+            this.fetchAll()
+          }, 2000)
+        })
         .catch((err) => console.log(err))
     },
     updateEntry (product) {
-      this.editMode = true
+      this.closeForm()
       this.$store.dispatch('getCategories')
         .then((result) => {
+          this.editMode = true
           this.$store.commit('editAbleData', { product, categories: result.data.data })
         })
         .catch((err) => console.log(err))
@@ -87,6 +101,7 @@ export default {
     closeForm (params) {
       this.isShowed = params
       this.editMode = params
+      this.$store.commit('unsetAll')
       this.fetchAll()
     }
   },
@@ -201,6 +216,16 @@ button#edit-btn:hover{
 
 i.fas.fa-plus, i.fas.fa-filter {
   font-size: 15pt;
+}
+
+small {
+    position: absolute;
+    top: 4rem;
+    right: 2rem;
+    background-color: #257966;
+    color: white;
+    padding: 1rem;
+    border-radius: 1rem;
 }
 
 @keyframes fade-in {

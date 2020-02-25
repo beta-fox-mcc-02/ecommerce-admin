@@ -20,7 +20,7 @@ export default {
 <style scoped>
 
 div#nav {
-  background-color: #189a18;
+  background-color: #2cb797;
   height: 3rem;
   width: 100%;
   text-align: right;

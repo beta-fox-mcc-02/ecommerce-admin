@@ -2,8 +2,8 @@
   <div id="homePage">
     <Loading v-if="isLoading" />
     <div id="home-navbar" v-else>
-      <Upperbar />
-      <Sidebar />
+      <NavBar />
+      <AsideBar />
       <section id="main-content">
         <SalesChart />
       </section>
@@ -12,15 +12,15 @@
 </template>
 
 <script>
-import Sidebar from '../components/sidebar.vue'
-import Upperbar from '../components/upperbar.vue'
-import Loading from '../components/loading.vue'
-import SalesChart from '../components/Saleschart.vue'
+import AsideBar from '../components/AsideBar.vue'
+import NavBar from '../components/NavBar.vue'
+import Loading from '../components/Loading.vue'
+import SalesChart from '../components/SalesChart.vue'
 
 export default {
   data () { return { isLoading: false } },
   name: 'Home',
-  components: { Sidebar, Upperbar, Loading, SalesChart },
+  components: { AsideBar, NavBar, Loading, SalesChart },
   methods: {
     stillLoading () {
       this.isLoading = true

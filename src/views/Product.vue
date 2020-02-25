@@ -1,19 +1,19 @@
 <template>
   <div>
-    <Upperbar />
-    <Sidebar />
-    <MainProduct />
+    <NavBar />
+    <AsideBar />
+    <ProductManagement />
   </div>
 </template>
 
 <script>
-import Sidebar from '../components/sidebar.vue'
-import Upperbar from '../components/upperbar.vue'
-import MainProduct from '../components/mainProduct.vue'
+import AsideBar from '../components/AsideBar.vue'
+import NavBar from '../components/NavBar.vue'
+import ProductManagement from '../components/ProductManagement.vue'
 
 export default {
   name: 'Product',
-  components: { Sidebar, Upperbar, MainProduct }
+  components: { AsideBar, NavBar, ProductManagement }
 }
 </script>
 

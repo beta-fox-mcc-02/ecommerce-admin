@@ -15,6 +15,20 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+
+*{
+  margin: 0;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+a{
+  color: black;
+  text-decoration: none;
+}
+
+button, a {
+  cursor: pointer;
+}
 
 </style>

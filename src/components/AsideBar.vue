@@ -52,7 +52,7 @@ div button{
 }
 
 div button:hover{
-  background-color: #189a18;
+  background-color: #189a84;
   border-radius: 0.2rem;
   box-shadow: 0rem 0rem 0.2rem black;
 }
