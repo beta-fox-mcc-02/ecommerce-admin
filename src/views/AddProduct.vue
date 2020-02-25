@@ -105,6 +105,9 @@ export default {
       this.image = null
     },
     AddProduct () {
+      const loader = this.$loading.show({
+        container: this.fullPage ? null : this.$refs.formContainer
+      })
       this.$store.dispatch('uploadImage', this.image)
         .then(({ data }) => {
           return this.$store.dispatch('addProduct', {
@@ -116,6 +119,7 @@ export default {
           })
         })
         .then(({ data }) => {
+          loader.hide()
           console.log('Result add product:', data)
           this.emptyForm()
           this.$notify({
@@ -127,6 +131,7 @@ export default {
           this.$router.push('/')
         })
         .catch(({ response }) => {
+          loader.hide()
           console.log('Result error add product:', response)
           this.emptyForm()
           if (response.data.name === 'SequelizeValidationError') {

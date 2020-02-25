@@ -120,6 +120,9 @@ export default {
   },
   methods: {
     updateProduct () {
+      const loader = this.$loading.show({
+        container: this.fullPage ? null : this.$refs.formContainer
+      })
       this.dialog = false
       this.$store.dispatch('uploadImage', this.image)
         .then(({ data }) => {
@@ -135,6 +138,7 @@ export default {
           })
         })
         .then(({ data }) => {
+          loader.hide()
           this.$notify({
             group: 'sign',
             title: 'Success',
@@ -144,6 +148,7 @@ export default {
           this.$store.dispatch('fetchProducts')
         })
         .catch(({ response }) => {
+          loader.hide()
           console.log(response)
           this.$notify({
             group: 'sign',

@@ -1,6 +1,6 @@
 import axios from 'axios'
 
 export default axios.create({
-  // baseURL: process.env.BASE_URL ? process.env.BASE_URL : 'http://localhost:3000'
-  baseURL: 'http://localhost:3000'
+  baseURL: 'https://shrouded-refuge-10537.herokuapp.com/'
+  // baseURL: 'http://localhost:3000'
 })
