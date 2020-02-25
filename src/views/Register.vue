@@ -128,6 +128,7 @@ export default {
       const input = {
         first_name: this.firstname,
         username: this.username,
+        last_name: this.lastname,
         email: this.email,
         password: this.password
       }

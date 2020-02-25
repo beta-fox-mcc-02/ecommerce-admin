@@ -66,6 +66,7 @@ export default {
     },
     logout () {
       this.$store.dispatch('logout')
+      this.$store.commit('SET_AUTH_SUCCESS', 'Logout success')
       this.$router.push('/login')
     }
   },
