@@ -7,7 +7,8 @@ export default new Vuex.Store({
   state: {
     isLogin: false,
     products: [],
-    categories: []
+    categories: [],
+    loading: false
   },
   mutations: {
     SET_IS_LOGIN (state, payload) {
@@ -46,7 +47,8 @@ export default new Vuex.Store({
         }
       })
     },
-    fetchProducts ({ commit }) {
+    fetchProducts ({ commit, state }) {
+      state.loading = true
       axios({
         method: 'GET',
         url: '/products',
@@ -56,6 +58,9 @@ export default new Vuex.Store({
       })
         .then(({ data }) => {
           commit('SET_PRODUCTS', data)
+          setTimeout(() => {
+            state.loading = false
+          }, 3000)
         })
         .catch(_ => {})
     },

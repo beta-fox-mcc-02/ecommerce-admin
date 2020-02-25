@@ -15,7 +15,8 @@
         <th scope="col">Action</th>
       </tr>
     </thead>
-    <tbody style="overflow: auto; max-heigth: 500px;">
+    <Loading v-if="loading"/>
+    <tbody v-else style="overflow: auto; max-heigth: 500px;">
       <tr v-for="(watch, i) in products" :key="watch.id">
         <th>{{ i + 1}}</th>
         <td>{{ watch.name }}</td>
@@ -35,11 +36,18 @@
 
 <script>
 // @ is an alias to /src
+import Loading from '../components/Loading'
 export default {
   name: 'Home',
+  components: {
+    Loading
+  },
   computed: {
     products () {
       return this.$store.state.products
+    },
+    loading () {
+      return this.$store.state.loading
     }
   },
   methods: {
