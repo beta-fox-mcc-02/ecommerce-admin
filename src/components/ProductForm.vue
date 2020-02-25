@@ -148,24 +148,6 @@ import OverlayLoader from './OverlayLoader'
 import CircularLoading from './CircularLoading'
 import Alert from './Alert'
 import { required, numeric } from 'vuelidate/lib/validators'
-// const initialProduct = {
-//   name: '',
-//   price: '',
-//   stock: '',
-//   category: {
-//     id: ''
-//   },
-//   SKU: '',
-//   description: '',
-//   weight: '',
-//   files: [
-//     {
-//       id: 0,
-//       isLoading: false,
-//       file: {}
-//     }
-//   ]
-// }
 export default {
   name: 'ProductForm',
   components: {
