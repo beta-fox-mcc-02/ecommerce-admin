@@ -2,7 +2,8 @@
   <div>
     <h1>ini page banner</h1>
     <addbanner/>
-    <div class="container row">
+     <img src="../assets/loading.gif" alt="" style="max-width: 20rem;" v-if="seeLoading">
+    <div class="container row" v-else>
       <bannerCard
       v-for="banner in getBanners"
       :key="banner.id"
@@ -29,6 +30,9 @@ export default {
    computed:{
     getBanners(){
       return this.banners = this.$store.state.banners
+    },
+     seeLoading() { 
+      return this.$store.state.loading;
     }
   },
     created: function(){

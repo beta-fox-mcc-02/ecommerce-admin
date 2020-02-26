@@ -1,7 +1,9 @@
 <template>
   <div class="container mx-auto" style="width: 20rem; margin-top: 5rem">
     <h3>Login as Admin</h3>
-    <form @submit.prevent="login">
+    
+    <img src="../assets/loading.gif" alt="" style="max-width: 20rem;" v-if="seeLoading">
+    <form @submit.prevent="login" v-else>
       <div class="form-group">
         <label for="exampleInputEmail1">Email address</label>
         <input
@@ -32,24 +34,28 @@
     <p>
       <router-link to="registerPage">Register here</router-link>
     </p>
-    <div class="alert alert-danger" role="alert" v-if="err !== ''">
-      {{err}}
-</div>
+    <div class="alert alert-danger" role="alert" v-if="err !== ''">{{err}}</div>
   </div>
 </template>
 <script>
 name: "loginPage";
-import axios from '../api/axiosInstance';
+import axios from "../api/axiosInstance";
 export default {
   data() {
     return {
       email: "",
       password: "",
-      err:''
+      err: ""
     };
+  },
+  computed:{
+    seeLoading() { 
+      return this.$store.state.loading;
+    }
   },
   methods: {
     login() {
+      this.$store.commit('SET_LOADING', true)
       axios({
         method: "post",
         url: "/user/login",
@@ -65,24 +71,28 @@ export default {
             // console.log(data);
             this.email = "";
             this.password = "";
-            this.$router.push('/admin')
+            this.$router.push("/admin");
+            // this.$store.commit.login
+            this.$store.commit('SET_LOADING', false)
+
+            this.$store.commit("SET_LOGIN", true);
           }
         })
         .catch(err => {
-          this.err = 'password/email wrong'
+          this.err = "password/email wrong";
           console.log(err);
+          this.$store.commit('SET_LOADING', false)
+
         });
     }
   },
-     beforeRouteEnter (to, from, next) {
-
-    if (localStorage.getItem('token')) {
-      next('/')
+  beforeRouteEnter(to, from, next) {
+    if (localStorage.getItem("token")) {
+      next("/");
     } else {
-      next()
+      next();
     }
   }
-
 };
 </script>
 

@@ -2,7 +2,8 @@
   <div class="home mt-3">
     <addProduct/>
     <!-- {{getProducts}} -->
-    <div class="container row ">
+     <img src="../assets/loading.gif" alt="" style="max-width: 20rem;" v-if="seeLoading">
+    <div class="container row " v-else>
       <productCard
       v-for="prod in getProducts"
       :key="prod.id"
@@ -40,6 +41,9 @@ export default {
   computed:{
     getProducts(){
       return this.products = this.$store.state.products
+    },
+     seeLoading() { 
+      return this.$store.state.loading;
     }
   },
   created: function(){

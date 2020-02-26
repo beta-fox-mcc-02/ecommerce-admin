@@ -4,7 +4,7 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div> -->
-    <navbarAdmin/>
+    <navbarAdmin v-if="isLogin"/>
     <router-view/>
   </div>
 </template>
@@ -14,11 +14,16 @@ export default {
 components:{
   navbarAdmin
 },
+computed:{
+    isLogin(){
+      return this.$store.state.login
+    }
+  },
   created: function(){
     if(localStorage.token){
       // console.log('get home');
       this.$router.push('/admin')
-
+      this.$store.commit('setLogin')
     }else{
       this.$router.push('/loginPage')
     }

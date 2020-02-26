@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark" v-if="isLogin">
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item mr-2">
@@ -29,10 +29,19 @@
 <script>
 name: 'navbarAdmin'
 export default {
+  computed:{
+    isLogin(){
+      return this.$store.state.login
+    }
+  },
   methods:{
      signOut(){
       localStorage.clear()
       this.$router.push('/loginPage')
+      // this.$store.commit('setLogin')
+            this.$store.commit("SET_LOGIN", false);
+
+
     }
   }
 }

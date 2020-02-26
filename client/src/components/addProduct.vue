@@ -76,7 +76,13 @@ export default {
       this.image = event.target.files[0]
     },
     addProduct(){
-      console.log('ini add product');
+       this.$vToastify.loader({
+        title: "Toastified!",
+        body: "This is the body.",      
+        type: "success",      
+        canTimeout: true,     
+        duration: 2000      
+      })
       
       let formData = new FormData();
       formData.append("image", this.image);
@@ -86,7 +92,6 @@ export default {
       formData.append("stock", this.stock);
       formData.append("CategoryId", this.categoryId);
       console.log(">> formData >> ", formData);
-
       axios({
         method: 'post',
         url: 'product/',
@@ -101,6 +106,7 @@ export default {
             console.log(data, 'product added');
             this.$store.dispatch('fetchProducts')
             // this.$router.push('adminPage')
+            this.$vToastify.stopLoader()
 
         })
         .catch(err => {

@@ -35,6 +35,15 @@ export default {
   },
   methods:{
     remove(id){
+     
+    //   this.$vToastify.prompt({
+    // body: "Are there hot singles in your area?",
+    // answers: { Yes: true, No: false }
+    // })
+    // .then( val =>{
+    //   console.log(val);
+      
+    // })  
       axios({
         method:'delete',
         url:`/product/${id}`,
