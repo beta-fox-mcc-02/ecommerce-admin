@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar navbar-light navbar-expand-md shadow-none navigation-clean-button">
+    <nav class="navbar navbar-light navbar-expand-md shadow-sm navigation-clean-button">
       <div class="container">
         <router-link to="/" class="navbar-brand">Hacktiv8 <i class="fas fa-store"
             style="font-size: 32px;"></i> E-commerce</router-link>
@@ -8,10 +8,13 @@
             class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navcol-1">
           <ul class="nav navbar-nav mr-auto">
-            <li class="nav-item" role="presentation"><a class="nav-link active" href="/">Home</a>
+            <li class="nav-item" role="presentation">
+              <router-link to="/dashboard" class="nav-link">Dashboard</router-link>
             </li>
             <li class="nav-item" role="presentation"></li>
           </ul><span class="navbar-text actions">
+            <button class="btn btn-light action-button" v-if="loginStatus"
+            @click="logout">Logout</button>
             <router-link to="/login" class="btn btn-light action-button" role="button"
             style="background-color: #4b70dd;"
             v-if="currentPage === 'register'">Log In</router-link>
@@ -36,25 +39,27 @@ export default {
   },
   methods: {
     logRoute() {
-      console.log(this.$route.path);
-      console.log(this.route);
-      if (this.route === '/login') {
-        this.currentPage = 'login';
-      } else if (this.route === '/register') {
-        this.currentPage = 'register';
+      if (localStorage.getItem('access_token')) {
+        console.log(this.route);
+      } else {
+        if (this.route === '/login' || this.route === '/') {
+          this.currentPage = 'login';
+        }
+        if (this.route === '/register' || this.route === '/') {
+          this.currentPage = 'register';
+        }
       }
       console.log(this.currentPage);
     },
+    logout() {
+      this.$store.dispatch('logout');
+      this.logRoute();
+    },
   },
-  watch: {
-    // route: () => {
-    //   console.log(this.$route.path);
-    //   if (this.route === '/login') {
-    //     this.currentPage = 'login';
-    //   } else if (this.route === '/register') {
-    //     this.currentPage = 'register';
-    //   }
-    // },
+  computed: {
+    loginStatus() {
+      return this.$store.state.isLogin;
+    },
   },
   mounted() {
     this.logRoute();

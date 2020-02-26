@@ -1,9 +1,11 @@
 <template>
-  <div class="home bg-gradient-primary">
+<div id="home">
+  <div class="home">
     <Navbar></Navbar>
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <i class="fab fa-soundcloud" style="font-size: 176px;color: #444444;"></i>
+    <HelloWorld msg="Welcome!"/>
   </div>
+</div>
 </template>
 
 <script>
@@ -19,3 +21,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+#home {
+  background-color: aliceblue !important;
+}
+</style>

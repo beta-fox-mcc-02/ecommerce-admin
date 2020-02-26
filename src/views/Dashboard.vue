@@ -12,16 +12,14 @@
       </a>
       <hr class="sidebar-divider my-0">
       <ul class="nav navbar-nav text-light" id="accordionSidebar">
-        <li class="nav-item" role="presentation"><a class="nav-link" href="index.html"><i
-              class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+        <li class="nav-item" role="presentation"><router-link to="/dashboard" class="nav-link"><i
+              class="fas fa-tachometer-alt"></i><span>Dashboard</span></router-link></li>
         <li class="nav-item" role="presentation">
           <router-link class="nav-link" to="/dashboard/list"><i
               class="fas fa-table"></i><span>Products</span></router-link></li>
-        <li class="nav-item" role="presentation"><router-link class="nav-link" to="add"><i
+      <li class="nav-item" role="presentation"><router-link class="nav-link" to="/dashboard/add"><i
               class="fas fa-window-maximize"></i><span>Add new product</span></router-link></li>
       </ul>
-      <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0"
-          id="sidebarToggle" type="button"></button></div>
     </div>
   </nav>
   <div class="d-flex flex-column" id="content-wrapper">
@@ -61,19 +59,15 @@
             <li class="nav-item dropdown no-arrow" role="presentation">
               <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link"
                   data-toggle="dropdown" aria-expanded="false" href="#"><span
-                    class="d-none d-lg-inline mr-2 text-gray-600 small">Menu</span><img
-                    class="border rounded-circle img-profile"
-                    src="assets/img/avatars/avatar1.jpeg"></a>
+                    class="d-none d-lg-inline mr-2 text-gray-600 small">Menu</span>
+                    <i class="fas fa-user-circle" style="font-size: 36px;"></i></a>
                 <div class="dropdown-menu shadow dropdown-menu-right animated--grow-in" role="menu">
-                  <a class="dropdown-item" role="presentation" href="#"><i
-                      class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Profile</a><a
-                    class="dropdown-item" role="presentation" href="#"><i
-                      class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Settings</a>
-                  <a class="dropdown-item" role="presentation" href="#"><i
-                      class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Activity log</a>
-                  <div class="dropdown-divider"></div><a class="dropdown-item" role="presentation"
-                    href="#"><i
-                    class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Logout</a>
+                  <a class="dropdown-item" role="presentation"><i
+                      class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Profile</a>
+                  <div class="dropdown-divider"></div><a @click="logout"
+                  class="dropdown-item" role="presentation"><i
+                    class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Logout
+                    </a>
                 </div>
               </div>
             </li>
@@ -102,11 +96,16 @@
 </template>
 
 <script>
-// import ProductList from '@/components/ProductList.vue';
 
 export default {
   components: {
     // ProductList,
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch('logout');
+      this.$router.push('/');
+    },
   },
 };
 </script>

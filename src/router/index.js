@@ -38,9 +38,17 @@ const routes = [
     children: [
       { path: 'add', component: AddForm },
       { path: 'list', component: ProductList },
-      { path: ':id/edit', component: EditForm },
+      {
+        name: 'Edit', path: 'edit', component: EditForm, props: true,
+      },
     ],
   },
+  {
+    path: '/notfound',
+    name: 'Not Found',
+    component: () => import('../views/NotFound.vue'),
+  },
+  { path: '*', redirect: '/notfound' },
 ];
 
 const router = new VueRouter({

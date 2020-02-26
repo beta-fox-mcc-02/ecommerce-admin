@@ -25,6 +25,11 @@ export default new Vuex.Store({
     login(context, payload) {
       return userAPI.post('/login', { email: payload.email, password: payload.password });
     },
+    logout() {
+      this.state.isLogin = false;
+      this.state.idToken = '';
+      localStorage.removeItem('access_token');
+    },
     register(context, newUser) {
       return userAPI.post('/register', {
         username: newUser.username,

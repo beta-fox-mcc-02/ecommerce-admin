@@ -28,12 +28,12 @@
         </thead>
         <tbody v-for="item in products" :key="item.id">
           <tr>
-            <td :oldname="item.name">{{item.name}}</td>
-            <td :oldimage="item.image_url"><a :href="item.image_url">Image Link</a></td>
-            <td :oldprice="item.price">{{item.price}}</td>
-            <td :oldstock="item.stock">{{item.stock}}</td>
+            <td>{{item.name}}</td>
+            <td><a :href="item.image_url">Image Link</a></td>
+            <td>{{item.price}}</td>
+            <td>{{item.stock}}</td>
             <td class="d-flex d-lg-flex flex-row justify-content-around align-items-lg-center">
-              <router-link :to="'/dashboard/' + item.id + '/edit'">
+              <router-link :to="{ name:'Edit', params: { item: item } }">
                 <i class="far fa-edit"></i> Edit</router-link>
                 <span>|</span>
                 <a href="#" @click="openModalDelete(item.id)">

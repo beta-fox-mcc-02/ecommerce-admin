@@ -8,9 +8,8 @@
     <form @submit.prevent="addProduct">
       <div class="form-group"><label for="address"><strong>Name</strong></label><input type="text"
           class="form-control" name="name" v-model="name" /></div>
-      <div class="form-group"><label><strong>Add Image</strong></label>
-      <input type="file" id="file" ref="file" @change="uploadToImgur()"
-          class="form-control-file" accept="image/*" /></div>
+      <div class="form-group"><label for="image_url"><strong>Image URL</strong></label>
+      <input type="text" class="form-control" name="image_url" v-model="image_url" /></div>
       <div class="form-row">
         <div class="col">
           <div class="form-group"><label for="city"><strong>Price</strong><br /></label><input
@@ -30,7 +29,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 
 export default {
   data() {
@@ -39,7 +37,6 @@ export default {
       image_url: '',
       price: 0,
       stock: 0,
-      file: '',
     };
   },
   methods: {
@@ -53,31 +50,6 @@ export default {
       this.$store.dispatch('addProduct', payload)
         .then((result) => {
           console.log(result);
-        })
-        .catch((err) => {
-          console.log(err.response);
-        });
-    },
-    uploadToImgur() {
-      // eslint-disable-next-line prefer-const
-      let data = new FormData();
-      data.append('name', 'my-file');
-      data.append('file', this.file);
-      console.log(data);
-
-      axios({
-        method: 'POST',
-        url: 'https://api.imgur.com/3/upload',
-        data,
-        datatype: 'json',
-        headers: {
-          // eslint-disable-next-line no-useless-concat
-          Authorization: 'Client-ID' + '4e45322b5570946',
-        },
-      })
-        .then((response) => {
-          this.image_url = response.data.link;
-          console.log(response.data);
         })
         .catch((err) => {
           console.log(err.response);
