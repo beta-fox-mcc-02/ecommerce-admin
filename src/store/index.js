@@ -95,14 +95,14 @@ const store = new Vuex.Store({
     getCategories (context) {
       return axios({
         method: 'GET',
-        url: `${serverUrl}/category`
+        url: `${serverUrl}/categories`
       })
     },
     loginAsync ({ state }) {
       if (state.email && state.password) {
         return axios({
           method: 'POST',
-          url: `${serverUrl}/admin/login`,
+          url: `${serverUrl}/admins/login`,
           data: {
             email: state.email,
             password: state.password
@@ -123,7 +123,7 @@ const store = new Vuex.Store({
         }
         return axios({
           method: 'POST',
-          url: `${serverUrl}/product`,
+          url: `${serverUrl}/products`,
           headers: { token },
           data
         })
@@ -135,7 +135,7 @@ const store = new Vuex.Store({
       if (input.name && input.price && input.stock && input.category) {
         return axios({
           method: 'PUT',
-          url: `${serverUrl}/product/${context.state.id}`,
+          url: `${serverUrl}/products/${context.state.id}`,
           headers: { token },
           data: {
             name: input.name,
@@ -151,7 +151,7 @@ const store = new Vuex.Store({
       const token = localStorage.getItem('access_token')
       return axios({
         method: 'DELETE',
-        url: `${serverUrl}/product/${id}`,
+        url: `${serverUrl}/products/${id}`,
         headers: { token }
       })
     },
@@ -169,7 +169,7 @@ const store = new Vuex.Store({
       if (input.email && input.password) {
         return axios({
           method: 'POST',
-          url: `${serverUrl}/admin/register`,
+          url: `${serverUrl}/admins/register`,
           headers: { token },
           data: {
             email: input.email,

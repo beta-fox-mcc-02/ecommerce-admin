@@ -1,19 +1,19 @@
 <template>
   <div>
-    <Upperbar />
-    <Sidebar />
+    <Navbar />
+    <AsideBar />
     <Management />
   </div>
 </template>
 
 <script>
-import Sidebar from '../components/sidebar.vue'
-import Upperbar from '../components/upperbar.vue'
+import AsideBar from '../components/AsideBar.vue'
+import Navbar from '../components/NavBar.vue'
 import Management from '../components/managementComps.vue'
 
 export default {
   name: 'Summary',
-  components: { Sidebar, Upperbar, Management }
+  components: { AsideBar, Navbar, Management }
 }
 </script>
 

@@ -34,8 +34,8 @@
                 <button id="edit-btn" v-on:click="updateEntry(product)"><i class="fas fa-edit"></i></button>
               </td>
             </tr>
-            <small v-if="notification">{{deletedProduct}} will be deleted!</small>
-            <small v-if="notification">{{updatedProduct}} UPDATED!</small>
+            <small v-if="delNotif">{{deletedProduct}} will be deleted!</small>
+            <small>{{updatedProduct}} UPDATED!</small>
             <EditProductForm v-if="editMode" v-on:closeForm="closeForm" />
           </tbody>
         </table>
@@ -53,7 +53,7 @@ export default {
     return {
       isShowed: false,
       editMode: false,
-      notification: false,
+      delNotif: false,
       deletedProduct: ''
     }
   },
@@ -79,10 +79,10 @@ export default {
     deleteEntry ({ name, id }) {
       this.$store.dispatch('deleteAsync', id)
         .then((result) => {
-          this.notification = true
+          this.delNotif = true
           this.deletedProduct = name
           setTimeout(() => {
-            this.notification = false
+            this.delNotif = false
             this.deletedProduct = ''
             this.fetchAll()
           }, 2000)
