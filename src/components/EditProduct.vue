@@ -3,6 +3,7 @@
     <div id="edit-header">
       <i class="far fa-window-close" v-on:click="close" style="float: right; font-size: 15pt; cursor: pointer"></i>
     </div>
+    <span>{{message}}</span>
     <div id="edit-form">
       <form v-on:submit.prevent="editProduct">
         <div class="add-input">
@@ -91,8 +92,8 @@ export default {
           if (!result) this.unfilledField = true
           else if (result) this.close()
         })
-        .catch((err) => {
-          console.log(err)
+        .catch(() => {
+          this.message = 'Price and Stock should not be a negative number'
         })
     },
     setOffNotif () {
@@ -110,8 +111,8 @@ div#edit-product-form {
     width: 20rem;
     background-color: #d7f6f7;
     right: 0.9rem;
-    top: 20rem;
-    height: 19rem;
+    top: 18rem;
+    height: 22rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -143,6 +144,13 @@ label {
     margin-left: 0.5rem;
     font-variant-caps: all-petite-caps;
     color: #a5a5a5;
+}
+
+span {
+    font-size: 10pt;
+    text-align: center;
+    font-weight: bold;
+    color: red;
 }
 
 input, select {

@@ -35,7 +35,6 @@
               </td>
             </tr>
             <small v-if="delNotif">{{deletedProduct}} will be deleted!</small>
-            <small>{{updatedProduct}} UPDATED!</small>
             <EditProductForm v-if="editMode" v-on:closeForm="closeForm" />
           </tbody>
         </table>

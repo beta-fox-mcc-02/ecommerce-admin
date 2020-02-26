@@ -2,8 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 
-const serverUrl = 'https://mysterious-beach-02436.herokuapp.com'
-// const serverUrl = 'http://localhost:3000'
+// const serverUrl = 'https://mysterious-beach-02436.herokuapp.com'
+const serverUrl = 'http://localhost:3000'
 
 Vue.use(Vuex)
 
@@ -12,7 +12,7 @@ const store = new Vuex.Store({
     admins: [],
     products: [],
     categories: [],
-    weekly: [],
+    chartData: [],
     email: '',
     password: '',
     id: '',
@@ -61,8 +61,8 @@ const store = new Vuex.Store({
     setCategories (state, params) {
       state.categories = params.data
     },
-    setWeeklyDate (state, params) {
-      state.weekly = params
+    setChartData (state, params) {
+      state.chartData = params
     },
     unsetEmailPassword (state) {
       state.email = ''

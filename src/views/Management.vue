@@ -9,7 +9,7 @@
 <script>
 import AsideBar from '../components/AsideBar.vue'
 import Navbar from '../components/NavBar.vue'
-import Management from '../components/managementComps.vue'
+import Management from '../components/Management.vue'
 
 export default {
   name: 'Summary',

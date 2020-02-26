@@ -5,12 +5,11 @@ export default {
   extends: Bar,
   data () {
     return {
-      totalPurchaseData: [],
       chartdata: {
-        labels: '',
+        labels: [],
         datasets: [
           {
-            label: 'Total Purchase Daily',
+            label: 'Total Purchase Per Category',
             backgroundColor: '#f87979',
             data: []
           }
@@ -23,35 +22,30 @@ export default {
     }
   },
   computed: {
-    hours () { return this.$store.state.weekly },
-    products () { return this.$store.state.products }
-  },
-  methods: {
-    getDate () {
-      const weekly = []
-      for (var i = 0; i < 7; i++) {
-        var date = new Date().getDate() + i
-        weekly.push(date)
-      }
-      this.$store.commit('setWeeklyDate', weekly)
-    },
-    fetchProducts () {
-      this.$store.dispatch('fetchProducts')
-    },
-    setData () {
-      this.products.forEach((product) => {
-        this.totalPurchaseData.push([product.total, 0])
-      })
+    data () {
+      return this.$store.state.chartData
     }
   },
   created () {
-    this.fetchProducts()
-    this.getDate()
-    this.setData()
-    this.chartdata.labels = this.hours
-    this.chartdata.datasets[0].data = this.totalPurchaseData
+    this.$store.dispatch('getCategories')
+      .then(({ data }) => {
+        var chartLabel = []
+        var chartData = []
+        for (const category of data.data) {
+          chartLabel.push(category.name)
+          var totalPurchase = 0
+          for (const item of category.Products) {
+            totalPurchase += (item.price * item.stock)
+          }
+          chartData.push([0, totalPurchase])
+        }
+        this.$store.commit('setChartData', { label: chartLabel, data: chartData })
+      })
+      .catch((err) => console.log(err))
   },
   mounted () {
+    this.chartdata.labels = this.data.label
+    this.chartdata.datasets[0].data = this.data.data
     this.renderChart(this.chartdata, this.options)
   }
 }
