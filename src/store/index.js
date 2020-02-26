@@ -2,8 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 
-// const serverUrl = 'https://mysterious-beach-02436.herokuapp.com'
-const serverUrl = 'http://localhost:3000'
+const serverUrl = 'https://mysterious-beach-02436.herokuapp.com'
+// const serverUrl = 'http://localhost:3000'
 
 Vue.use(Vuex)
 
@@ -13,6 +13,7 @@ const store = new Vuex.Store({
     products: [],
     categories: [],
     chartData: [],
+    banners: [],
     email: '',
     password: '',
     id: '',
@@ -20,7 +21,8 @@ const store = new Vuex.Store({
     price: '',
     stock: '',
     imageUrl: '',
-    category: ''
+    category: '',
+    bannerUrl: ''
   },
   mutations: {
     fetchProducts (state, obj) {
@@ -64,6 +66,13 @@ const store = new Vuex.Store({
     setChartData (state, params) {
       state.chartData = params
     },
+    setBanner (state, value) {
+      state.bannerUrl = value
+    },
+    banners (state, value) {
+      state.banners = value
+      console.log(state.banners, value)
+    },
     unsetEmailPassword (state) {
       state.email = ''
       state.password = ''
@@ -77,6 +86,7 @@ const store = new Vuex.Store({
       state.stock = ''
       state.imageUrl = ''
       state.category = ''
+      state.bannerUrl = ''
     }
   },
   actions: {
@@ -177,6 +187,26 @@ const store = new Vuex.Store({
           }
         })
       } else return null
+    },
+    postBannerAsync ({ state }) {
+      const url = state.bannerUrl
+      const token = localStorage.getItem('access_token')
+      return axios({
+        method: 'POST',
+        url: `${serverUrl}/banners`,
+        headers: { token },
+        data: { url }
+      })
+    },
+    getBannersAsync ({ state, commit }) {
+      axios({
+        method: 'GET',
+        url: `${serverUrl}/banners`
+      })
+        .then(({ data }) => {
+          commit('banners', data)
+        })
+        .catch((err) => console.log(err))
     }
   }
 })
