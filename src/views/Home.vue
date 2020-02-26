@@ -3,7 +3,7 @@
     <Navigation></Navigation>
     <b-card
       overlay
-      img-src="https://picsum.photos/900/250/?image=3"
+      img-src="../assets/banner.jpg"
       img-alt="Card Image"
       text-variant="white"
       style="margin-bottom: 50px"

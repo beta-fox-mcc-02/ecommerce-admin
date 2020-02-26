@@ -103,7 +103,7 @@ const store = new Vuex.Store({
           console.log(err.response);
         })
         .finally(() => {
-          store.commit('stopLoading');
+          context.commit('stopLoading');
         });
     },
     addProduct(context, payload) {

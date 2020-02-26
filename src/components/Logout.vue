@@ -1,12 +1,12 @@
 <template>
-  <a @click.prevent="tes()" class="nav-link" href>Sign Out</a>
+  <a @click.prevent="logout()" class="nav-link" href>Sign Out</a>
 </template>
 
 <script>
 export default {
   name: 'Logout',
   methods: {
-    tes() {
+    logout() {
       localStorage.clear();
       this.$router.push('/');
       this.$store.dispatch('logout');
