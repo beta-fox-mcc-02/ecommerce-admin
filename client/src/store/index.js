@@ -28,12 +28,11 @@ export default new Vuex.Store({
     register (context, payload) {
       return axios({
         method: 'POST',
-        url: '/register',
+        url: '/admin/register',
         data: {
           username: payload.username,
           email: payload.email,
-          password: payload.password,
-          isAdmin: payload.isAdmin
+          password: payload.password
         }
       })
     },

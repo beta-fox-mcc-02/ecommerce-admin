@@ -49,8 +49,7 @@ export default {
     return {
       username: '',
       email: '',
-      password: '',
-      isAdmin: true
+      password: ''
     }
   },
   methods: {
@@ -58,8 +57,7 @@ export default {
       this.$store.dispatch('register', {
         username: this.username,
         email: this.email,
-        password: this.password,
-        isAdmin: this.isAdmin
+        password: this.password
       })
         .then(({ data }) => {
           this.username = ''

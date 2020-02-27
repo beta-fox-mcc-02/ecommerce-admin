@@ -43,7 +43,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: white;
-  background-image: url('https://cdn2.vectorstock.com/i/1000x1000/15/71/white-watch-dial-and-black-background-seamless-vector-6481571.jpg');
+  background-image: url('https://lh3.googleusercontent.com/proxy/Qe6LipW7FA36rYpHVUqvERJ9SOlF5k8_o1PHgmC_cZjz5vHideuFtCTFgW1hTYKmICmUMGxfrwNiISUcpVOvcu_7S2Eg7_5B6KzmOJ-3aG1ObfNMH4BHsAQoSRawT2vcwKsBSmIpSgqm4HCf8xjHGtW8voXwcqSEUfzEQdLaSTWEmK1TkE_E2A');
   min-height: 100vh;
 }
 
