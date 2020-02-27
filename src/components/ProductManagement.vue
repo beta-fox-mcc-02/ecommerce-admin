@@ -18,7 +18,6 @@
               <th>Name</th>
               <th>Price</th>
               <th>Stock</th>
-              <th>Purchase Total</th>
               <th class="action-cols">Action</th>
             </tr>
           </thead>
@@ -28,7 +27,6 @@
               <td>{{ product.name }}</td>
               <td>Rp. {{ product.price.toLocaleString() }}</td>
               <td>{{ product.stock.toLocaleString() }} Units</td>
-              <td>Rp. {{ product.total.toLocaleString() }}</td>
               <td class="action-cols">
                 <button id="trash-btn" v-on:click="deleteEntry(product)"><i class="fas fa-trash-alt"></i></button>
                 <button id="edit-btn" v-on:click="updateEntry(product)"><i class="fas fa-edit"></i></button>
@@ -156,9 +154,9 @@ tr#rowhead {
 td {
   text-align: right;
 }
-th, td {
-    width: 19%;
-    text-align: center;
+
+td, th {
+    width: 23%;
 }
 
 .action-cols{

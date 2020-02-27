@@ -1,6 +1,7 @@
 <template>
   <section>
     <div id="admin-cards-header">
+      <span> {{notification}} </span>
       <a class="fas fa-user-plus" style="cursor: pointer;" v-on:click="changeMode"></a>
       <div class="header-desc">Add new employee</div>
       <div id="add-admin" v-if="addMode">
@@ -28,9 +29,8 @@
     </div>
     <div id="administrator-list">
       <div class="admincards-container" v-for="admin of admins" v-bind:key="admin.id">
-        <input type="checkbox">
         <div class="adminbox-id">{{ admin.id }}</div>
-        <div class="adminbox-email">{{ admin.email }}</div>
+        <div class="adminbox-email">{{ admin.email.substring(0, admin.email.indexOf('@')) }}</div>
       </div>
     </div>
   </section>
@@ -41,7 +41,9 @@ export default {
   data () {
     return {
       addMode: false,
-      unfilledField: false
+      unfilledField: false,
+      notification: '',
+      showNotif: false
     }
   },
   computed: {
@@ -76,7 +78,15 @@ export default {
             this.close()
           } else this.unfilledField = true
         })
-        .catch(() => this.close())
+        .catch(() => {
+          this.close()
+          this.showNotif = true
+          this.notification = 'You are not authorized or expected input false!'
+          setTimeout(() => {
+            this.showNotif = false
+            this.notification = ''
+          }, 3000)
+        })
     },
     close () {
       this.$store.commit('unsetAll')
@@ -100,8 +110,16 @@ section{
   display: flex;
   position: relative;
   align-items: center;
+  width: 30%;
 }
 
+span {
+    position: absolute;
+    width: 10rem;
+    right: -12rem;
+    color: red;
+    padding: 0.5rem;
+}
 div#administrator-list {
     background-color: whitesmoke;
     width: 40vw;
