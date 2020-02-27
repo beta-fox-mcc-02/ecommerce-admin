@@ -28,7 +28,6 @@
             </div>
           </div>
         </div>
-        <SalesChart />
       </section>
     </div>
   </div>
@@ -38,7 +37,6 @@
 import AsideBar from '../components/AsideBar.vue'
 import NavBar from '../components/NavBar.vue'
 import Loading from '../components/Loading.vue'
-import SalesChart from '../components/SalesChart.vue'
 
 export default {
   data () {
@@ -49,7 +47,7 @@ export default {
     }
   },
   name: 'Home',
-  components: { AsideBar, NavBar, Loading, SalesChart },
+  components: { AsideBar, NavBar, Loading },
   computed: {
     banners () {
       return this.$store.state.banners
