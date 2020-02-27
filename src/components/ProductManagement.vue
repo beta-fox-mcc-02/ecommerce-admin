@@ -32,7 +32,7 @@
                 <button id="edit-btn" v-on:click="updateEntry(product)"><i class="fas fa-edit"></i></button>
               </td>
             </tr>
-            <small v-if="delNotif">{{deletedProduct}} will be deleted!</small>
+            <small v-if="delNotif">{{deletedProduct}}</small>
             <EditProductForm v-if="editMode" v-on:closeForm="closeForm" />
           </tbody>
         </table>
@@ -68,7 +68,7 @@ export default {
           this.$store.commit('setCategories', { data: result.data.data })
           this.isShowed = true
         })
-        .catch((err) => console.log(err))
+        .catch(() => this.isShowed = true)
     },
     fetchAll () {
       this.$store.dispatch('fetchProducts')
@@ -77,14 +77,22 @@ export default {
       this.$store.dispatch('deleteAsync', id)
         .then((result) => {
           this.delNotif = true
-          this.deletedProduct = name
+          this.deletedProduct = `${name} will be deleted`
           setTimeout(() => {
             this.delNotif = false
             this.deletedProduct = ''
             this.fetchAll()
           }, 2000)
         })
-        .catch((err) => console.log(err))
+        .catch(() => {
+          this.delNotif = true
+          this.deletedProduct = 'failed to delete'
+          setTimeout(() => {
+            this.delNotif = false
+            this.deletedProduct = ''
+            this.fetchAll()
+          }, 2000)
+        })
     },
     updateEntry (product) {
       this.closeForm()
@@ -93,7 +101,7 @@ export default {
           this.editMode = true
           this.$store.commit('editAbleData', { product, categories: result.data.data })
         })
-        .catch((err) => console.log(err))
+        .catch(() => this.editMode = false)
     },
     closeForm (params) {
       this.isShowed = params

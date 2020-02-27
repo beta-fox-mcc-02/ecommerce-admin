@@ -71,7 +71,6 @@ const store = new Vuex.Store({
     },
     banners (state, value) {
       state.banners = value
-      console.log(state.banners, value)
     },
     unsetEmailPassword (state) {
       state.email = ''
@@ -100,7 +99,7 @@ const store = new Vuex.Store({
         .then((result) => {
           this.commit('fetchProducts', { data: result.data.products })
         })
-        .catch((err) => console.log(err))
+        .catch(() => {})
     },
     getCategories (context) {
       return axios({
@@ -206,7 +205,7 @@ const store = new Vuex.Store({
         .then(({ data }) => {
           commit('banners', data)
         })
-        .catch((err) => console.log(err))
+        .catch(() => {})
     }
   }
 })

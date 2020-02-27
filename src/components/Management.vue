@@ -65,7 +65,7 @@ export default {
         .then((result) => {
           this.$store.commit('getAdmins', result.data.admins)
         })
-        .catch((err) => console.log(err))
+        .catch(() => {})
     },
     changeMode () {
       this.addMode = true
