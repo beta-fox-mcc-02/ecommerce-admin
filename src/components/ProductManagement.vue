@@ -68,7 +68,7 @@ export default {
           this.$store.commit('setCategories', { data: result.data.data })
           this.isShowed = true
         })
-        .catch(() => this.isShowed = true)
+        .catch(() => { this.isShowed = true })
     },
     fetchAll () {
       this.$store.dispatch('fetchProducts')
@@ -101,7 +101,7 @@ export default {
           this.editMode = true
           this.$store.commit('editAbleData', { product, categories: result.data.data })
         })
-        .catch(() => this.editMode = false)
+        .catch(() => { this.editMode = false })
     },
     closeForm (params) {
       this.isShowed = params
