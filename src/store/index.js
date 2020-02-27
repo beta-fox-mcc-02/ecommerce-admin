@@ -18,8 +18,11 @@ const store = new Vuex.Store({
   },
   getters: {
     mostExpensive(state) {
-      const clone = state.listOfProducts.slice(0);
-      return `Rp. ${clone.sort((a, b) => b.price - a.price)[0].price.toLocaleString()}`;
+      if (state.listOfProducts.length) {
+        const clone = state.listOfProducts.slice(0);
+        return `Rp. ${clone.sort((a, b) => b.price - a.price)[0].price.toLocaleString()}`;
+      }
+      return null;
     },
   },
   mutations: {
@@ -103,7 +106,7 @@ const store = new Vuex.Store({
           console.log(err.response);
         })
         .finally(() => {
-          store.commit('stopLoading');
+          context.commit('stopLoading');
         });
     },
     addProduct(context, payload) {

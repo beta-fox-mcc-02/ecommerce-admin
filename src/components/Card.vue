@@ -28,6 +28,7 @@ export default {
 <style scoped>
   .card{
     width: 250px;
+    margin: 15px auto;
   }
   .flex{
     display: flex;
