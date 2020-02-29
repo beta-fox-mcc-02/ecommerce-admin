@@ -49,10 +49,10 @@ export default {
       };
       this.$store.dispatch('addProduct', payload)
         .then((result) => {
-          console.log(result);
+          this.$store.commit('SET_MESSAGE', result.data);
         })
         .catch((err) => {
-          console.log(err.response);
+          this.$store.commit('SET_ERRORS', err.response);
         });
     },
   },

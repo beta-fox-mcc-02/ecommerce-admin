@@ -9,16 +9,24 @@ export default new Vuex.Store({
     idToken: '',
     isLogin: false,
     products: [],
+    errors: [],
+    message: '',
   },
   mutations: {
     SET_IDTOKEN(state, payload) {
       state.idToken = payload;
     },
+    SET_MESSAGE(state, payload) {
+      state.message = payload;
+    },
     SET_ISLOGIN(state, status) {
       state.isLogin = status;
     },
     SET_PRODUCTS(state, payload) {
-      this.state.products = payload;
+      state.products = payload;
+    },
+    SET_ERRORS(state, payload) {
+      state.errors = payload;
     },
   },
   actions: {

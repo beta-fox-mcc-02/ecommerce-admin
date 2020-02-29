@@ -40,7 +40,7 @@ export default {
   methods: {
     logRoute() {
       if (localStorage.getItem('access_token')) {
-        console.log(this.route);
+        // console.log(this.route);
       } else {
         if (this.route === '/login' || this.route === '/') {
           this.currentPage = 'login';
@@ -49,7 +49,6 @@ export default {
           this.currentPage = 'register';
         }
       }
-      console.log(this.currentPage);
     },
     logout() {
       this.$store.dispatch('logout');

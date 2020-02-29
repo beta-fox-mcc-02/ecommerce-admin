@@ -25,12 +25,11 @@ export default {
     deleteProduct() {
       this.$store.dispatch('deleteProduct', +this.id)
         .then(() => {
-          console.log('success deleting product');
           this.$emit('closeModal', false);
           this.$emit('fetchProduct');
         })
         .catch((err) => {
-          console.log(err.response);
+          this.$store.commit('SET_ERRORS', err.response);
           this.$emit('closeModal', false);
         });
     },

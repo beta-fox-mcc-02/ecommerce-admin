@@ -65,7 +65,6 @@ export default {
       this.$store.dispatch('login', payload)
         .then((response) => {
           if (response.data.access_token) {
-            console.log(this.$store.state.idToken);
             localStorage.setItem('access_token', response.data.access_token);
             this.$store.commit('SET_IDTOKEN', response.data.access_token);
             this.$store.commit('SET_ISLOGIN', true);
@@ -73,7 +72,7 @@ export default {
           }
         })
         .catch((err) => {
-          console.log(err);
+          this.$store.commit('SET_ERRORS', err.response);
         });
     },
   },

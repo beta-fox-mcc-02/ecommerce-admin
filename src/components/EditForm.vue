@@ -79,17 +79,16 @@ export default {
       };
       this.$store.dispatch('editProduct', payload)
         .then((result) => {
-          console.log(result.data);
+          this.$store.commit('SET_MESSAGE', result.data);
         })
         .catch((err) => {
-          console.log(err.response);
+          this.$store.commit('SET_ERRORS', err.response);
         });
     },
     uploadToImgur() {
       const data = new FormData();
       data.append('name', 'my-file');
       data.append('file', this.$refs.image.files['0']);
-      console.log(data);
 
       axios({
         method: 'POST',
@@ -105,10 +104,9 @@ export default {
       })
         .then((response) => {
           this.image_url = response.data.link;
-          console.log(response.data);
         })
         .catch((err) => {
-          console.log(err);
+          this.$store.commit('SET_ERRORS', err.response);
         });
     },
   },

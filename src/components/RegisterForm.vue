@@ -116,7 +116,7 @@ export default {
           }
         })
         .catch((err) => {
-          console.log(err, '====== dari error di store register');
+          this.$store.commit('SET_ERRORS', err.response);
         });
     },
   },
