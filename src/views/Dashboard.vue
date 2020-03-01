@@ -32,10 +32,12 @@
             <tr v-for="product in getProducts" :key="product.id">
               <td align="center">{{product.id}}</td>
               <td>{{product.name}}</td>
-              <td>{{product.image_url}}</td>
+              <td align="center">
+                <img :src="product.image_url" class="product-img">
+              </td>
               <td align="center">{{product.price}}</td>
               <td align="center">{{product.stock}}</td>
-              <td align="center" class="action-area">
+              <td align="center">
                 <i class="fas fa-pen btn" @click="editProductForm(product.id)"></i>
                 <i class="fas fa-trash btn" @click="deleteProduct(product.id)"></i>
               </td>
@@ -157,9 +159,10 @@ export default {
 }
 
 .product-table {
-  display: block;
+  /* display: block; */
   table-layout: fixed;
-  max-width: 100%;
+  /* width: 1000px; */
+  /* max-width: 100%; */
   overflow: auto;
 }
 
@@ -193,5 +196,9 @@ export default {
   position: absolute;
   top: 50%;
   left: 50%;
+}
+
+.product-img {
+  width: 100px;
 }
 </style>
