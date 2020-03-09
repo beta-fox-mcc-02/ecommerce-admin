@@ -1,24 +1,22 @@
 <template>
   <div>
-    {{editData}}
-    {{this.$store.state.editData.data.name}}
       <h3>Edit Product</h3>
     <form class="container" @submit='edit'>
       <div class="form-group">
           <label>Product Name</label>
-          <input type="text" class="form-control" aria-describedby v-model="name">
+          <input type="text" class="form-control" aria-describedby v-model="editProduct.name">
       </div>
       <div class="form-group">
           <label>Image Url</label>
-          <input type="text" class="form-control" id="" aria-describedby v-model="image_url">
+          <input type="text" class="form-control" id="" aria-describedby v-model="editProduct.image_url">
       </div>
       <div class="form-group">
           <label>Price</label>
-          <input type="number" class="form-control" id="" aria-describedby v-model="price">
+          <input type="number" class="form-control" id="" aria-describedby v-model="editProduct.price">
       </div>
       <div class="form-group">
           <label>Stock</label>
-          <input type="number" class="form-control" id="" aria-describedby v-model="stock">
+          <input type="number" class="form-control" id="" aria-describedby v-model="editProduct.stock">
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
@@ -31,12 +29,11 @@ export default {
   data () {
     return {
       editProduct: {
-        id: this.$store.state.editData.data.id,
-        name: this.$store.state.editData.data.name,
-        image_url: this.$store.state.editData.data.image_url,
-        price: this.$store.state.editData.data.price,
-        stock: this.$store.state.editData.data.stock,
-        RoleId: 1
+        id: '',
+        name: '',
+        image_url: '',
+        price: '',
+        stock: ''
       }
     }
   },
@@ -46,6 +43,7 @@ export default {
         .then(editData => {
           console.log('berhasil edit iyey')
           console.log(editData)
+          this.$router.push('/')
         })
         .catch(err => {
           this.$store.dispatch('error', err.msg)
@@ -57,8 +55,17 @@ export default {
     editData () {
       return this.$store.state.editData
     }
+  },
+  created () {
+    this.$store.dispatch('fetchEditData', this.$route.params.id)
+      .then(({ data }) => {
+        console.log('MASOK WEEEEEEYYYYYY', data.data)
+        this.editProduct = data.data
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
-
   // created () {
   //   setTimeout(() => {
   //     this.id = this.editData.id

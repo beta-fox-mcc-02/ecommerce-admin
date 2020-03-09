@@ -1,5 +1,6 @@
 <template>
-    <div class="container">
+    <!-- <div class="container">
+
         <form
         @submit.prevent="register"
         >
@@ -14,7 +15,29 @@
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+    </div> -->
+
+  <div class="wrapper fadeInDown">
+    <div id="formContent">
+      <!-- Tabs Titles -->
+
+      <!-- Icon -->
+      <div class="fadeIn first">
+        <h3>Register Admin</h3>
+        <!-- <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" /> -->
+      </div>
+
+      <!-- Login Form -->
+      <form @submit.prevent="register">
+        <input type="text" id="login" class="fadeIn second" name="login" placeholder="email" v-model="dataRegistration.email">
+        <input type="password" id="password" class="fadeIn third" name="login" placeholder="password"  v-model="dataRegistration.password">
+        <input type="submit" class="fadeIn fourth" value="Log In">
+      </form>
+
+      <!-- Remind Passowrd -->
+
     </div>
+  </div>
 </template>
 
 <script>
@@ -39,8 +62,8 @@ export default {
           this.$router.push('/login')
         })
         .catch(err => {
-          this.$store.dispatch('error', err.msg)
-          console.log(err)
+          // this.$store.dispatch('error', err.msg)
+          console.log(err, 'ini msgnya==============')
         })
     }
   }

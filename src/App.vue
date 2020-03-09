@@ -16,7 +16,6 @@ export default {
   },
   created () {
     if (localStorage.access_token) {
-      console.log('Cek poin baru masuuukk')
       this.$router.push('/')
     } else {
       this.$router.push('/login')

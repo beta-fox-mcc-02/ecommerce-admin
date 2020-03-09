@@ -36,9 +36,8 @@ export default new Vuex.Store({
   },
   actions: {
     login (context, payload) {
-      console.log(payload, 'yang terbaru loh ini')
       return axios({
-        url: 'http://localhost:3000/login',
+        url: 'http://localhost:3000/loginAdmin',
         method: 'post',
         data: payload
       })
@@ -50,12 +49,6 @@ export default new Vuex.Store({
         method: 'post',
         data: payload
       })
-      // .then(userRegistered => {
-      //   console.log(userRegistered)
-      // })
-      // .catch(err => {
-      //   console.log(err)
-      // })
     },
     addProduct (context, payload) {
       return axios({
@@ -72,13 +65,6 @@ export default new Vuex.Store({
           access_token: localStorage.access_token
         }
       })
-      // .then(product => {
-      //   console.log('datanya berhasil di add loh0-----', product)
-      //   context.commit('ADD_PRODUCT', true)
-      // })
-      // .catch(err => {
-      //   console.log(err)
-      // })
     },
     fetchData (context) {
       return axios({
@@ -88,12 +74,6 @@ export default new Vuex.Store({
           access_token: localStorage.access_token
         }
       })
-      // .then(items => {
-      //   context.commit('FETCH_DATA', items.data.data)
-      // })
-      // .catch(err => {
-      //   console.log(err)
-      // })
     },
     fetchEditData (context, id) {
       console.log(id, 'ini idnyaaaaaaaaa')
@@ -104,14 +84,6 @@ export default new Vuex.Store({
           access_token: localStorage.access_token
         }
       })
-      // .then(({ data }) => {
-      //   console.log(data, 'ini datanyaaaaaaa====================')
-      //   context.commit('EDIT_DATA', data)
-      // })
-      // .catch(err => {
-      //   console.log('masuknya ke errorrrrr')
-      //   console.log(err)
-      // })
     },
     editData (context, dataEditProduct) {
       console.log(dataEditProduct)
@@ -123,13 +95,6 @@ export default new Vuex.Store({
           access_token: localStorage.access_token
         }
       })
-      // .then(editData => {
-      //   console.log('berhasil edit iyey')
-      //   console.log(editData)
-      // })
-      // .catch(err => {
-      //   console.log(err)
-      // })
     },
     deleteData (context, id) {
       console.log('masuk niiiih idnyooo', id)

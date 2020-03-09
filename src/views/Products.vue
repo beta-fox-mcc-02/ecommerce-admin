@@ -8,8 +8,9 @@
         <div class="card-body">
           <h5 class="card-title">{{product.name}}</h5>
           <div class="d-flex justify-content-center m-4">
-            <button @click="edit(product.id)" type="button" class="btn btn-success">Edit</button>
-            <button @click="remove(product.id)" type="button" class="btn btn-danger">Delete</button>
+
+            <b-button :to="`/edit/${product.id}`" variant="success">Edit</b-button>
+            <b-button @click="remove(product.id)" variant="danger">Delete</b-button>
           </div>
         </div>
       </div>
@@ -32,30 +33,13 @@ export default {
           console.log(err)
         })
     },
-    edit (id) {
-      console.log(id)
-      this.$store.dispatch('fetchEditData', id)
-        .then(({ data }) => {
-          console.log(data, 'ini datanyaaaaaaa====================')
-          this.$store.commit('EDIT_DATA', data)
-          this.$router.push('/edit')
-        })
-        .catch(err => {
-          this.$store.dispatch('error', err.msg)
-          console.log('masuknya ke errorrrrr')
-          console.log(err)
-        })
-    },
     remove (id) {
       console.log('masuk id neyyyy', id)
       this.$store.dispatch('deleteData', id)
         .then(editData => {
-          console.log('DELETE DATA!')
-          console.log('berhasil edit iyey')
           this.$router.push('/')
         })
         .catch(err => {
-          console.log('GAGAL NIIIIIH HUHU')
           this.$store.dispatch('error', err.msg)
         })
     }
