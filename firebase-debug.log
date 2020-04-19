@@ -1,0 +1,10 @@
+[debug] [2020-02-29T07:25:54.853Z] ----------------------------------------------------------------------
+[debug] [2020-02-29T07:25:54.856Z] Command:       /usr/bin/node /usr/bin/firebase init
+[debug] [2020-02-29T07:25:54.856Z] CLI Version:   7.14.0
+[debug] [2020-02-29T07:25:54.856Z] Platform:      linux
+[debug] [2020-02-29T07:25:54.856Z] Node Version:  v13.9.0
+[debug] [2020-02-29T07:25:54.867Z] Time:          Sat Feb 29 2020 14:25:54 GMT+0700 (Indochina Time)
+[debug] [2020-02-29T07:25:54.867Z] ----------------------------------------------------------------------
+[debug] [2020-02-29T07:25:54.868Z] 
+[debug] [2020-02-29T07:25:54.893Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-02-29T07:25:54.894Z] > attempting to authenticate via app default credentials
