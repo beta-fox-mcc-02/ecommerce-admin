@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div class="container alert alert-warning" role="alert" v-if="error">{{error}}</div>
     <b-form method="post" @submit.prevent="addProduct">
       <b-input
         type="text"
@@ -38,7 +39,8 @@
     </b-form>
     <b-button variant="primary">
       <router-link to="/product/list" class=white>Back to product list</router-link>
-    </b-button>
+    </b-button> <br>
+    <b-spinner label="Spinning" v-if="loading"></b-spinner>
   </div>
 </template>
 
@@ -51,14 +53,17 @@ export default {
       name: "",
       image_url: "",
       price: "",
-      stocks: ""
+      stocks: "",
+      error: "",
+      loading: false
     };
   },
   methods: {
     addProduct() {
+      this.loading = true;
       axios({
         method: "post",
-        url: "http://localhost:3000/admin/product/create",
+        url: "https://tranquil-coast-06554.herokuapp.com/admin/product/create",
         data: {
           name: this.name,
           image_url: this.image_url,
@@ -67,10 +72,16 @@ export default {
         }
       })
         .then(data => {
+          this.loading = false;
           this.$router.push("list");
         })
         .catch(err => {
-          console.log(err);
+          if (err.response.data.msg) {
+            this.error = err.response.data.msg
+          } else if (err.response.data.msg) {
+            this.error = err.response.data.msg[0]
+          }
+          this.loading = false
         });
     }
   },

@@ -28,13 +28,13 @@ const store = new Vuex.Store({
     fetch() {
       return axios({
         method: "get",
-        url: "http://localhost:3000/admin/product"
+        url: "https://tranquil-coast-06554.herokuapp.com/admin/product"
       })
     },
     login(context, payload) {
       return axios({
         method: "post",
-        url: "http://localhost:3000/admin/login",
+        url: "https://tranquil-coast-06554.herokuapp.com/admin/login",
         data: {
           email: payload.email,
           password: payload.password

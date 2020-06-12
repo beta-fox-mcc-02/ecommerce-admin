@@ -23,7 +23,7 @@
                 class="table-image"
               />
             </td>
-            <td>Rp. {{ products.price }}</td>
+            <td>Rp. {{ new Number(products.price).toLocaleString('id-ID') }}</td>
             <td>{{ products.stocks }}</td>
             <td>
               <b-button variant="danger" href="#" @click="deleteProduct(products.id)">
@@ -35,6 +35,7 @@
             </td>
           </tr>
         </tbody>
+      <b-spinner label="Spinning" v-if="loading"></b-spinner>
       </table>
     </div>
 
@@ -42,13 +43,14 @@
 
     <UpdateForm @fetchAll="fetchAll" @changePage="changePage" />-->
 
-    <b-modal id="editForm" @ok="handleOk">
+    <b-modal id="editForm" @ok="handleOk" title="Edit product">
       <b-form @submit.prevent="updateProduct">
         <b-input type="text" name="name" v-model="name" /> <br />
         <b-input type="text" name="image_url" v-model="image_url" /> <br />
         <b-input type="text" name="price" v-model="price" /> <br />
         <b-input type="text" name="stocks" v-model="stocks" /> <br />
       </b-form>
+      <b-spinner label="Spinning" v-if="loading"></b-spinner>
     </b-modal>
   </div>
 </template>
@@ -64,11 +66,13 @@ export default {
       name: '',
       image_url: '',
       price: '',
-      stocks: ''
+      stocks: '',
+      loading: false
     };
   },
   methods: {
     fetchAll() {
+      this.loading = true;
       this.$store
         .dispatch("fetch")
         .then(response => {
@@ -76,15 +80,18 @@ export default {
           response.data.forEach(product => {
             this.$store.commit("setProduct", product);
           });
+          this.loading = false;
         })
         .catch(err => console.log(err));
     },
     deleteProduct(id) {
+      this.loading = true;
       axios({
         method: "delete",
-        url: `http://localhost:3000/admin/product/${id}/delete`
+        url: `https://tranquil-coast-06554.herokuapp.com/admin/product/${id}/delete`
       })
         .then(data => {
+          this.loading = false
           this.fetchAll();
         })
         .catch(err => {
@@ -94,10 +101,9 @@ export default {
     findOne(id) {
       axios({
         method: "get",
-        url: `http://localhost:3000/admin/product/${id}/update`
+        url: `https://tranquil-coast-06554.herokuapp.com/admin/product/${id}/update`
       })
         .then(data => {
-          console.log(data.data);
           this.id = data.data.id;
           this.name = data.data.name;
           this.image_url = data.data.image_url;
@@ -109,10 +115,11 @@ export default {
         });
     },
     updateProduct() {
+      this.loading = true;
       let id = this.id;
       axios({
         method: "put",
-        url: `http://localhost:3000/admin/product/${id}/update`,
+        url: `https://tranquil-coast-06554.herokuapp.com/admin/product/${id}/update`,
         data: {
           name: this.name,
           image_url: this.image_url,
@@ -121,6 +128,7 @@ export default {
         }
       })
         .then(data => {
+          this.loading = false;
           this.$nextTick(() => {
             this.$bvModal.hide('editForm')
           })
@@ -166,7 +174,8 @@ a {
 #products {
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
   border-collapse: collapse;
-  width: 100%;
+  width: 90%;
+
 }
 
 #products td,

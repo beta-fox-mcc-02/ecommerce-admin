@@ -5,14 +5,20 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <h1>Welcome to admin page</h1>
+    <NavBar></NavBar>
+    <center><h1>Product list</h1></center>
     <router-view />
   </div>
 </template>
 
 <script>
+import NavBar from '@/components/NavBar.vue'
+
 export default {
-  name: "Product"
+  name: "Product",
+  components: {
+    NavBar
+  }
 };
 </script>
 

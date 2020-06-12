@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div class="container alert alert-warning" role="alert" v-if="error">{{error}}</div>
     <form method="post" @submit.prevent="updateProduct">
       <input type="text" name="name" v-model="name" /> <br />
       <input type="text" name="image_url" v-model="image_url" /> <br />
@@ -10,6 +11,7 @@
     <button>
       <router-link to="/product/list">Back to product list</router-link>
     </button>
+    <b-spinner label="Spinning" v-if="loading"></b-spinner>
   </div>
 </template>
 
@@ -22,15 +24,18 @@ export default {
       name: "",
       image_url: "",
       price: "",
-      stocks: ""
+      stocks: "",
+      loading: false,
+      error: ''
     };
   },
   methods: {
     updateProduct() {
       let id = this.id;
+      this.loading = true;
       axios({
         method: "put",
-        url: `http://localhost:3000/admin/product/${id}/update`,
+        url: `https://tranquil-coast-06554.herokuapp.com/admin/product/${id}/update`,
         data: {
           name: this.name,
           image_url: this.image_url,
@@ -40,10 +45,16 @@ export default {
       })
         .then(data => {
           this.page = "list";
+          this.loading = false
           this.fetchAll();
         })
         .catch(err => {
-          console.log(err);
+          if (err.response.data.msg) {
+            this.error = err.response.data.msg
+          } else if (err.response.data.msg) {
+            this.error = err.response.data.msg[0]
+          }
+          this.loading = false
         });
     }
   }
